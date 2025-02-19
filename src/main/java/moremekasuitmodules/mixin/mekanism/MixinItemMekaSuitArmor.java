@@ -27,7 +27,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.common.Optional;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,7 +50,7 @@ import javax.annotation.Nullable;
         @Optional.Interface(iface = "thaumcraft.api.items.IVisDiscountGear", modid = "thaumcraft"),
         @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "thaumcraft")
 })
-public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnergizedItem, ISpecialArmor, IModuleContainerItem, IModeItem,
+public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnergizedItem, IModuleContainerItem, IModeItem,
         ISpecialElectricItem, IEnergyContainerItem, IHazmatLike, Magnetic, ICustomArmor, IArmorApiarist, IVisDiscountGear, IGoggles {
 
     @Shadow(remap = false)

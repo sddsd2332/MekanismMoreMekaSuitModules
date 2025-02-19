@@ -15,9 +15,11 @@ item.module_gravitational_modulating_additional_unit.name=微重力调节单元
 item.module_fosic_resonator_unit.name=汇星共振单元
 item.module_ichosic_resonator_unit.name=液华共振器
 item.module_energy_shield_unit.name=能量护盾单元
+item.module_chaos_resistance_unit.name=混沌抗性单元
 item.module_chaos_vortex_stabilization_unit.name=混沌旋涡稳定单元
 item.module_smart_shielding_unit.name=智能屏蔽单元
 item.module_infinite_energy_supply_unit.name=无限能量供应单元
+
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进拦截救援系统单元
@@ -37,6 +39,7 @@ module.mekanism.fosic_resonator_unit=汇星共振单元
 module.mekanism.ichosic_resonator_unit=液华共振器
 module.mekanism.energy_shield_unit=能量护盾单元
 module.mekanism.chaos_vortex_stabilization_unit=混沌旋涡稳定单元
+module.mekanism.chaos_resistance_unit=混沌抗性单元
 module.mekanism.smart_shielding_unit=智能屏蔽单元
 module.mekanism.infinite_energy_supply_unit=无限能量供应单元
 
@@ -59,6 +62,7 @@ description.mekanism.warp_clear_base_unit=通过特殊的方法移除身上的�
 description.mekanism.warp_clear_advanced_unit=通过特殊的方法移除身上的普通扭曲值
 description.mekanism.warp_clear_ultimate_unit=通过特殊的方法移除身上的永久扭曲值
 description.mekanism.magic_optimization_unit=使用特殊的方法，减少魔力的使用
+
 description.mekanism.goggles_of_revealing_unit=与揭示之护目镜相同
 description.mekanism.intelligent_temperature_regulation_unit=让身体一直保持最佳温度
 description.mekanism.automatic_liquid_supply_unit=通过大气含有的水分来自动补充身体的所需的水分
@@ -66,6 +70,7 @@ description.mekanism.gravitational_modulating_additional_unit=为‘重力调制
 description.mekanism.fosic_resonator_unit=通过星能场的共振，可以显示世界上星能范围
 description.mekanism.ichosic_resonator_unit=通过星能场的共振，可以显示世界上涌泉的流体本源精华
 description.mekanism.energy_shield_unit=使用能量护盾来抵挡伤害
+description.mekanism.chaos_resistance_unit=对混沌产生的抗性进行抵抗
 description.mekanism.chaos_vortex_stabilization_unit=如果附近含有混沌产生的旋涡，则自动消耗本单元来平息旋涡
 description.mekanism.smart_shielding_unit.name=通过芯片分析，自动屏蔽对方的目光
 description.mekanism.infinite_energy_supply_unit=让MekaSuit始终充满能量
@@ -78,3 +83,4 @@ tooltip.install.tc6=需要安装 Thaumcraft 6 才能工作
 tooltip.install.tna=需要安装 Tough As Nails 才能工作
 tooltip.install.as=需要安装 Astral Sorcery 才能工作
 tooltip.install.DR=需要安装 Draconic Evolution 才能工作
+tooltip.chaos.resistance=混沌抗性

@@ -31,13 +31,14 @@ import java.util.Random;
 @SideOnly(Side.CLIENT)
 public class ClientTickHandler {
 
+    public static Minecraft minecraft = Minecraft.getMinecraft();
     public static Random rand = new Random();
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().player != null) {
+        if (event.phase == TickEvent.Phase.END && minecraft.player != null) {
             if (Loader.isModLoaded("astralsorcery")) {
-                AsStarlightFieldEffect(Minecraft.getMinecraft().player);
+                AsStarlightFieldEffect(minecraft.player);
             }
         }
     }
@@ -55,11 +56,11 @@ public class ClientTickHandler {
     //copy ItemSkyResonator playStarlightFieldEffect
     @Optional.Method(modid = "astralsorcery")
     private void playStarlightFieldEffect() {
-        if (!ConstellationSkyHandler.getInstance().getSeedIfPresent(Minecraft.getMinecraft().world).isPresent()) return;
-        float nightPerc = ConstellationSkyHandler.getInstance().getCurrentDaytimeDistribution(Minecraft.getMinecraft().world);
+        if (!ConstellationSkyHandler.getInstance().getSeedIfPresent(minecraft.world).isPresent()) return;
+        float nightPerc = ConstellationSkyHandler.getInstance().getCurrentDaytimeDistribution(minecraft.world);
         if (nightPerc >= 0.05) {
             Color c = new Color(0, 6, 58);
-            BlockPos center = Minecraft.getMinecraft().player.getPosition();
+            BlockPos center = minecraft.player.getPosition();
             int offsetX = center.getX();
             int offsetZ = center.getZ();
             BlockPos.PooledMutableBlockPos pos = BlockPos.PooledMutableBlockPos.retain(center);
@@ -67,9 +68,9 @@ public class ClientTickHandler {
             for (int xx = -30; xx <= 30; xx++) {
                 for (int zz = -30; zz <= 30; zz++) {
 
-                    BlockPos top = Minecraft.getMinecraft().world.getTopSolidOrLiquidBlock(pos.setPos(offsetX + xx, 0, offsetZ + zz));
+                    BlockPos top = minecraft.world.getTopSolidOrLiquidBlock(pos.setPos(offsetX + xx, 0, offsetZ + zz));
                     //Can be force unwrapped since statement 2nd Line prevents non-present values.
-                    Float opF = SkyCollectionHelper.getSkyNoiseDistributionClient(Minecraft.getMinecraft().world, top).get();
+                    Float opF = SkyCollectionHelper.getSkyNoiseDistributionClient(minecraft.world, top).get();
 
                     float fPerc = (float) Math.pow((opF - 0.4F) * 1.65F, 2);
                     if (opF >= 0.4F && rand.nextFloat() <= fPerc) {
@@ -97,8 +98,7 @@ public class ClientTickHandler {
 
     @SubscribeEvent
     public static void onFOVModifier(FOVUpdateEvent e) {
-        Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.player;
+        EntityPlayer player = minecraft.player;
         IModule<ModuleGravitationalModulatingAdditionalUnit> module = ModuleHelper.get().load(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
         if (module != null && module.isEnabled()) {
             boolean fixFOV = module.getCustomInstance().getFixFOV().get();
@@ -111,7 +111,6 @@ public class ClientTickHandler {
     @SubscribeEvent
     public void GuiScreenEvent(GuiOpenEvent event) {
         if (event.getGui() instanceof GuiGameOver) {
-            Minecraft minecraft = event.getGui().mc;
             if (minecraft.player instanceof EntityPlayerSP) {
                 ItemStack head = minecraft.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!minecraft.player.isEntityAlive()){

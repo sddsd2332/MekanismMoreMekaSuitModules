@@ -35,14 +35,18 @@ public class drRecipes {
     @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
     public static void addDRrecipes() {
         addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD), new ItemStack(MekanismItems.ModuleBase), 256000000L, 3,
-                DEFeatures.chaoticCore, "PoloniumPellet", MekanismItems.HDPE_SHEET, DEFeatures.chaosShard, MekanismItems.HDPE_SHEET, "PoloniumPellet", DEFeatures.chaoticCore,
-                "PoloniumPellet", MekanismItems.CosmicMatter, "alloyUltimate", "circuitUltimate", "alloyUltimate", MekanismItems.CosmicMatter, "PoloniumPellet",
-                MekanismItems.HDPE_SHEET, "alloyUltimate", "PlutoniumPellet", new ItemStack(DEFeatures.toolUpgrade, 1, 8), "PlutoniumPellet", "alloyUltimate", MekanismItems.HDPE_SHEET,
-                DEFeatures.chaosShard, "circuitUltimate", new ItemStack(DEFeatures.toolUpgrade, 1, 9), new ItemStack(DEFeatures.toolUpgrade, 1, 9), "circuitUltimate", DEFeatures.chaosShard,
-                MekanismItems.HDPE_SHEET, "alloyUltimate", "PlutoniumPellet", new ItemStack(DEFeatures.toolUpgrade, 1, 8), "PlutoniumPellet", "alloyUltimate", MekanismItems.HDPE_SHEET,
-                "PoloniumPellet", MekanismItems.CosmicMatter, "alloyUltimate", "circuitUltimate", "alloyUltimate", MekanismItems.CosmicMatter, "PoloniumPellet",
-                DEFeatures.chaoticCore, "PoloniumPellet", MekanismItems.HDPE_SHEET, DEFeatures.chaosShard, MekanismItems.HDPE_SHEET, "PoloniumPellet", DEFeatures.chaoticCore);
-
+                MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET,
+                "PoloniumPellet", "PoloniumPellet", "PoloniumPellet", "PoloniumPellet",
+                "alloyUltimate", "alloyUltimate", "alloyUltimate", "alloyUltimate",
+                "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet",
+                DEFeatures.chaoticCore, DEFeatures.chaoticCore, DEFeatures.chaoticCore, DEFeatures.chaoticCore,
+                new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 9), new ItemStack(DEFeatures.toolUpgrade, 1, 9),
+                "circuitUltimate", "circuitUltimate", "circuitUltimate", "circuitUltimate",
+                DEFeatures.chaosShard, DEFeatures.chaosShard, DEFeatures.chaosShard, DEFeatures.chaosShard,
+                MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter,
+                "alloyUltimate", "alloyUltimate", "alloyUltimate", "alloyUltimate",
+                "PoloniumPellet", "PoloniumPellet", "PoloniumPellet", "PoloniumPellet",
+                MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET);
     }
 
     @Optional.Method(modid = MekanismHooks.DraconicAdditions_MOD_ID)
@@ -98,15 +102,19 @@ public class drRecipes {
 
 
         addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_ADVANCED_INTERCEPTION_SYSTEM), new ItemStack(MekanismItems.ModuleBase), Integer.MAX_VALUE * 53L, 3,
-                DAFeatures.chaosHeart, inductionCell, DAFeatures.chaosStabilizerCore, inductionCell, DAFeatures.chaosHeart,
-                DAFeatures.chaosHeart, chaoticHelm, "PlutoniumPellet", chaoticChest, DAFeatures.chaosHeart,
-                inductionCell, MekanismItems.CosmicMatter, "PoloniumPellet", MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, "PoloniumPellet", MekanismItems.CosmicMatter, inductionCell,
-                "PoloniumPellet", MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, "PoloniumPellet",
-                DAFeatures.chaosStabilizerCore, "PlutoniumPellet", MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, "circuitUltimate", MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, "PlutoniumPellet", DAFeatures.chaosStabilizerCore,
-                "PoloniumPellet", MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, "PoloniumPellet",
-                inductionCell, MekanismItems.CosmicMatter, "PoloniumPellet", MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, "PoloniumPellet", MekanismItems.CosmicMatter, inductionCell,
-                DAFeatures.chaosHeart, chaoticLegs, "PlutoniumPellet", chaoticBoots, DAFeatures.chaosHeart,
-                DAFeatures.chaosHeart, inductionCell, DAFeatures.chaosStabilizerCore, inductionCell, DAFeatures.chaosHeart
+                inductionCell, inductionCell, inductionCell, inductionCell,
+                "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet",
+                MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter,
+                DAFeatures.chaosHeart, DAFeatures.chaosHeart, DAFeatures.chaosHeart, DAFeatures.chaosHeart,
+                MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE,
+                MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, chaoticHelm, chaoticChest, MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD,
+                "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet",
+                MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD, chaoticLegs, chaoticBoots, MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD,
+                MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE, MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE,
+                DAFeatures.chaosHeart, DAFeatures.chaosHeart, DAFeatures.chaosHeart, DAFeatures.chaosHeart,
+                DAFeatures.chaosStabilizerCore, DAFeatures.chaosStabilizerCore, DAFeatures.chaosStabilizerCore, DAFeatures.chaosStabilizerCore,
+                "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet",
+                inductionCell, inductionCell, inductionCell, inductionCell
         );
 
     }

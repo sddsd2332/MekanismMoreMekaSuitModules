@@ -1,7 +1,10 @@
 package moremekasuitmodules.common;
 
-import blusunrize.immersiveengineering.common.util.IEDamageSources.*;
+import blusunrize.immersiveengineering.common.util.IEDamageSources.ElectricDamageSource;
+import com.brandon3055.draconicevolution.lib.DEDamageSources;
+import com.google.common.collect.Sets;
 import gregtech.api.damagesources.DamageSources;
+import mekanism.api.gear.IModule;
 import mekanism.api.gear.ModuleData;
 import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismModules;
@@ -20,9 +23,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
+
+import java.util.Set;
 
 public class CommonPlayerTickHandler {
 
@@ -144,7 +150,7 @@ public class CommonPlayerTickHandler {
         boolean legs = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
         boolean feet = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
         if (helmet && chest && legs && feet) {
-            if (event.getSource() instanceof ElectricDamageSource damageSource){
+            if (event.getSource() instanceof ElectricDamageSource damageSource) {
                 damageSource.dmg = 0;
                 event.setCanceled(true);
             }
@@ -160,10 +166,63 @@ public class CommonPlayerTickHandler {
         boolean legs = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
         boolean feet = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
         if (helmet && chest && legs && feet) {
-            if (event.getSource() == DamageSources.getElectricDamage()){
+            if (event.getSource() == DamageSources.getElectricDamage()) {
                 event.setCanceled(true);
             }
         }
     }
+
+    public static final Set<String> CHAOS_DAMAGE_NAMES = Sets.newHashSet(
+            "de.GuardianFireball", "de.GuardianEnergyBall", "de.GuardianChaosBall",
+            "chaosImplosion", "damage.de.fusionExplode", "de.islandImplode");
+
+    @SubscribeEvent //这个事件用于计算是否可以完全取消混沌伤害
+    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
+    public void onDEDamage(LivingAttackEvent event) {
+        if (event.getSource() instanceof DEDamageSources.DamageSourceChaos || CHAOS_DAMAGE_NAMES.contains(event.getSource().damageType) || event.getSource().damageType.equals("chaos")) {
+            EntityLivingBase base = event.getEntityLiving();
+            int totalLevel = 0;
+            for (ItemStack stack : base.getArmorInventoryList()) {
+                if (stack.getItem() instanceof IModuleContainerItem item) {
+                    IModule<?> module = item.getModule(stack, MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
+                    if (module != null && module.isEnabled()) {
+                        totalLevel += module.getInstalledCount();
+                    }
+                }
+            }
+            if (totalLevel > 0) {
+                float newDamage = event.getAmount() * (1F - (totalLevel * 0.01F));
+                if (newDamage <= 0F) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent //这个事件用于计算是否可以取消混沌伤害 ，如果不能，则重新设置消减后的值
+    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
+    public void onDEDamage(LivingHurtEvent event) {
+        if (event.getSource() instanceof DEDamageSources.DamageSourceChaos || CHAOS_DAMAGE_NAMES.contains(event.getSource().damageType) || event.getSource().damageType.equals("chaos")) {
+            EntityLivingBase base = event.getEntityLiving();
+            int totalLevel = 0;
+            for (ItemStack stack : base.getArmorInventoryList()) {
+                if (stack.getItem() instanceof IModuleContainerItem item) {
+                    IModule<?> module = item.getModule(stack, MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
+                    if (module != null && module.isEnabled()) {
+                        totalLevel += module.getInstalledCount();
+                    }
+                }
+            }
+            if (totalLevel > 0) {
+                float newDamage = event.getAmount() * (1F - (totalLevel * 0.01F));
+                if (newDamage > 0F) {
+                    event.setAmount(newDamage);
+                } else {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
 
 }

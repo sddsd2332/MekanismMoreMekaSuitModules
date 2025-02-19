@@ -26,6 +26,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_FOSIC_RESONATOR = new ItemModule(MekaSuitMoreModules.FOSIC_RESONATOR_UNIT);
     public static final ItemModule MODULE_ICHOSIC_RESONATOR = new ItemModule(MekaSuitMoreModules.ICHOSIC_RESONATOR_UNIT);
     public static final ItemModule MODULE_ENERGY_SHIELD = new ItemModule(MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
+    public static final ItemModule MODULE_CHAOS_RESISTANCE = new ItemModule(MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
     public static final ItemModule MODULE_CHAOS_VORTEX_STABILIZATION = new ItemModule(MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
     public static final ItemModule MODULE_SMART_SHIELDING = new ItemModule(MekaSuitMoreModules.SMART_SHIELDING_UNIT);
     public static final ItemModule MODULE_INFINITE_ENERGY_SUPPLY = new ItemModule(MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT);
@@ -64,6 +65,7 @@ public class MekaSuitMoreModulesItem {
         }
         if (Mekanism.hooks.DraconicEvolution) {
             registry.register(initModule(MODULE_ENERGY_SHIELD));
+            registry.register(initModule(MODULE_CHAOS_RESISTANCE));
             registry.register(initModule(MODULE_CHAOS_VORTEX_STABILIZATION));
         }
         if (Loader.isModLoaded("iceandfire")){

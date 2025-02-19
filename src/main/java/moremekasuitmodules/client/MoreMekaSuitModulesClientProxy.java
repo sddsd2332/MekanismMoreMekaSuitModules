@@ -18,6 +18,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
     public void init() {
         super.init();
         MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+        MinecraftForge.EVENT_BUS.register(new RenderTickHandler());
         new GMUTKeyHandler();
     }
 
@@ -56,6 +57,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         }
         if (Mekanism.hooks.DraconicEvolution) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_RESISTANCE);
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_VORTEX_STABILIZATION);
         }
         if (Loader.isModLoaded("iceandfire")){

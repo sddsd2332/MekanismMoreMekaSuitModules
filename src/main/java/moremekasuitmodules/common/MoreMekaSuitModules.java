@@ -115,7 +115,7 @@ public class MoreMekaSuitModules implements IModule {
         for (Item stack : addMekaSuitModules) {
 
             if (Mekanism.hooks.DraconicEvolution) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
+                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT,MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
             }
             if (Mekanism.hooks.AR || Mekanism.hooks.GC) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.SEAL_UNIT);

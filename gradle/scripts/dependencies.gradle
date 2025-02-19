@@ -80,7 +80,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:baubles-227083:2518667")
     implementation rfg.deobf("curse.maven:botania-225643:3330934")
     implementation rfg.deobf("curse.maven:extrabotany-299086:3112313")
-    implementation rfg.deobf(files('libs/Mekanism-CE-Unofficial-All-9.9.1.219-dev.jar'))
+    implementation rfg.deobf(files('libs/Mekanism-CE-Unofficial-All-9.9.1.220-dev.jar'))
     implementation rfg.deobf(files('libs/MekanismMixinHelp-1.0.4-dev.jar'))
 
     compileOnly rfg.deobf(files("libs/Galacticraft-1.12.2-4.0.6.jar"))
@@ -98,5 +98,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:draconic-additions-314515:3514704")
     compileOnly rfg.deobf(files("libs/iceandfire-1.9.1-1.12.2.jar"))
     compileOnly rfg.deobf(files("libs/llibrary-1.7.20-1.12.2.jar"))
-
+    runtimeOnly files("libs/persistency-1.2.0.jar")
+    runtimeOnly files("libs/thaumicspeedup-4.0.jar")
+    runtimeOnly files("libs/ThaumicJEI-1.12.2-1.7.0.jar")
 }
