@@ -1,0 +1,31 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_smart_shielding_unit"
+  },
+  "pattern": [
+    "BEB",
+    "FDF",
+    "AAA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "B": {
+      "ore": "paneGlassBlack",
+      "type": "forge:ore_dict"
+    },
+    "E": {
+      "ore": "circuitUltimate",
+      "type": "forge:ore_dict"
+    },
+    "D": {
+      "item": "mekanism:modulebase"
+    },
+    "F": {
+      "item": "mekanism:plasticblock",
+      "data": 0
+    }
+  }
+}

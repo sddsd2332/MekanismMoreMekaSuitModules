@@ -3,7 +3,6 @@ package moremekasuitmodules.common;
 import mekanism.api.gear.ModuleData;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.integration.MekanismHooks;
-import moremekasuitmodules.common.content.gear.integration.astralsorcery.ModuleIchosicResonatorUnit;
 import moremekasuitmodules.common.content.gear.integration.draconicevolution.ModuleChaosVortexStabilizationUnit;
 import moremekasuitmodules.common.content.gear.integration.galacticraft.ModuleThermalProtectionUnit;
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearAdvancedUnit;
@@ -46,12 +45,6 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleAutomaticLiquidSupplyUnit> AUTOMATIC_LIQUID_SUPPLY_UNIT = ModuleHelper.register("automatic_liquid_supply_unit", ModuleAutomaticLiquidSupplyUnit::new, builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("toughasnails")).notEnabled("tooltip.install.tna"));
     //微重力调节单元[移植Gravitational Modulating Additional Unit]
     public static final ModuleData<ModuleGravitationalModulatingAdditionalUnit> GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT = ModuleHelper.register("gravitational_modulating_additional_unit", ModuleGravitationalModulatingAdditionalUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE));
-    //汇星共振单元 星辉（通过于星能场的共振，可以显示世界上星能范围）
-    public static final ModuleData<?> FOSIC_RESONATOR_UNIT = ModuleHelper.registerMarker("fosic_resonator_unit", builder -> builder.rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("astralsorcery")).notEnabled("tooltip.install.as"));
-    //液华共振器 星辉（通过于星能场的共振，可以显示世界上涌泉的流体本源精华）
-    public static final ModuleData<ModuleIchosicResonatorUnit> ICHOSIC_RESONATOR_UNIT = ModuleHelper.register("ichosic_resonator_unit", ModuleIchosicResonatorUnit::new, builder -> builder.rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("astralsorcery")).notEnabled("tooltip.install.as"));
-    //AE智能合成无线单元模块 AE （可以访问AE内的物品并可以合成物品？） 【可能不会实现】
-
     //能量护盾单元 DR （给meka套提供能量护盾）[最大10个](需要mixin)
     public static final ModuleData<?> ENERGY_SHIELD_UNIT = ModuleHelper.registerMarker("energy_shield_unit", builder -> builder.maxStackSize(10).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR"));
     ///混沌抗性单元 （给meka套提供阻挡混沌伤害的抵抗效果）[最大25个]

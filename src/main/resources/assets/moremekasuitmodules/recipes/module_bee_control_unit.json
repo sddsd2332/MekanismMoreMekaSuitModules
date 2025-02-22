@@ -1,0 +1,24 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_bee_control_unit"
+      },
+      "pattern": [
+            "AAA",
+            "BCB",
+            "AAA"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "item": "forestry:crafting_material",
+                  "data": 3
+            },
+            "B": {
+                  "ore": "circuitUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "mekanism:modulebase"
+            }
+      }
+}

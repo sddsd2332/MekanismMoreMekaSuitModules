@@ -1,0 +1,13 @@
+{
+	"package": "moremekasuitmodules.mixin.gregtech",
+	"required": true,
+	"refmap": "mixins.${mod_id}.refmap.json",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"MixinBlockCable"
+	],
+	"server": [],
+	"client": []
+}

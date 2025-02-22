@@ -77,6 +77,7 @@ dependencies {
     runtimeOnly 'curse.maven:had-enough-characters-640802:4035773'
     runtimeOnly 'curse.maven:better-advancements-272515:2685984'
     runtimeOnly 'curse.maven:MmmMmmMmmMmm-225738:2503041'
+    implementation 'curse.maven:crafttweaker-239197:4534504'
     implementation rfg.deobf("curse.maven:baubles-227083:2518667")
     implementation rfg.deobf("curse.maven:botania-225643:3330934")
     implementation rfg.deobf("curse.maven:extrabotany-299086:3112313")
@@ -84,8 +85,8 @@ dependencies {
     implementation rfg.deobf(files('libs/MekanismMixinHelp-1.0.4-dev.jar'))
 
     compileOnly rfg.deobf(files("libs/Galacticraft-1.12.2-4.0.6.jar"))
-    compileOnly rfg.deobf(files("libs/AdvancedRocketry-1.12.2-2.1.5.jar"))
-    compileOnly rfg.deobf(files("libs/arlib-1.0.8.jar"))
+    implementation rfg.deobf(files("libs/AdvancedRocketry-1.12.2-2.1.5.jar"))
+    implementation rfg.deobf(files("libs/ARLib-17-09-2024.jar"))
     implementation rfg.deobf(files("libs/ImmersiveEngineering-0.12-98.jar"))
     implementation rfg.deobf(files("libs/forestry_1.12.2-5.8.2.425.jar"))
     implementation rfg.deobf(files("libs/ToughAsNails-1.12.2-3.1.0.141-universal.jar"))

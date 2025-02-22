@@ -1,0 +1,23 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_insulated_unit"
+      },
+      "pattern": [
+            "ABA",
+            "BCB",
+            "ABA"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "item": "mekanism:hdpe_sheet"
+            },
+            "B": {
+                  "ore": "leather",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "mekanism:modulebase"
+            }
+      }
+}

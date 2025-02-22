@@ -10,11 +10,18 @@ import net.minecraft.entity.player.EntityPlayer;
 public class ModuleInfiniteEnergySupplyUnit implements ICustomModule<ModuleInfiniteEnergySupplyUnit> {
 
     @Override
+    public void tickClient(IModule<ModuleInfiniteEnergySupplyUnit> module, EntityPlayer player) {
+        this.tickServer(module,player);
+    }
+
+    @Override
     public void tickServer(IModule<ModuleInfiniteEnergySupplyUnit> module, EntityPlayer player) {
         IEnergizedItem energyContainer = module.getEnergyContainer();
         if (energyContainer != null) {
             energyContainer.insert(module.getContainer(), energyContainer.getMaxEnergy(module.getContainer()), true);
         }
     }
+
+
 
 }

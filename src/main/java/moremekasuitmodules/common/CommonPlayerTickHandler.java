@@ -20,10 +20,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
@@ -157,20 +154,6 @@ public class CommonPlayerTickHandler {
         }
     }
 
-    @SubscribeEvent
-    @Optional.Method(modid = MekanismHooks.GTCEU_MOD_ID)
-    public void onGTCEUElectricDamage(LivingAttackEvent event) {
-        EntityLivingBase base = event.getEntityLiving();
-        boolean helmet = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
-        boolean chest = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-        boolean legs = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
-        boolean feet = isInsulated(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
-        if (helmet && chest && legs && feet) {
-            if (event.getSource() == DamageSources.getElectricDamage()) {
-                event.setCanceled(true);
-            }
-        }
-    }
 
     public static final Set<String> CHAOS_DAMAGE_NAMES = Sets.newHashSet(
             "de.GuardianFireball", "de.GuardianEnergyBall", "de.GuardianChaosBall",

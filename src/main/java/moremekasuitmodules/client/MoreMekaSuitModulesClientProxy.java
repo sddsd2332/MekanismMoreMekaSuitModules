@@ -26,14 +26,14 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
     public void registerItemRenders() {
         registerItemRender(MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_ADVANCED_INTERCEPTION_SYSTEM);
-        if (Mekanism.hooks.GC || Mekanism.hooks.AR){
+        if (Mekanism.hooks.GC || Mekanism.hooks.AR) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SEAL);
         }
 
-        if (Mekanism.hooks.GC){
+        if (Mekanism.hooks.GC) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_THERMAL_PROTECTION);
         }
-        if (Loader.isModLoaded("immersiveengineering") ||Mekanism.hooks.GTCEULoaded){
+        if (Loader.isModLoaded("immersiveengineering") || Mekanism.hooks.GTCEULoaded) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_INSULATED);
         }
         if (Loader.isModLoaded("forestry")) {
@@ -51,16 +51,13 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
             registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_LIQUID_SUPPLY);
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_GRAVITATIONAL_MODULATING_ADDITIONAL);
-        if (Loader.isModLoaded("astralsorcery")) {
-            registerItemRender(MekaSuitMoreModulesItem.MODULE_FOSIC_RESONATOR);
-            registerItemRender(MekaSuitMoreModulesItem.MODULE_ICHOSIC_RESONATOR);
-        }
+
         if (Mekanism.hooks.DraconicEvolution) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_ENERGY_SHIELD);
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_RESISTANCE);
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_VORTEX_STABILIZATION);
         }
-        if (Loader.isModLoaded("iceandfire")){
+        if (Loader.isModLoaded("iceandfire")) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_SHIELDING);
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_ENERGY_SUPPLY);

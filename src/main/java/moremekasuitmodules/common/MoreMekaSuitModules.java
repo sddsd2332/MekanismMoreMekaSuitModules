@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -96,6 +97,7 @@ public class MoreMekaSuitModules implements IModule {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         drRecipes.addRecipes();
+        tcRecipes.addRecipes();
     }
 
     @SubscribeEvent
@@ -145,10 +147,6 @@ public class MoreMekaSuitModules implements IModule {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.THERMAL_PROTECTION_UNIT);
         }
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
-        if (Loader.isModLoaded("astralsorcery")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.FOSIC_RESONATOR_UNIT);
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.ICHOSIC_RESONATOR_UNIT);
-        }
 
         if (Mekanism.hooks.DraconicEvolution) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);

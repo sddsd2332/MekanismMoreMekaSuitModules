@@ -23,8 +23,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_INTELLIGENT_TEMPERATURE_REGULATION = new ItemModule(MekaSuitMoreModules.INTELLIGENT_TEMPERATURE_REGULATION_UNIT);
     public static final ItemModule MODULE_AUTOMATIC_LIQUID_SUPPLY = new ItemModule(MekaSuitMoreModules.AUTOMATIC_LIQUID_SUPPLY_UNIT);
     public static final ItemModule MODULE_GRAVITATIONAL_MODULATING_ADDITIONAL = new ItemModule(MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
-    public static final ItemModule MODULE_FOSIC_RESONATOR = new ItemModule(MekaSuitMoreModules.FOSIC_RESONATOR_UNIT);
-    public static final ItemModule MODULE_ICHOSIC_RESONATOR = new ItemModule(MekaSuitMoreModules.ICHOSIC_RESONATOR_UNIT);
     public static final ItemModule MODULE_ENERGY_SHIELD = new ItemModule(MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
     public static final ItemModule MODULE_CHAOS_RESISTANCE = new ItemModule(MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
     public static final ItemModule MODULE_CHAOS_VORTEX_STABILIZATION = new ItemModule(MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
@@ -59,10 +57,8 @@ public class MekaSuitMoreModulesItem {
             registry.register(initModule(MODULE_AUTOMATIC_LIQUID_SUPPLY));
         }
         registry.register(initModule(MODULE_GRAVITATIONAL_MODULATING_ADDITIONAL));
-        if (Loader.isModLoaded("astralsorcery")) {
-            registry.register(initModule(MODULE_FOSIC_RESONATOR));
-            registry.register(initModule(MODULE_ICHOSIC_RESONATOR));
-        }
+
+
         if (Mekanism.hooks.DraconicEvolution) {
             registry.register(initModule(MODULE_ENERGY_SHIELD));
             registry.register(initModule(MODULE_CHAOS_RESISTANCE));

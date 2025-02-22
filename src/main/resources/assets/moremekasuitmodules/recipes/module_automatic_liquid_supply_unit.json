@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_automatic_liquid_supply_unit"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "AEA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "B": {
+      "item": "toughasnails:rain_collector",
+      "data": 0
+    },
+    "C": {
+      "item": "toughasnails:charcoal_filter"
+    },
+    "E": {
+      "ore": "circuitUltimate",
+      "type": "forge:ore_dict"
+    },
+    "D": {
+      "item": "mekanism:modulebase"
+    }
+  }
+}
