@@ -3,24 +3,27 @@ package moremekasuitmodules.common;
 import blusunrize.immersiveengineering.common.util.IEDamageSources.ElectricDamageSource;
 import com.brandon3055.draconicevolution.lib.DEDamageSources;
 import com.google.common.collect.Sets;
-import gregtech.api.damagesources.DamageSources;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.ModuleData;
 import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismModules;
-import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.integration.MekanismHooks;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
@@ -28,6 +31,7 @@ import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
 import java.util.Set;
 
 public class CommonPlayerTickHandler {
+
 
     private boolean ModuleInstallation(ItemStack stack, ModuleData<?> data) {
         if (stack.getItem() instanceof IModuleContainerItem item) {
@@ -81,19 +85,27 @@ public class CommonPlayerTickHandler {
         if (event.getEntityLiving() instanceof EntityPlayer player) {
             ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
             if (head.getItem() instanceof IModuleContainerItem item) {
-                if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+                if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
                     event.setCanceled(true);
-                    if (!item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                    if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                         item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                     }
-                    player.setHealth(5F);
+                    if (Loader.isModLoaded("lolipickaxe")) {
+                        isInfiniteModules(player);
+                    }
+                    player.deathTime = 0;
+                    player.isDead = false;
+                    player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
                     player.clearActivePotions();
                     player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
                     player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
                     player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
                     player.setAir(300);
                     player.getFoodStats().addStats(20, 20);
-                    if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                    if (isInfiniteModule) {
+                        player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+                    } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                         player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
                     } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
                         player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
@@ -104,34 +116,58 @@ public class CommonPlayerTickHandler {
         }
     }
 
+
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         //If the player is affected by setHealth
         //What? Why do you want to go straight to setHealth?
-        if (MekanismConfig.current().mekce.MekAsuitOverloadProtection.val()) {
-            if (event.getEntityLiving() instanceof EntityPlayer player) {
+        if (MoreModulesConfig.current().config.MekAsuitOverloadProtection.val()) {
+            if (event.getEntityLiving() instanceof EntityPlayerMP player) {
                 ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!player.isEntityAlive()) {
-                    if (head.getItem() instanceof IModuleContainerItem item) {
-                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
-                            if (!item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                if (head.getItem() instanceof IModuleContainerItem item) {
+                    boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+                    if (!player.isEntityAlive()) {
+                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
+                            if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                                 item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                             }
-                            player.hurtResistantTime = 20;
-                            player.deathTime = 0;
+                            if (Loader.isModLoaded("lolipickaxe")) {
+                                isInfiniteModules(player);
+                            }
                             player.isDead = false;
-                            player.setHealth(5F);
+                            player.deathTime = 0;
+                            player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
                             player.clearActivePotions();
                             player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
                             player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
                             player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
                             player.setAir(300);
                             player.getFoodStats().addStats(20, 20);
+                            //重新刷新玩家的位置 确保玩家在该位置
+                            player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
+                            player.world.updateEntityWithOptionalForce(player, true);
+
+                            if (isInfiniteModule) {
+                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+                            } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+                            } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
+                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    //对氪金萝莉进行兼容
+    //太坏了 为什么要另外注入
+    @Optional.Method(modid = "lolipickaxe")
+    private void isInfiniteModules(EntityPlayer player) {
+        player.loliDead = false;
+        player.loliDeathTime = 0;
+        player.loliCool = false;
     }
 
     private boolean isInsulated(ItemStack stack) {
@@ -205,6 +241,104 @@ public class CommonPlayerTickHandler {
                 }
             }
         }
+    }
+
+
+    /**
+     * 无限拦截模块 开始
+     */
+
+    @SubscribeEvent //实体更新(玩家另外处理)
+    public void isInfiniteModule(LivingEvent.LivingUpdateEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (!(base instanceof EntityPlayer) && isInfiniteModule(base)) {
+            if (base.getHealth() != base.getMaxHealth()) {
+                base.setHealth(base.getMaxHealth());
+            }
+            if (base.isEntityAlive()) {
+                base.isDead = false;
+                base.deathTime = 0;
+                base.clearActivePotions();
+                base.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
+                base.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
+                base.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
+            }
+
+        }
+    }
+
+
+    @SubscribeEvent //取消所有伤害
+    public void isInfiniteModule(LivingAttackEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (isInfiniteModule(base)) {
+            event.setCanceled(true);
+        }
+    }
+
+
+    @SubscribeEvent //取消所有击退
+    public void isInfiniteModule(LivingKnockBackEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (isInfiniteModule(base)) {
+            event.setCanceled(true);
+        }
+    }
+
+
+    @SubscribeEvent //取消所有伤害2
+    public void isInfiniteModule(LivingHurtEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (isInfiniteModule(base)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent //取消所有伤害3
+    public void isInfiniteModule(LivingDamageEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (isInfiniteModule(base)) {
+            event.setCanceled(true);
+        }
+    }
+
+
+    @SubscribeEvent //取消所有死亡(玩家另外处理)
+    public void isInfiniteModule(LivingDeathEvent event) {
+        EntityLivingBase base = event.getEntityLiving();
+        if (!(base instanceof EntityPlayer) && isInfiniteModule(base)) {
+            event.setCanceled(true);
+            base.setHealth(base.getMaxHealth());
+        }
+    }
+
+
+    @SubscribeEvent //如果玩家攻击目标带有无限模块，取消本次攻击
+    public void isInfiniteModule(AttackEntityEvent event) {
+        if (event.getTarget() instanceof EntityLivingBase base) {
+            if (isInfiniteModule(base)) {
+                event.setCanceled(true);
+            }
+
+        }
+    }
+
+    @SubscribeEvent //弹射物伤害取消？
+    public void isInfiniteModule(CriticalHitEvent event) {
+        if (event.getTarget() instanceof EntityLivingBase base) {
+            if (isInfiniteModule(base)) {
+                event.setDamageModifier(0);
+            }
+        }
+    }
+
+
+    public boolean isInfiniteModule(EntityLivingBase base) {
+        ItemStack head = base.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        if (head.getItem() instanceof IModuleContainerItem item) {
+            return item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+        }
+        return false;
     }
 
 

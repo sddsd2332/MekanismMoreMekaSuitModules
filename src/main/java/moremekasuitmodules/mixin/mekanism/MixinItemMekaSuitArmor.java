@@ -13,13 +13,13 @@ import mekanism.api.gear.Magnetic;
 import mekanism.common.Mekanism;
 import mekanism.common.MekanismFluids;
 import mekanism.common.MekanismItems;
-import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.integration.MekanismHooks;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import mekanism.common.item.interfaces.IModeItem;
 import mekanism.common.util.ItemNBTHelper;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -91,10 +91,10 @@ public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnerg
         if (module != null) {
             int upgradeLevel = module.getInstalledCount();
             if (module.isEnabled()) {
-                if (MekanismConfig.current().meka.mekaSuitShield.val()) {
-                    return MekanismConfig.current().meka.mekaSuitShieldCapacity.val() * absorption * (int) Math.pow(2, upgradeLevel);
+                if (MoreModulesConfig.current().config.mekaSuitShield.val()) {
+                    return MoreModulesConfig.current().config.mekaSuitShieldCapacity.val() * absorption * (int) Math.pow(2, upgradeLevel);
                 } else {
-                    return MekanismConfig.current().meka.mekaSuitShieldCapacity.val() * absorption * upgradeLevel;
+                    return MoreModulesConfig.current().config.mekaSuitShieldCapacity.val() * absorption * upgradeLevel;
                 }
             } else {
                 return ItemNBTHelper.getFloat(stack, "ProtectionPoints", 0);
@@ -110,10 +110,10 @@ public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnerg
         IModule<?> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
         if (module != null && module.isEnabled()) {
             int upgradeLevel = module.getInstalledCount();
-            if (MekanismConfig.current().meka.mekaSuitRecovery.val()) {
-                return MekanismConfig.current().meka.mekaSuitRecoveryRate.val() * (int) Math.pow(2, upgradeLevel);
+            if (MoreModulesConfig.current().config.mekaSuitRecovery.val()) {
+                return MoreModulesConfig.current().config.mekaSuitRecoveryRate.val() * (int) Math.pow(2, upgradeLevel);
             } else {
-                return MekanismConfig.current().meka.mekaSuitRecoveryRate.val() * (1.0F + upgradeLevel);
+                return MoreModulesConfig.current().config.mekaSuitRecoveryRate.val() * (1.0F + upgradeLevel);
             }
         } else {
             return 0.0F;
@@ -165,7 +165,7 @@ public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnerg
     @Override
     @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
     public int getEnergyPerProtectionPoint() {
-        return MekanismConfig.current().meka.mekaSuitShieldRestoresEnergy.val();
+        return MoreModulesConfig.current().config.mekaSuitShieldRestoresEnergy.val();
     }
 
     @Override

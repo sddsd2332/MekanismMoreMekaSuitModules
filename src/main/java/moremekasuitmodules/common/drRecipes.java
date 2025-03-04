@@ -8,10 +8,10 @@ import com.brandon3055.draconicevolution.lib.RecipeManager;
 import mekanism.common.Mekanism;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
-import mekanism.common.config.MekanismConfig;
 import mekanism.common.integration.MekanismHooks;
 import mekanism.common.tier.InductionCellTier;
 import mekanism.common.util.ItemDataUtils;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.foxmcloud.draconicadditions.DAFeatures;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,11 +21,11 @@ public class drRecipes {
 
     public static void addRecipes() {
         if (Mekanism.hooks.DraconicEvolution) {
-            if (MekanismConfig.current().mekce.DRrecipes.val()) {
+            if (MoreModulesConfig.current().config.DRrecipes.val()) {
                 addDRrecipes();
             }
             if (Mekanism.hooks.DraconicAdditions) {
-                if (MekanismConfig.current().mekce.DRAdditionsrecipes.val()) {
+                if (MoreModulesConfig.current().config.DRAdditionsrecipes.val()) {
                     addDRAdditionsrecipes();
                 }
             }
@@ -47,22 +47,22 @@ public class drRecipes {
                 "alloyUltimate", "alloyUltimate", "alloyUltimate", "alloyUltimate",
                 "PoloniumPellet", "PoloniumPellet", "PoloniumPellet", "PoloniumPellet",
                 MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET, MekanismItems.HDPE_SHEET);
-       ItemStack particleGenerator = new ItemStack(DEFeatures.particleGenerator,1,2);
+        ItemStack particleGenerator = new ItemStack(DEFeatures.particleGenerator, 1, 2);
 
-        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_CHAOS_RESISTANCE), new ItemStack(MekanismItems.ModuleBase),256000000L,3,
-                particleGenerator,particleGenerator,particleGenerator,particleGenerator,
-                DEFeatures.draconicBlock,DEFeatures.draconicBlock,DEFeatures.draconicBlock,DEFeatures.draconicBlock,
+        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_CHAOS_RESISTANCE), new ItemStack(MekanismItems.ModuleBase), 256000000L, 3,
+                particleGenerator, particleGenerator, particleGenerator, particleGenerator,
+                DEFeatures.draconicBlock, DEFeatures.draconicBlock, DEFeatures.draconicBlock, DEFeatures.draconicBlock,
                 new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8),
-                DEFeatures.dragonHeart,DEFeatures.dragonHeart,DEFeatures.dragonHeart,DEFeatures.dragonHeart,
+                DEFeatures.dragonHeart, DEFeatures.dragonHeart, DEFeatures.dragonHeart, DEFeatures.dragonHeart,
                 new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8), new ItemStack(DEFeatures.toolUpgrade, 1, 8),
-                DEFeatures.draconicBlock,DEFeatures.draconicBlock,DEFeatures.draconicBlock,DEFeatures.draconicBlock,
-                particleGenerator,particleGenerator,particleGenerator,particleGenerator);
+                DEFeatures.draconicBlock, DEFeatures.draconicBlock, DEFeatures.draconicBlock, DEFeatures.draconicBlock,
+                particleGenerator, particleGenerator, particleGenerator, particleGenerator);
 
-        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_CHAOS_VORTEX_STABILIZATION), new ItemStack(MekanismItems.ModuleBase),2000000L,2,
+        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_CHAOS_VORTEX_STABILIZATION), new ItemStack(MekanismItems.ModuleBase), 2000000L, 2,
                 DEFeatures.draconicIngot, DEFeatures.draconicIngot, DEFeatures.draconicIngot, DEFeatures.draconicIngot,
-                new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),
-                new ItemStack(DEFeatures.reactorPart,1,4),new ItemStack(DEFeatures.reactorPart,1,4),new ItemStack(DEFeatures.reactorPart,1,4),new ItemStack(DEFeatures.reactorPart,1,4),
-                new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),new ItemStack(DEFeatures.chaosShard,1,3),
+                new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3),
+                new ItemStack(DEFeatures.reactorPart, 1, 4), new ItemStack(DEFeatures.reactorPart, 1, 4), new ItemStack(DEFeatures.reactorPart, 1, 4), new ItemStack(DEFeatures.reactorPart, 1, 4),
+                new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3), new ItemStack(DEFeatures.chaosShard, 1, 3),
                 DEFeatures.draconicIngot, DEFeatures.draconicIngot, DEFeatures.draconicIngot, DEFeatures.draconicIngot);
     }
 
@@ -117,7 +117,7 @@ public class drRecipes {
         DAFeatures.chaoticBoots.modifyEnergy(chaoticBoots, DAFeatures.chaoticBoots.getMaxEnergyStored(chaoticBoots));
         chaoticBoots.getTagCompound().setBoolean("isStable", true);
 
-        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_ADVANCED_INTERCEPTION_SYSTEM), new ItemStack(MekanismItems.ModuleBase), 2000000000  * 52L, 3,
+        addDRSimpleFusionRecipe(new ItemStack(MekaSuitMoreModulesItem.MODULE_ADVANCED_INTERCEPTION_SYSTEM), new ItemStack(MekanismItems.ModuleBase), 2000000000 * 52L, 3,
                 inductionCell, inductionCell, inductionCell, inductionCell,
                 "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet", "PlutoniumPellet",
                 MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter, MekanismItems.CosmicMatter,

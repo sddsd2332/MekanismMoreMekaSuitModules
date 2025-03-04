@@ -1,12 +1,13 @@
 package moremekasuitmodules.common.network;
 
 import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.network.to_server.PacketSwitchVerticalSpeedPacket;
+import moremekasuitmodules.common.network.to_server.PacketSwitchVerticalSpeedPacket.SwitchVerticalSpeedPacketMessage;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import moremekasuitmodules.common.network.to_server.PacketSwitchVerticalSpeedPacket;
-import moremekasuitmodules.common.network.to_server.PacketSwitchVerticalSpeedPacket.SwitchVerticalSpeedPacketMessage;
+
 public class GMUTPacketHandler {
 
     public final SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(MoreMekaSuitModules.MODID);

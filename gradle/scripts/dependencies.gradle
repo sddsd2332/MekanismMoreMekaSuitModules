@@ -102,4 +102,9 @@ dependencies {
     runtimeOnly files("libs/persistency-1.2.0.jar")
     runtimeOnly files("libs/thaumicspeedup-4.0.jar")
     runtimeOnly files("libs/ThaumicJEI-1.12.2-1.7.0.jar")
+    compileOnly rfg.deobf(files("libs/LoliPickaxe-1.2.12-1.12.2.jar"))
+    implementation rfg.deobf("curse.maven:ae2-extended-life-570458:5411078-api-5411081-sources-5411080")
+    implementation rfg.deobf('curse.maven:ae2-fluid-crafting-rework-623955:5751930')
+    implementation rfg.deobf('curse.maven:mekanism-energistics-1027681:5775101')
+    implementation rfg.deobf("curse.maven:matter-overdrive-community-edition-557428:5114422")
 }

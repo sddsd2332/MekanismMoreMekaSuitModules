@@ -3,6 +3,8 @@ package moremekasuitmodules.common;
 import mekanism.api.gear.ModuleData;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.integration.MekanismHooks;
+import moremekasuitmodules.common.content.gear.integration.appliedenergistics2.ModuleSmartWirelessUnit;
+import moremekasuitmodules.common.content.gear.integration.botania.*;
 import moremekasuitmodules.common.content.gear.integration.draconicevolution.ModuleChaosVortexStabilizationUnit;
 import moremekasuitmodules.common.content.gear.integration.galacticraft.ModuleThermalProtectionUnit;
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearAdvancedUnit;
@@ -38,7 +40,7 @@ public class MekaSuitMoreModules {
     //魔力优化单元 神秘（使用特殊的方法，减少魔力Vis的使用）[最大25个](需要mixin)
     public static final ModuleData<?> MAGIC_OPTIMIZATION_UNIT = ModuleHelper.registerMarker("magic_optimization_unit", builder -> builder.maxStackSize(25).canEnable(!Loader.isModLoaded("thaumcraft")).notEnabled("tooltip.install.tc6"));
     //揭示护目单元 神秘 （同揭示之护目镜）(需要mixin)
-    public static final ModuleData<?> GOGGLES_OF_REVEALING_UNIT = ModuleHelper.registerMarker("goggles_of_revealing_unit", builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("thaumcraft")).notEnabled("tooltip.install.tc6"));
+    public static final ModuleData<?> GOGGLES_OF_REVEALING_UNIT = ModuleHelper.registerMarker("goggles_of_revealing_unit", builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("thaumcraft")).notEnabled("tooltip.install.tc6").disabledByDefault());
     //智能温度调节单元 意志坚定(稳定身体的温度，一直保持最佳温度)
     public static final ModuleData<ModuleIntelligentTemperatureRegulationUnit> INTELLIGENT_TEMPERATURE_REGULATION_UNIT = ModuleHelper.register("intelligent_temperature_regulation_unit", ModuleIntelligentTemperatureRegulationUnit::new, builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("toughasnails")).notEnabled("tooltip.install.tna"));
     //自动供液单元 意志坚定(如果口渴了，自动喝水)
@@ -50,10 +52,25 @@ public class MekaSuitMoreModules {
     ///混沌抗性单元 （给meka套提供阻挡混沌伤害的抵抗效果）[最大25个]
     public static final ModuleData<?> CHAOS_RESISTANCE_UNIT = ModuleHelper.registerMarker("chaos_resistance_unit", builder -> builder.maxStackSize(25).rarity(EnumRarity.EPIC).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR"));
     //混沌旋涡稳定器 DR（当挖掘混沌晶体时，如果玩家附近会产生混沌旋涡，则移除本单元来平息该爆炸）
-    public static final ModuleData<ModuleChaosVortexStabilizationUnit> CHAOS_VORTEX_STABILIZATION_UNIT = ModuleHelper.register("chaos_vortex_stabilization_unit", ModuleChaosVortexStabilizationUnit::new, builder -> builder.maxStackSize(10).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR"));
+    public static final ModuleData<ModuleChaosVortexStabilizationUnit> CHAOS_VORTEX_STABILIZATION_UNIT = ModuleHelper.register("chaos_vortex_stabilization_unit", ModuleChaosVortexStabilizationUnit::new, builder -> builder.maxStackSize(10).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR").disabledByDefault());
     //智能屏蔽单元 冰与火（通过芯片分析，自动屏蔽对方的目光）【需要mixin】
     public static final ModuleData<?> SMART_SHIELDING_UNIT = ModuleHelper.registerMarker("smart_shielding_unit", builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("iceandfire")).notEnabled("tooltip.install.IAF"));
     //无限能量供能单元 （让MekaSuit始终充满能量）【创造物品】
     public static final ModuleData<ModuleInfiniteEnergySupplyUnit> INFINITE_ENERGY_SUPPLY_UNIT = ModuleHelper.register("infinite_energy_supply_unit", ModuleInfiniteEnergySupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC));
-
+    //无限拦截救援系统单元 不再受伤【创造物品】
+    public static final ModuleData<?> INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT = ModuleHelper.registerMarker("infinite_interception_and_rescue_system_unit", builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC).noDisable());
+    //光环单元
+    public static final ModuleData<ModuleBandofAuraUnit> BAND_OF_AURA_UNIT = ModuleHelper.register("band_of_aura_unit", ModuleBandofAuraUnit::new, builder -> builder.maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //基础光环单元
+    public static final ModuleData<ModuleBasicBandofAuraUnit> BASIC_BAND_OF_AURA_UNIT = ModuleHelper.register("basic_band_of_aura_unit", ModuleBasicBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.UNCOMMON).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //高级光环单元
+    public static final ModuleData<ModuleAdvancedBandofAuraUnit> ADVANCED_BAND_OF_AURA_UNIT = ModuleHelper.register("advanced_band_of_aura_unit", ModuleAdvancedBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.UNCOMMON).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //精英光环单元
+    public static final ModuleData<ModuleEliteBandofAuraUnit> ELITE_BAND_OF_AURA_UNIT = ModuleHelper.register("elite_band_of_aura_unit", ModuleEliteBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.RARE).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //终极光环单元
+    public static final ModuleData<ModuleUltimateBandofAuraUnit> ULTIMATE_BAND_OF_AURA_UNIT = ModuleHelper.register("ultimate_band_of_aura_unit", ModuleUltimateBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.RARE).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //创造光环单元
+    public static final ModuleData<ModuleCreativeBandofAuraUnit> CREATIVE_BAND_OF_AURA_UNIT = ModuleHelper.register("creative_band_of_aura_unit", ModuleCreativeBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.EPIC).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
+    //AE智能无线单元 AE
+    public static final ModuleData<ModuleSmartWirelessUnit> SMART_WIRELESS_UNIT = ModuleHelper.register("smart_wireless_unit", ModuleSmartWirelessUnit::new, builder -> builder.rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("appliedenergistics2")).notEnabled("tooltip.install.AE2").handlesModeChange().rendersHUD());
 }

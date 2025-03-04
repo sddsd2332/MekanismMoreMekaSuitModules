@@ -23,7 +23,6 @@ import java.util.Random;
 public class ClientTickHandler {
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
-    public static Random rand = new Random();
 
 
     @SubscribeEvent
@@ -45,7 +44,7 @@ public class ClientTickHandler {
                 ItemStack head = minecraft.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!minecraft.player.isEntityAlive()) {
                     if (head.getItem() instanceof IModuleContainerItem item) {
-                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || item.hasModule(head,MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT)) {
                             event.setCanceled(true);
                         }
                     }

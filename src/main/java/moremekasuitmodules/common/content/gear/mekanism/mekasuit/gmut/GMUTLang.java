@@ -20,6 +20,8 @@ public enum GMUTLang implements ILangEntry {
     MODULE_STOP_IMMEDIATELY("module", "stop_immediately"),
     MODULE_FIX_FOV("module", "fix_fov"),
     MODULE_VERTICAL_SPEED("module", "vertical_speed"),
+    MODULE_AE("module","wireless_terminal"),
+    MODULE_AE_MATCHING("module","wireless_matching"),
     // EOL
     ;
 

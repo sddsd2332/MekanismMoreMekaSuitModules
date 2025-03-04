@@ -1,12 +1,12 @@
 {
-	"package": "moremekasuitmodules.mixin.advancedRocketry",
+	"package": "moremekasuitmodules.mixin.lolipickaxe",
 	"required": true,
-	"refmap": "mixins.${mod_id}.refmap.json",
+	"refmap": "mixins.moremekasuitmodules.refmap.json",
 	"target": "@env(DEFAULT)",
 	"minVersion": "0.8",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"MixinTileChemicalReactor"
+		"MixinLoliPickaxeUtil"
 	],
 	"server": [],
 	"client": []

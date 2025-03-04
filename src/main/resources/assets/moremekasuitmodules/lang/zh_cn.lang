@@ -1,5 +1,5 @@
 item.module_emergency_rescue_unit.name=紧急救援单元
-item.module_advanced_interception_system_unit.name=先进拦截救援系统单元
+item.module_advanced_interception_system_unit.name=先进救援系统单元
 item.module_seal_unit.name=密封单元
 item.module_thermal_protection_unit.name=热防护单元
 item.module_insulated_unit.name=绝缘单元
@@ -17,10 +17,17 @@ item.module_chaos_resistance_unit.name=混沌抗性单元
 item.module_chaos_vortex_stabilization_unit.name=混沌旋涡稳定单元
 item.module_smart_shielding_unit.name=智能屏蔽单元
 item.module_infinite_energy_supply_unit.name=无限能量供应单元
-
+item.module_infinite_interception_and_rescue_system_unit.name=无限拦截救援系统单元
+item.module_band_of_aura_unit.name=光环单元
+item.module_basic_band_of_aura_unit.name=基础光环单元
+item.module_advanced_band_of_aura_unit.name=高级光环单元
+item.module_elite_band_of_aura_unit.name=精英光环单元
+item.module_ultimate_band_of_aura_unit.name=终极光环单元
+item.module_creative_band_of_aura_unit.name=创造光环单元
+item.module_smart_wireless_unit.name=智能无线单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
-module.mekanism.advanced_interception_system_unit=先进拦截救援系统单元
+module.mekanism.advanced_interception_system_unit=先进救援系统单元
 module.mekanism.seal_unit=密封单元
 module.mekanism.thermal_protection_unit=热防护单元
 module.mekanism.insulated_unit=绝缘单元
@@ -38,6 +45,14 @@ module.mekanism.chaos_vortex_stabilization_unit=混沌旋涡稳定单元
 module.mekanism.chaos_resistance_unit=混沌抗性单元
 module.mekanism.smart_shielding_unit=智能屏蔽单元
 module.mekanism.infinite_energy_supply_unit=无限能量供应单元
+module.mekanism.infinite_interception_and_rescue_system_unit=无限拦截救援系统单元
+module.mekanism.band_of_aura_unit=光环单元
+module.mekanism.basic_band_of_aura_unit=基础光环单元
+module.mekanism.advanced_band_of_aura_unit=高级光环单元
+module.mekanism.elite_band_of_aura_unit=精英光环单元
+module.mekanism.ultimate_band_of_aura_unit=终极光环单元
+module.mekanism.creative_band_of_aura_unit=创造光环单元
+module.mekanism.smart_wireless_unit=智能无线单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -45,7 +60,13 @@ module.mekanism.stop_immediately=无重力惯性
 module.mekanism.vertical_speed=垂直速度修改
 constants.mekanism.key_category=Mekanism - 微重力操纵单元
 key.mekanism.vertical_speed=垂直速度修改开关
-
+module.mekanism.wireless_terminal=无线终端
+module.mekanism.wireless_matching=无线终端匹配
+module.mekanism.terminal=终端
+module.mekanism.crafting=合成
+module.mekanism.pattern=样板
+module.mekanism.fluid=流体
+module.mekanism.wireless_terminal_mode=无线终端模式
 module.emergency_rescue.use=警告！使用者遭到强大的打击！已进行拦截！
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
@@ -58,7 +79,6 @@ description.mekanism.warp_clear_base_unit=通过特殊的方法移除身上的�
 description.mekanism.warp_clear_advanced_unit=通过特殊的方法移除身上的普通扭曲值
 description.mekanism.warp_clear_ultimate_unit=通过特殊的方法移除身上的永久扭曲值
 description.mekanism.magic_optimization_unit=使用特殊的方法，减少魔力的使用
-
 description.mekanism.goggles_of_revealing_unit=与揭示之护目镜相同
 description.mekanism.intelligent_temperature_regulation_unit=让身体一直保持最佳温度
 description.mekanism.automatic_liquid_supply_unit=通过大气含有的水分来自动补充身体的所需的水分
@@ -68,6 +88,16 @@ description.mekanism.chaos_resistance_unit=对混沌产生的抗性进行抵抗
 description.mekanism.chaos_vortex_stabilization_unit=如果附近含有混沌产生的旋涡，则自动消耗本单元来平息旋涡
 description.mekanism.smart_shielding_unit=通过芯片分析，自动屏蔽对方的目光
 description.mekanism.infinite_energy_supply_unit=让MekaSuit始终充满能量
+description.mekanism.infinite_interception_and_rescue_system_unit=耗尽了无限维度的资源，最终诞生的这个单元，当安装这个单元，你将不会在受伤
+description.mekanism.band_of_aura_unit=可以以 1 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.basic_band_of_aura_unit=可以以 3 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.advanced_band_of_aura_unit=可以以 5 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.elite_band_of_aura_unit=可以以 7 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.ultimate_band_of_aura_unit=可以以 9 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.creative_band_of_aura_unit=可以以 §6§k2147483647§r§7 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
+description.mekanism.smart_wireless_unit=安装此单元后，可以访问AE网络内的内容
+
+chat.appliedenergistics2.DeviceLinked=设备已连接
 
 tooltip.install.space=需要安装 Advanced Rocketry 或者 GalactiCraft 才能工作
 tooltip.install.gc=需要安装 GalactiCraft 才能工作
@@ -78,4 +108,7 @@ tooltip.install.tna=需要安装 Tough As Nails 才能工作
 tooltip.install.as=需要安装 Astral Sorcery 才能工作
 tooltip.install.DR=需要安装 Draconic Evolution 才能工作
 tooltip.install.IAF=需要安装 Ice and Fire 才能工作
+tooltip.install.botania=需要安装 Botania 才能工作
+tooltip.install.AE2=需要安装 AE2 Unofficial Extended Life 才能工作
 tooltip.chaos.resistance=混沌抗性
+tooltip.InfiniteDefense=无限防御

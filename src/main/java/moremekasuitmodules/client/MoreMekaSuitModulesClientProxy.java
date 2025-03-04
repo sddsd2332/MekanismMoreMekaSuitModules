@@ -6,6 +6,7 @@ import moremekasuitmodules.client.key.GMUTKeyHandler;
 import moremekasuitmodules.common.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -61,6 +62,22 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_SHIELDING);
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_ENERGY_SUPPLY);
+        if (MoreModulesConfig.current().config.InfiniteInterception.val()){
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM);
+        }
+
+        if (Loader.isModLoaded("botania")){
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_BAND_OF_AURA);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_BASIC_BAND_OF_AURA);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_ADVANCED_BAND_OF_AURA);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_ELITE_BAND_OF_AURA);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_ULTIMATE_BAND_OF_AURA);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_CREATIVE_BAND_OF_AURA);
+        }
+
+        if (Loader.isModLoaded("appliedenergistics2")){
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_WIRELESS);
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package moremekasuitmodules.common;
 
 import mekanism.common.Mekanism;
 import mekanism.common.item.ItemModule;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -28,18 +29,26 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_CHAOS_VORTEX_STABILIZATION = new ItemModule(MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
     public static final ItemModule MODULE_SMART_SHIELDING = new ItemModule(MekaSuitMoreModules.SMART_SHIELDING_UNIT);
     public static final ItemModule MODULE_INFINITE_ENERGY_SUPPLY = new ItemModule(MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT);
+    public static final ItemModule MODULE_INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM = new ItemModule(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+    public static final ItemModule MODULE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_BASIC_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_ADVANCED_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_ELITE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_ULTIMATE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_CREATIVE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
+    public static final ItemModule MODULE_SMART_WIRELESS = new ItemModule(MekaSuitMoreModules.SMART_WIRELESS_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
         registry.register(initModule(MODULE_ADVANCED_INTERCEPTION_SYSTEM));
-        if (Mekanism.hooks.GC || Mekanism.hooks.AR){
+        if (Mekanism.hooks.GC || Mekanism.hooks.AR) {
             registry.register(initModule(MODULE_SEAL));
         }
 
-        if (Mekanism.hooks.GC){
+        if (Mekanism.hooks.GC) {
             registry.register(initModule(MODULE_THERMAL_PROTECTION));
         }
-        if (Loader.isModLoaded("immersiveengineering") ||Mekanism.hooks.GTCEULoaded){
+        if (Loader.isModLoaded("immersiveengineering") || Mekanism.hooks.GTCEULoaded) {
             registry.register(initModule(MODULE_INSULATED));
         }
         if (Loader.isModLoaded("forestry")) {
@@ -64,10 +73,25 @@ public class MekaSuitMoreModulesItem {
             registry.register(initModule(MODULE_CHAOS_RESISTANCE));
             registry.register(initModule(MODULE_CHAOS_VORTEX_STABILIZATION));
         }
-        if (Loader.isModLoaded("iceandfire")){
+        if (Loader.isModLoaded("iceandfire")) {
             registry.register(initModule(MODULE_SMART_SHIELDING));
         }
         registry.register(initModule(MODULE_INFINITE_ENERGY_SUPPLY));
+        if (MoreModulesConfig.current().config.InfiniteInterception.val()) {
+            registry.register(initModule(MODULE_INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM));
+        }
+        if (Loader.isModLoaded("botania")) {
+            registry.register(initModule(MODULE_BAND_OF_AURA));
+            registry.register(initModule(MODULE_BASIC_BAND_OF_AURA));
+            registry.register(initModule(MODULE_ADVANCED_BAND_OF_AURA));
+            registry.register(initModule(MODULE_ELITE_BAND_OF_AURA));
+            registry.register(initModule(MODULE_ULTIMATE_BAND_OF_AURA));
+            registry.register(initModule(MODULE_CREATIVE_BAND_OF_AURA));
+        }
+
+        if (Loader.isModLoaded("appliedenergistics2")) {
+            registry.register(initModule(MODULE_SMART_WIRELESS));
+        }
     }
 
     public static Item initModule(ItemModule item) {

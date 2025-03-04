@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_band_of_aura_unit"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "ore": "ingotTerrasteel",
+      "type": "forge:ore_dict"
+    },
+    "B": {
+      "ore": "runeManaB",
+      "type": "forge:ore_dict"
+    },
+    "C": {
+      "item": "botania:auraringgreater"
+    },
+    "D": {
+      "item": "mekanism:modulebase"
+    }
+  }
+}

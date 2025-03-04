@@ -16,10 +16,14 @@ public class MoreMekaSuitModulesMixin implements ILateMixinLoader {
     private static final Map<String, BooleanSupplier> MIXIN_CONFIGS = new LinkedHashMap<>();
 
     static {
-        addModdedMixinCFG("mixins.moremekasuitmodules.iceandfire.json", "iceandfire");
-        addModdedMixinCFG("mixins.moremekasuitmodules.gregtech.json", "gregtech");
-        addModdedMixinCFG("mixins.moremekasuitmodules.advancedRocketry.json","advancedrocketry");
-        addMixinCFG("mixins.moremekasuitmodules.json");
+        addMixinCFG("mixins.moremekasuitmodules_mekanism.json");
+        addModdedMixinCFG("mixins.moremekasuitmodules_iceandfire.json", "iceandfire");
+        addModdedMixinCFG("mixins.moremekasuitmodules_gregtech.json", "gregtech");
+        addModdedMixinCFG("mixins.moremekasuitmodules_advancedRocketry.json","advancedrocketry");
+        addModdedMixinCFG("mixins.moremekasuitmodules_lolipickaxe.json","lolipickaxe");
+        addModdedMixinCFG("mixins.moremekasuitmodules_botania.json","botania");
+        addModdedMixinCFG("mixins.moremekasuitmodules_appliedenergistics2.json","appliedenergistics2");
+        addModdedMixinCFG("mixins.moremekasuitmodules_matteroverdrive.json","matteroverdrive");
     }
 
     @Override

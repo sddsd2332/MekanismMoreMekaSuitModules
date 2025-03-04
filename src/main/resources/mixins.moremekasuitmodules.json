@@ -1,13 +1,12 @@
 {
-	"package": "moremekasuitmodules.mixin.mekanism",
-	"required": true,
-	"refmap": "mixins.${mod_id}.refmap.json",
-	"target": "@env(DEFAULT)",
-	"minVersion": "0.8",
-	"compatibilityLevel": "JAVA_8",
-	"mixins": [
-		"MixinItemMekaSuitArmor"
-	],
-	"server": [],
-	"client": []
+  "package": "moremekasuitmodules.mixin.minecraft",
+  "refmap": "mixins.moremekasuitmodules.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinEntityLiving"
+  ],
+  "server": [],
+  "client": []
 }
