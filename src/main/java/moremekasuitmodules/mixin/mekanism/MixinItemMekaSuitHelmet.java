@@ -97,13 +97,13 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
     @Optional.Method(modid = "appliedenergistics2")
     public IConfigManager getConfigManager(ItemStack itemStack) {
         final ConfigManager out = new ConfigManager((manager, settingName, newValue) -> {
-            final NBTTagCompound data = Platform.openNbtData(itemStack);
+            final NBTTagCompound data = openNbtData(itemStack);
             manager.writeToNBT(data);
         });
         out.registerSetting(Settings.SORT_BY, SortOrder.NAME);
         out.registerSetting(Settings.VIEW_MODE, ViewItems.ALL);
         out.registerSetting(Settings.SORT_DIRECTION, SortDir.ASCENDING);
-        out.readFromNBT(Platform.openNbtData(itemStack).copy());
+        out.readFromNBT(openNbtData(itemStack).copy());
         return out;
     }
 
@@ -133,15 +133,26 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
     @Override
     @Optional.Method(modid = "appliedenergistics2")
     public String getEncryptionKey(ItemStack itemStack) {
-        final NBTTagCompound tag = Platform.openNbtData(itemStack);
+        final NBTTagCompound tag = openNbtData(itemStack);
         return tag.getString("encryptionKey");
     }
 
     @Override
     @Optional.Method(modid = "appliedenergistics2")
     public void setEncryptionKey(ItemStack item, String encKey, String name) {
-        final NBTTagCompound tag = Platform.openNbtData(item);
+        final NBTTagCompound tag = openNbtData(item);
         tag.setString("encryptionKey", encKey);
         tag.setString("name", name);
+    }
+
+
+    @Unique
+    private static NBTTagCompound openNbtData(ItemStack i) {
+        NBTTagCompound compound = i.getTagCompound();
+        if (compound == null) {
+            i.setTagCompound(compound = new NBTTagCompound());
+        }
+
+        return compound;
     }
 }

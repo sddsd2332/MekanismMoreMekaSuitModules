@@ -48,9 +48,7 @@ public abstract class MixinPacketTerminalUse extends AppEngPacket {
                         if (!match) { //在匹配模式关闭时，确保打开其他gui的时候还是返回原来的界面
                             module.getCustomInstance().changeMode(mode.ordinal());
                         }
-                        Mekanism.logger.info("module getMode + {}", module.getCustomInstance().getMode());
                         openGui(ar, 36 + i, player, false);
-                        Mekanism.logger.info("module getMode1 + {}", module.getCustomInstance().getMode());
                         return;
                     }
                 }
