@@ -29,10 +29,10 @@ public abstract class MixinEntityGorgon extends EntityMob implements IAnimatedEn
      */
     @Overwrite(remap = false)
     public static boolean isBlindfolded(EntityLivingBase attackTarget) {
-        if (attackTarget != null){
+        if (attackTarget != null) {
             ItemStack head = attackTarget.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            return head.getItem() == IafItemRegistry.blindfold || head.getItem()instanceof IModuleContainerItem item && item.isModuleEnabled(head, MekaSuitMoreModules.SMART_SHIELDING_UNIT);
+            return head.getItem() == IafItemRegistry.blindfold || head.getItem() instanceof IModuleContainerItem item && item.isModuleEnabled(head, MekaSuitMoreModules.SMART_SHIELDING_UNIT);
         }
-       return false;
+        return false;
     }
 }

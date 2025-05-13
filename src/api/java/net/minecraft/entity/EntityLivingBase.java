@@ -160,7 +160,7 @@ public abstract class EntityLivingBase extends Entity {
 	/**
 	 * The most recent player that has attacked this entity
 	 */
-	protected EntityPlayer attackingPlayer;
+	public EntityPlayer attackingPlayer;
 	/**
 	 * Set to 60 when hit by the player or the player's wolf, then decrements. Used to determine whether the entity
 	 * should drop items on death.

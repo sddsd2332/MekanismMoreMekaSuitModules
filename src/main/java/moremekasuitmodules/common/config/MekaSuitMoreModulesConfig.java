@@ -16,6 +16,6 @@ public class MekaSuitMoreModulesConfig extends BaseConfig {
     public final BooleanOption DRrecipes = new BooleanOption(this, "moremodules", "DRrecipes", true, "Enable the default Draconic Evolution recipe").setRequiresGameRestart(true);
     public final BooleanOption DRAdditionsrecipes = new BooleanOption(this, "moremodules", "DRAdditionsrecipes", true, "Enable the default Draconic Additions recipe").setRequiresGameRestart(true);
     public final BooleanOption InfiniteInterception = new BooleanOption(this,"moremodules","InfiniteInterception",false,"Enable Infinite interception and rescue system unit").setRequiresGameRestart(true);
-
-
+    public final BooleanOption TCRecipes = new BooleanOption(this,"moremodules","TCRecipes",true,"Enable the default Thaumcraft Recipe");
+    public final BooleanOption TCAspectRecipes = new BooleanOption(this,"moremodules","TCAspectRecipes",true,"Let default Thaumcraft recipes add the elements synthesized from both types of elements into the recipe.");
 }

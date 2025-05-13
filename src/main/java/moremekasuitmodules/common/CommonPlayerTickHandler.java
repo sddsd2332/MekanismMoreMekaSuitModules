@@ -12,7 +12,9 @@ import mekanism.common.integration.MekanismHooks;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -23,6 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -94,22 +97,8 @@ public class CommonPlayerTickHandler {
                     if (Loader.isModLoaded("lolipickaxe")) {
                         isInfiniteModules(player);
                     }
-                    player.deathTime = 0;
-                    player.isDead = false;
-                    player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
-                    player.clearActivePotions();
-                    player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
-                    player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
-                    player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
-                    player.setAir(300);
-                    player.getFoodStats().addStats(20, 20);
-                    if (isInfiniteModule) {
-                        player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                    } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
-                        player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                    } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
-                        player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                    }
+                    Death(player,isInfiniteModule);
+                    sendMessage(player, isInfiniteModule, item, head);
                 }
             }
 
@@ -134,30 +123,38 @@ public class CommonPlayerTickHandler {
                             if (Loader.isModLoaded("lolipickaxe")) {
                                 isInfiniteModules(player);
                             }
-                            player.isDead = false;
-                            player.deathTime = 0;
-                            player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
-                            player.clearActivePotions();
-                            player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
-                            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
-                            player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
-                            player.setAir(300);
-                            player.getFoodStats().addStats(20, 20);
+                            Death(player,isInfiniteModule);
                             //重新刷新玩家的位置 确保玩家在该位置
                             player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
                             player.world.updateEntityWithOptionalForce(player, true);
-
-                            if (isInfiniteModule) {
-                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                            } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
-                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                            } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
-                                player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-                            }
+                            sendMessage(player, isInfiniteModule, item, head);
                         }
                     }
                 }
             }
+        }
+    }
+
+
+    private void Death(EntityPlayer player, boolean isInfiniteModule) {
+        player.isDead = false;
+        player.deathTime = 0;
+        player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
+        player.clearActivePotions();
+        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
+        player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 900, 2));
+        player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
+        player.setAir(300);
+        player.getFoodStats().addStats(20, 20);
+    }
+
+    private void sendMessage(EntityPlayer player, boolean isInfiniteModule, IModuleContainerItem item, ItemStack head) {
+        if (isInfiniteModule) {
+            player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+        } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+            player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
+        } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
+            player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
         }
     }
 
@@ -342,4 +339,39 @@ public class CommonPlayerTickHandler {
     }
 
 
+    @SubscribeEvent
+    public void isInfiniteModule(PlayerEvent.Visibility event) {
+        EntityLivingBase entity = event.getEntityLiving();
+        if (isInfiniteModule(entity)) {
+            event.modifyVisibility(0);
+        }
+    }
+
+    @SubscribeEvent
+    public void isInfiniteModuleStopTasks(LivingEvent.LivingUpdateEvent event) {
+        EntityLivingBase entity = event.getEntityLiving();
+        if (entity instanceof EntityLiving mob) {
+            setStop(mob);
+            if (mob instanceof EntityPigZombie zombie) {
+                zombie.angerTargetUUID = null;
+                zombie.angerLevel = 0;
+            }
+        }
+    }
+
+    private void setStop(EntityLiving entity) {
+        if (entity.getAttackTarget() != null && isInfiniteModule(entity.getAttackTarget())) {
+            entity.setAttackTarget(null);
+            if (entity.targetTasks != null) {
+                entity.targetTasks.taskEntries.forEach(task -> task.action.resetTask());
+                entity.targetTasks.executingTaskEntries.forEach(task -> task.action.resetTask());
+            }
+        }
+
+        if (entity.getRevengeTarget() != null && isInfiniteModule(entity.getRevengeTarget())) {
+            entity.setAttackTarget(null);
+            entity.setRevengeTarget(null);
+            entity.attackingPlayer = null;
+        }
+    }
 }

@@ -12,7 +12,10 @@ import zmaster587.libVulpes.recipe.RecipesMachine;
 @Mixin(TileChemicalReactor.class)
 public class MixinTileChemicalReactor {
 
-    //取消meka套的在化学结晶机里可以附魔，改用模块实现
+    /**
+     * @author sddsd2332
+     * @reason 取消meka套的在化学结晶机里可以附魔，改用模块实现
+     */
     @Inject(method = "registerRecipe", at = @At(value = "HEAD"),remap = false, cancellable = true)
     private static void registerRecipe(RecipesMachine recipesMachine, Item item, CallbackInfo ci) {
         if (item instanceof ItemMekaSuitArmor) {

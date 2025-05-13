@@ -2,7 +2,7 @@ package moremekasuitmodules.mixin.minecraft;
 
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -15,40 +15,40 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(EntityLiving.class)
-public abstract class MixinEntityLiving extends EntityLivingBase {
+@Mixin(EntityLivingBase.class)
+public abstract class MixinEntityLivingBase extends Entity {
+
 
     @Shadow
-    private EntityLivingBase attackTarget;
+    private EntityLivingBase revengeTarget;
 
-    public MixinEntityLiving(World worldIn) {
+    public MixinEntityLivingBase(World worldIn) {
         super(worldIn);
+    }
+
+    /**
+     * @author sddsd2332
+     * @reason 检查是否有复仇目标是否有无限模块
+     */
+    @Inject(method = "getRevengeTarget",at = @At("HEAD"), cancellable = true)
+    public void getRevengeTarget(CallbackInfoReturnable<EntityLivingBase> cir){
+        if (isInfiniteModule(revengeTarget)){
+            revengeTarget = null;
+            cir.setReturnValue(null);
+            cir.cancel();
+        }
     }
 
     /**
      * @author sddsd2332
      * @reason 取消攻击带有无限拦截单元模块的生物
      */
-    @Inject(method = "setAttackTarget", at = @At("HEAD"), cancellable = true)
-    public void setAttackTarget(EntityLivingBase base, CallbackInfo ci) {
-        if (isInfiniteModule(base)) {
+    @Inject(method = "setRevengeTarget",at = @At("HEAD"), cancellable = true)
+    public void setRevengeTarget(EntityLivingBase base, CallbackInfo ci){
+        if (isInfiniteModule(base)){
             ci.cancel();
         }
     }
-
-    /**
-     * @author sddsd2332
-     * @reason 检查是否有攻击目标是否有无限模块
-     */
-    @Inject(method = "getAttackTarget", at = @At("HEAD"), cancellable = true)
-    public void getAttackTarget(CallbackInfoReturnable<EntityLivingBase> cir) {
-        if (isInfiniteModule(attackTarget)) {
-            attackTarget = null;
-            cir.setReturnValue(null);
-            cir.cancel();
-        }
-    }
-
 
     @Unique
     private boolean isInfiniteModule(EntityLivingBase base) {
@@ -60,4 +60,5 @@ public abstract class MixinEntityLiving extends EntityLivingBase {
         }
         return false;
     }
+
 }
