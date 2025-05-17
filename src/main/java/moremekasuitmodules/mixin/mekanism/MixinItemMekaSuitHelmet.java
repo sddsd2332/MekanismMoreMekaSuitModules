@@ -10,7 +10,7 @@ import appeng.api.features.IWirelessTermHandler;
 import appeng.api.util.IConfigManager;
 import appeng.core.sync.GuiBridge;
 import appeng.util.ConfigManager;
-import appeng.util.Platform;
+import mekanism.api.EnumColor;
 import mekanism.api.gas.IGasItem;
 import mekanism.api.gear.IModule;
 import mekanism.api.mixninapi.EnderMaskMixinHelp;
@@ -21,6 +21,7 @@ import mekanism.common.item.armor.ItemMekaSuitHelmet;
 import mekanism.common.util.LangUtils;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.content.gear.integration.appliedenergistics2.ModuleSmartWirelessUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteInterceptionAndRescueSystemUnit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -29,6 +30,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,11 +51,13 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
     }
 
 
+    @SideOnly(Side.CLIENT)
     @Inject(method = "addInformation", at = @At("TAIL"), remap = false)
     public void aeModule(ItemStack stack, World world, List<String> tooltip, CallbackInfo ci) {
         if (Loader.isModLoaded("appliedenergistics2")) {
             addaemodule(stack, tooltip);
         }
+        addInfiniteModule(stack, tooltip);
     }
 
     @Unique
@@ -74,6 +79,27 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
         }
     }
 
+
+    @Unique
+    private void addInfiniteModule(ItemStack stack, List<String> tooltip) {
+        IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module = getModule(stack, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+        if (module != null && module.isEnabled()) {
+            tooltip.add(EnumColor.ORANGE + LangUtils.localize("tooltip.moremekasuitmodules.warning"));
+            tooltip.add(LangUtils.localize("tooltip.moremekasuitmodules.rangeExclude"));
+            boolean source = module.getCustomInstance().getSource();
+            boolean sourceIndirect = module.getCustomInstance().getSourceIndirect();
+            if (source) {
+                tooltip.add(LangUtils.localize("tooltip.moremekasuitmodules.damage_true_source_exclude"));
+            }
+            if (sourceIndirect) {
+                tooltip.add(LangUtils.localize("tooltip.moremekasuitmodules.damage_true_source_exclude_indirect"));
+            }
+            if (source || sourceIndirect) {
+                tooltip.add(EnumColor.ORANGE + LangUtils.localize("tooltip.moremekasuitmodules.warning"));
+                tooltip.add(EnumColor.ORANGE + LangUtils.localize("tooltip.moremekasuitmodules.damage_true_source_exclude.warning"));
+            }
+        }
+    }
 
     @Override
     @Optional.Method(modid = "appliedenergistics2")

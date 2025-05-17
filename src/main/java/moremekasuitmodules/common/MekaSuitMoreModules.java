@@ -13,6 +13,8 @@ import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarp
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleAutomaticLiquidSupplyUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleIntelligentTemperatureRegulationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteEnergySupplyUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteGasSupplyUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteInterceptionAndRescueSystemUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fml.common.Loader;
@@ -58,7 +60,7 @@ public class MekaSuitMoreModules {
     //无限能量供能单元 （让MekaSuit始终充满能量）【创造物品】
     public static final ModuleData<ModuleInfiniteEnergySupplyUnit> INFINITE_ENERGY_SUPPLY_UNIT = ModuleHelper.register("infinite_energy_supply_unit", ModuleInfiniteEnergySupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC));
     //无限拦截救援系统单元 不再受伤【创造物品】
-    public static final ModuleData<?> INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT = ModuleHelper.registerMarker("infinite_interception_and_rescue_system_unit", builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC).noDisable());
+    public static final ModuleData<ModuleInfiniteInterceptionAndRescueSystemUnit> INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT = ModuleHelper.register("infinite_interception_and_rescue_system_unit", ModuleInfiniteInterceptionAndRescueSystemUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC).noDisable());
     //光环单元
     public static final ModuleData<ModuleBandofAuraUnit> BAND_OF_AURA_UNIT = ModuleHelper.register("band_of_aura_unit", ModuleBandofAuraUnit::new, builder -> builder.maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
     //基础光环单元
@@ -69,8 +71,10 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleEliteBandofAuraUnit> ELITE_BAND_OF_AURA_UNIT = ModuleHelper.register("elite_band_of_aura_unit", ModuleEliteBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.RARE).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
     //终极光环单元
     public static final ModuleData<ModuleUltimateBandofAuraUnit> ULTIMATE_BAND_OF_AURA_UNIT = ModuleHelper.register("ultimate_band_of_aura_unit", ModuleUltimateBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.RARE).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
-    //创造光环单元
+    //创造光环单元【创造物品】
     public static final ModuleData<ModuleCreativeBandofAuraUnit> CREATIVE_BAND_OF_AURA_UNIT = ModuleHelper.register("creative_band_of_aura_unit", ModuleCreativeBandofAuraUnit::new, builder -> builder.rarity(EnumRarity.EPIC).maxStackSize(1).canEnable(!Loader.isModLoaded("botania")).notEnabled("tooltip.install.botania").disabledByDefault());
     //AE智能无线单元 AE
     public static final ModuleData<ModuleSmartWirelessUnit> SMART_WIRELESS_UNIT = ModuleHelper.register("smart_wireless_unit", ModuleSmartWirelessUnit::new, builder -> builder.rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("appliedenergistics2")).notEnabled("tooltip.install.AE2").handlesModeChange().rendersHUD());
+    //无限气体供能单元 （让MekaSuit始终充气体）【创造物品】
+    public static final ModuleData<ModuleInfiniteGasSupplyUnit> INFINITE_GAS_SUPPLY_UNIT = ModuleHelper.register("infinite_gas_supply_unit", ModuleInfiniteGasSupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC));
 }

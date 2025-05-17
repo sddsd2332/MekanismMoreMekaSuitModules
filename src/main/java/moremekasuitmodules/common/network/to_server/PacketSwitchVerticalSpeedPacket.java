@@ -24,7 +24,7 @@ public class PacketSwitchVerticalSpeedPacket implements IMessageHandler<SwitchVe
         PacketHandler.handlePacket(() -> {
             Module<ModuleGravitationalModulatingAdditionalUnit> module = EntityModuleHelper.findArmorEnabledModule(player, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
             if (module != null) {
-                module.changeMode(player, module.getContainer(), message.shift, true);
+                module.getCustomInstance().changeMode(module,player, module.getContainer(), message.shift, true);
             }
         }, player);
         return null;

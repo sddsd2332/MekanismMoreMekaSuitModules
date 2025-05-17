@@ -25,6 +25,7 @@ item.module_elite_band_of_aura_unit.name=Elite Aura unit
 item.module_ultimate_band_of_aura_unit.name=Ultimate Aura unit
 item.module_creative_band_of_aura_unit.name=Creative Aura unit
 item.module_smart_wireless_unit.name=Smart wireless unit
+item.module_infinite_gas_supply_unit.name=Infinite gas supply unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -53,6 +54,7 @@ module.mekanism.elite_band_of_aura_unit=Elite Aura unit
 module.mekanism.ultimate_band_of_aura_unit=Ultimate Aura unit
 module.mekanism.creative_band_of_aura_unit=Creative Aura unit
 module.mekanism.smart_wireless_unit=Smart wireless unit
+module.mekanism.infinite_gas_supply_unit=Infinite gas supply unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -68,6 +70,8 @@ module.mekanism.pattern=Pattern
 module.mekanism.fluid=Fluid
 module.mekanism.wireless_terminal_mode=Wireless terminal mode
 module.emergency_rescue.use=Warn! The user has been hit hard! Intercepted!
+module.mekanism.damage_true_source_exclude=Exclusion of direct sources of harm
+module.mekanism.damage_true_source_exclude_Indirect=Exclusion of indirect sources of damage.
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
 description.mekanism.advanced_interception_system_unit=The upgraded version of the emergency rescue unit will not be consumed
@@ -96,6 +100,7 @@ description.mekanism.elite_band_of_aura_unit=Mana can be slowly created at a rat
 description.mekanism.ultimate_band_of_aura_unit=Mana can be slowly created at a rate of 9 mana/tick and stored in items that can carry mana
 description.mekanism.creative_band_of_aura_unit=Mana can be slowly created at a rate of §6§k2147483647§r§7 mana/tick and stored in items that can carry mana
 description.mekanism.smart_wireless_unit=Once this unit is installed, content within the AE network can be accessed
+description.mekanism.infinite_gas_supply_unit=Keep MekaSuit full of gas at all times
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 
@@ -112,3 +117,10 @@ tooltip.install.botania=need to install Botania to work
 tooltip.install.AE2=need to install  AE2 Unofficial Extended Life to work
 tooltip.chaos.resistance=Chaos Resistance
 tooltip.InfiniteDefense=Infinite Defense
+
+tooltip.moremekasuitmodules.warning=Warning：
+tooltip.moremekasuitmodules.rangeExclude=Scope exclusion is automatically turned on and cannot be selected
+
+tooltip.moremekasuitmodules.damage_true_source_exclude=The removal of direct sources of damage has been initiated.
+tooltip.moremekasuitmodules.damage_true_source_exclude_indirect=The removal of indirect sources of harm has been initiated.
+tooltip.moremekasuitmodules.damage_true_source_exclude.warning=This state is unable to deal damage to some entities that require a source of damage

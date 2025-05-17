@@ -2,6 +2,7 @@ package moremekasuitmodules.common;
 
 
 import io.netty.buffer.ByteBuf;
+import mekanism.api.gas.IGasItem;
 import mekanism.common.Mekanism;
 import mekanism.common.MekanismItems;
 import mekanism.common.Version;
@@ -127,10 +128,12 @@ public class MoreMekaSuitModules implements IModule {
     }
 
     private void imcQueue() {
-
         for (Item allmodules : ForgeRegistries.ITEMS) {
             if (allmodules instanceof IModuleContainerItem) {
                 ModuleHelper.get().setSupported(allmodules, MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT);
+                if (allmodules instanceof IGasItem) {
+                    ModuleHelper.get().setSupported(allmodules, MekaSuitMoreModules.INFINITE_GAS_SUPPLY_UNIT);
+                }
             }
         }
 
@@ -180,12 +183,12 @@ public class MoreMekaSuitModules implements IModule {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_SHIELDING_UNIT);
         }
 
-        if (Loader.isModLoaded("botania")){
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.BAND_OF_AURA_UNIT,MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT,MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT,MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT,MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT,MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
+        if (Loader.isModLoaded("botania")) {
+            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.BAND_OF_AURA_UNIT, MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
         }
 
-        if (Loader.isModLoaded("appliedenergistics2")){
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET,MekaSuitMoreModules.SMART_WIRELESS_UNIT);
+        if (Loader.isModLoaded("appliedenergistics2")) {
+            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }
 
     }

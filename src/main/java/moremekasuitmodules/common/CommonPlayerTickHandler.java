@@ -26,7 +26,6 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
@@ -94,10 +93,7 @@ public class CommonPlayerTickHandler {
                     if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                         item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                     }
-                    if (Loader.isModLoaded("lolipickaxe")) {
-                        isInfiniteModules(player);
-                    }
-                    Death(player,isInfiniteModule);
+                    Death(player, isInfiniteModule);
                     sendMessage(player, isInfiniteModule, item, head);
                 }
             }
@@ -120,10 +116,7 @@ public class CommonPlayerTickHandler {
                             if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                                 item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                             }
-                            if (Loader.isModLoaded("lolipickaxe")) {
-                                isInfiniteModules(player);
-                            }
-                            Death(player,isInfiniteModule);
+                            Death(player, isInfiniteModule);
                             //重新刷新玩家的位置 确保玩家在该位置
                             player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
                             player.world.updateEntityWithOptionalForce(player, true);
@@ -158,14 +151,6 @@ public class CommonPlayerTickHandler {
         }
     }
 
-    //对氪金萝莉进行兼容
-    //太坏了 为什么要另外注入
-    @Optional.Method(modid = "lolipickaxe")
-    private void isInfiniteModules(EntityPlayer player) {
-        player.loliDead = false;
-        player.loliDeathTime = 0;
-        player.loliCool = false;
-    }
 
     private boolean isInsulated(ItemStack stack) {
         return ModuleInstallation(stack, MekaSuitMoreModules.INSULATED_UNIT);

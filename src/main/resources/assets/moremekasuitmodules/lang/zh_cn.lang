@@ -25,6 +25,7 @@ item.module_elite_band_of_aura_unit.name=精英光环单元
 item.module_ultimate_band_of_aura_unit.name=终极光环单元
 item.module_creative_band_of_aura_unit.name=创造光环单元
 item.module_smart_wireless_unit.name=智能无线单元
+item.module_infinite_gas_supply_unit.name=无限气体供应单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进救援系统单元
@@ -53,6 +54,7 @@ module.mekanism.elite_band_of_aura_unit=精英光环单元
 module.mekanism.ultimate_band_of_aura_unit=终极光环单元
 module.mekanism.creative_band_of_aura_unit=创造光环单元
 module.mekanism.smart_wireless_unit=智能无线单元
+module.mekanism.infinite_gas_supply_unit=无限气体供应单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -68,6 +70,8 @@ module.mekanism.pattern=样板
 module.mekanism.fluid=流体
 module.mekanism.wireless_terminal_mode=无线终端模式
 module.emergency_rescue.use=警告！使用者遭到强大的打击！已进行拦截！
+module.mekanism.damage_true_source_exclude=直接伤害来源排除
+module.mekanism.damage_true_source_exclude_Indirect=间接伤害来源排除
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -96,6 +100,7 @@ description.mekanism.elite_band_of_aura_unit=可以以 7 mana/tick的速度缓�
 description.mekanism.ultimate_band_of_aura_unit=可以以 9 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
 description.mekanism.creative_band_of_aura_unit=可以以 §6§k2147483647§r§7 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
 description.mekanism.smart_wireless_unit=安装此单元后，可以访问AE网络内的内容
+description.mekanism.infinite_gas_supply_unit=让MekaSuit始终充满气体
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 
@@ -112,3 +117,11 @@ tooltip.install.botania=需要安装 Botania 才能工作
 tooltip.install.AE2=需要安装 AE2 Unofficial Extended Life 才能工作
 tooltip.chaos.resistance=混沌抗性
 tooltip.InfiniteDefense=无限防御
+
+tooltip.moremekasuitmodules.warning=警告：
+tooltip.moremekasuitmodules.rangeExclude=已自动开启范围排除，无法被选中
+
+tooltip.moremekasuitmodules.damage_true_source_exclude=已启动直接伤害来源剔除
+tooltip.moremekasuitmodules.damage_true_source_exclude_indirect=已启动间接伤害来源剔除
+tooltip.moremekasuitmodules.damage_true_source_exclude.warning=该状态下无法对部分有伤害来源要求的实体无法造成伤害
+

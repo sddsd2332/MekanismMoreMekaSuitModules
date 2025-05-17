@@ -37,6 +37,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_ULTIMATE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT);
     public static final ItemModule MODULE_CREATIVE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
     public static final ItemModule MODULE_SMART_WIRELESS = new ItemModule(MekaSuitMoreModules.SMART_WIRELESS_UNIT);
+    public static final ItemModule MODULE_INFINITE_GAS_SUPPLY = new ItemModule(MekaSuitMoreModules.INFINITE_GAS_SUPPLY_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
@@ -92,6 +93,7 @@ public class MekaSuitMoreModulesItem {
         if (Loader.isModLoaded("appliedenergistics2")) {
             registry.register(initModule(MODULE_SMART_WIRELESS));
         }
+        registry.register(initModule(MODULE_INFINITE_GAS_SUPPLY));
     }
 
     public static Item initModule(ItemModule item) {

@@ -78,6 +78,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         if (Loader.isModLoaded("appliedenergistics2")){
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_WIRELESS);
         }
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_GAS_SUPPLY);
     }
 
     @Override
