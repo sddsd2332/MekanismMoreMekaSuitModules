@@ -12,9 +12,7 @@ import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarp
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearUltimateUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleAutomaticLiquidSupplyUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleIntelligentTemperatureRegulationUnit;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteEnergySupplyUnit;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteGasSupplyUnit;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteInterceptionAndRescueSystemUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.*;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fml.common.Loader;
@@ -77,4 +75,11 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleSmartWirelessUnit> SMART_WIRELESS_UNIT = ModuleHelper.register("smart_wireless_unit", ModuleSmartWirelessUnit::new, builder -> builder.rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("appliedenergistics2")).notEnabled("tooltip.install.AE2").handlesModeChange().rendersHUD());
     //无限气体供能单元 （让MekaSuit始终充气体）【创造物品】
     public static final ModuleData<ModuleInfiniteGasSupplyUnit> INFINITE_GAS_SUPPLY_UNIT = ModuleHelper.register("infinite_gas_supply_unit", ModuleInfiniteGasSupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC));
+    //智能范围攻击单元 (WC 挂)
+    public static final ModuleData<ModuleAutomaticAttackUnit> AUTOMATIC_ATTACK_UNIT = ModuleHelper.register("automatic_attack_unit", ModuleAutomaticAttackUnit::new, builder -> builder.maxStackSize(4).rarity(EnumRarity.EPIC));
+    //动力增强单元（增加伤害和攻击速度）
+    public static final ModuleData<ModularPowerEnhancementUnit> POWER_ENHANCEMENT_UNIT = ModuleHelper.register("power_enhancement_unit", ModularPowerEnhancementUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC));
+    //加速冷却单元(加速物品的冷却)
+    public static final ModuleData<ModularHighSpeedCoolingUnit> HIGH_SPEED_COOLING_UNIT = ModuleHelper.register("high_speed_cooling_unit", ModularHighSpeedCoolingUnit::new, builder -> builder.maxStackSize(10).rarity(EnumRarity.EPIC));
+
 }

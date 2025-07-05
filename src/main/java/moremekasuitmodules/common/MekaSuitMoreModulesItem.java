@@ -38,6 +38,9 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_CREATIVE_BAND_OF_AURA = new ItemModule(MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
     public static final ItemModule MODULE_SMART_WIRELESS = new ItemModule(MekaSuitMoreModules.SMART_WIRELESS_UNIT);
     public static final ItemModule MODULE_INFINITE_GAS_SUPPLY = new ItemModule(MekaSuitMoreModules.INFINITE_GAS_SUPPLY_UNIT);
+    public static final ItemModule MODULE_AUTOMATIC_ATTACK = new ItemModule(MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
+    public static final ItemModule MODULE_POWER_ENHANCEMENT = new ItemModule(MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT);
+    public static final ItemModule MODULE_HIGH_SPEED_COOLING = new ItemModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
@@ -94,6 +97,9 @@ public class MekaSuitMoreModulesItem {
             registry.register(initModule(MODULE_SMART_WIRELESS));
         }
         registry.register(initModule(MODULE_INFINITE_GAS_SUPPLY));
+        registry.register(initModule(MODULE_AUTOMATIC_ATTACK));
+        registry.register(initModule(MODULE_POWER_ENHANCEMENT));
+        registry.register(initModule(MODULE_HIGH_SPEED_COOLING));
     }
 
     public static Item initModule(ItemModule item) {

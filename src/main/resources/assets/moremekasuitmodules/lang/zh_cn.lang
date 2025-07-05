@@ -26,6 +26,9 @@ item.module_ultimate_band_of_aura_unit.name=终极光环单元
 item.module_creative_band_of_aura_unit.name=创造光环单元
 item.module_smart_wireless_unit.name=智能无线单元
 item.module_infinite_gas_supply_unit.name=无限气体供应单元
+item.module_automatic_attack_unit.name=智能范围攻击单元
+item.module_power_enhancement_unit.name=动力增强单元
+item.module_high_speed_cooling_unit.name=加速冷却单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进救援系统单元
@@ -55,6 +58,9 @@ module.mekanism.ultimate_band_of_aura_unit=终极光环单元
 module.mekanism.creative_band_of_aura_unit=创造光环单元
 module.mekanism.smart_wireless_unit=智能无线单元
 module.mekanism.infinite_gas_supply_unit=无限气体供应单元
+module.mekanism.automatic_attack_unit=智能范围攻击单元
+module.mekanism.power_enhancement_unit=动力增强单元
+module.mekanism.high_speed_cooling_unit=加速冷却单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -71,7 +77,10 @@ module.mekanism.fluid=流体
 module.mekanism.wireless_terminal_mode=无线终端模式
 module.emergency_rescue.use=警告！使用者遭到强大的打击！已进行拦截！
 module.mekanism.damage_true_source_exclude=直接伤害来源排除
-module.mekanism.damage_true_source_exclude_Indirect=间接伤害来源排除
+module.mekanism.damage_true_source_exclude_indirect=间接伤害来源排除
+module.mekanism.attack_player=攻击玩家
+module.mekanism.attack_hostile=攻击敌对生物
+module.mekanism.attack_friendly=攻击友善生物
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -101,6 +110,10 @@ description.mekanism.ultimate_band_of_aura_unit=可以以 9 mana/tick的速度�
 description.mekanism.creative_band_of_aura_unit=可以以 §6§k2147483647§r§7 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面
 description.mekanism.smart_wireless_unit=安装此单元后，可以访问AE网络内的内容
 description.mekanism.infinite_gas_supply_unit=让MekaSuit始终充满气体
+description.mekanism.automatic_attack_unit=自动攻击玩家范围内的所有生物
+description.mekanism.power_enhancement_unit=能够增强使用者的攻击速度和伤害
+description.mekanism.high_speed_cooling_unit=加速冷却物品的使用
+
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 

@@ -1,0 +1,31 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_automatic_attack_unit"
+      },
+      "pattern": [
+            "BAB",
+            "DCD",
+            "EEE"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "Antimatter",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "mekanism:modulebase"
+            },
+            "D": {
+                  "item": "minecraft:diamond_sword"
+            },
+            "E": {
+                  "ore": "PoloniumPellet",
+                  "type": "forge:ore_dict"
+            }
+      }
+}

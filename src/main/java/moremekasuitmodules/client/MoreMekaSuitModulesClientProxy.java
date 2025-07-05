@@ -79,6 +79,9 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_WIRELESS);
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_GAS_SUPPLY);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_ATTACK);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_POWER_ENHANCEMENT);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING);
     }
 
     @Override

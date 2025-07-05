@@ -24,6 +24,10 @@ public enum GMUTLang implements ILangEntry {
     MODULE_AE_MATCHING("module","wireless_matching"),
     MODULE_DAMAGE_SOURCE("module","damage_true_source_exclude"),
     MODULE_DAMAGE_SOURCE_INDIRECT("module","damage_true_source_exclude_Indirect"),
+
+    MODULE_ATTACK_PLAYER("module", "attack_player"),
+    MODULE_ATTACK_HOSTILE("module","attack_hostile"),
+    MODULE_ATTACK_FRIENDLY("module","attack_friendly"),
     // EOL
     ;
 

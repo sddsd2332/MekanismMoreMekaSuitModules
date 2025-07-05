@@ -24,6 +24,7 @@ public class MoreMekaSuitModulesMixin implements ILateMixinLoader {
         addModdedMixinCFG("mixins.moremekasuitmodules_botania.json","botania");
         addModdedMixinCFG("mixins.moremekasuitmodules_appliedenergistics2.json","appliedenergistics2");
         addModdedMixinCFG("mixins.moremekasuitmodules_matteroverdrive.json","matteroverdrive");
+        addModdedMixinCFG("mixins.moremekasuitmodules_thaumcraft.json","thaumcraft");
     }
 
     @Override
