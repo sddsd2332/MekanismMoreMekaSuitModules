@@ -28,7 +28,7 @@ public abstract class MixinEntityGorgon extends EntityMob implements IAnimatedEn
      * @author sddsd2332
      * @reason 实现meka的模块屏蔽
      */
-    @Inject(method = "isBlindfolded", at = @At("HEAD"), remap = false)
+    @Inject(method = "isBlindfolded", at = @At("HEAD"), remap = false, cancellable = true)
     private static void isBlindfolded(EntityLivingBase attackTarget, CallbackInfoReturnable<Boolean> cir) {
         if (attackTarget != null) {
             ItemStack head = attackTarget.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
