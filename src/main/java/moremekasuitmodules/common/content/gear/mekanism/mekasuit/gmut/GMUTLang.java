@@ -28,6 +28,7 @@ public enum GMUTLang implements ILangEntry {
     MODULE_ATTACK_PLAYER("module", "attack_player"),
     MODULE_ATTACK_HOSTILE("module","attack_hostile"),
     MODULE_ATTACK_FRIENDLY("module","attack_friendly"),
+    MODULE_PHASE_THROUGH_BLOCKS("module","phase_through_blocks"),
     // EOL
     ;
 

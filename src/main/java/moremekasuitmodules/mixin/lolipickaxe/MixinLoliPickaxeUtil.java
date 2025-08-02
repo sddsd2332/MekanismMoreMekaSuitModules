@@ -32,7 +32,7 @@ public class MixinLoliPickaxeUtil {
         if (base != null) {
             ItemStack head = base.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
             if (head.getItem() instanceof IModuleContainerItem item) {
-                return item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+                return item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || item.isModuleEnabled(head,MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
             }
         }
         return false;

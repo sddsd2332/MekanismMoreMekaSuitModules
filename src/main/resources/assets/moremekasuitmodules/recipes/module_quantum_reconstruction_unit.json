@@ -1,0 +1,30 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_quantum_reconstruction_unit"
+      },
+      "pattern": [
+            "EDE",
+            "CBC",
+            "AAA"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "Antimatter",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "item": "mekanism:modulebase"
+            },
+            "C": {
+                  "item": "mekanism:teleportationcore"
+            },
+            "D": {
+                  "item": "minecraft:ender_pearl"
+            },
+            "E": {
+                  "ore": "alloyUltimate",
+                  "type": "forge:ore_dict"
+            }
+      }
+}

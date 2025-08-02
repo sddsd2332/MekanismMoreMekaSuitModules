@@ -82,6 +82,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_ATTACK);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_POWER_ENHANCEMENT);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_QUANTUM_RECONSTRUCTION);
     }
 
     @Override

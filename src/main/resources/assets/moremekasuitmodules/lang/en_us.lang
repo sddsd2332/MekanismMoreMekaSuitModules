@@ -29,6 +29,7 @@ item.module_infinite_gas_supply_unit.name=Infinite gas supply unit
 item.module_automatic_attack_unit.name=Automatic Attack Units
 item.module_power_enhancement_unit.name=Power enhancement unit
 item.module_high_speed_cooling_unit.name=Cooling unit boost
+item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -61,6 +62,7 @@ module.mekanism.infinite_gas_supply_unit=Infinite gas supply unit
 module.mekanism.automatic_attack_unit=Automatic Attack Units
 module.mekanism.power_enhancement_unit=Power enhancement unit
 module.mekanism.high_speed_cooling_unit=Cooling unit boost
+module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -81,6 +83,7 @@ module.mekanism.damage_true_source_exclude_indirect=Exclusion of indirect source
 module.mekanism.attack_player=Attack the player
 module.mekanism.attack_hostile=Attacks hostile mobs
 module.mekanism.attack_friendly=Attacks friendly mobs
+module.mekanism.phase_through_blocks=Through Blocks
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
 description.mekanism.advanced_interception_system_unit=The upgraded version of the emergency rescue unit will not be consumed
@@ -113,6 +116,7 @@ description.mekanism.infinite_gas_supply_unit=Keep MekaSuit full of gas at all t
 description.mekanism.automatic_attack_unit=Automatically attack all creatures within the range of the player.
 description.mekanism.power_enhancement_unit=Increases the user's attack speed and damage
 description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
+description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

@@ -13,11 +13,10 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Random;
 
 @SideOnly(Side.CLIENT)
 public class ClientTickHandler {
@@ -25,14 +24,14 @@ public class ClientTickHandler {
     public static Minecraft minecraft = Minecraft.getMinecraft();
 
 
-    @SubscribeEvent
-    public static void onFOVModifier(FOVUpdateEvent e) {
-        EntityPlayer player = minecraft.player;
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onFOVModifier(FOVUpdateEvent event) {
+        EntityPlayer player = event.getEntity();
         IModule<ModuleGravitationalModulatingAdditionalUnit> module = ModuleHelper.get().load(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
         if (module != null && module.isEnabled()) {
             boolean fixFOV = module.getCustomInstance().getFixFOV().get();
             if (fixFOV) {
-                e.setNewfov(1.0F);
+                event.setNewfov(1.0F);
             }
         }
     }
@@ -44,7 +43,7 @@ public class ClientTickHandler {
                 ItemStack head = minecraft.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!minecraft.player.isEntityAlive()) {
                     if (head.getItem() instanceof IModuleContainerItem item) {
-                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || item.hasModule(head,MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT)) {
+                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT)) {
                             event.setCanceled(true);
                         }
                     }

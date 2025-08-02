@@ -29,6 +29,7 @@ item.module_infinite_gas_supply_unit.name=无限气体供应单元
 item.module_automatic_attack_unit.name=智能范围攻击单元
 item.module_power_enhancement_unit.name=动力增强单元
 item.module_high_speed_cooling_unit.name=加速冷却单元
+item.module_quantum_reconstruction_unit.name=量子重构单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进救援系统单元
@@ -61,6 +62,7 @@ module.mekanism.infinite_gas_supply_unit=无限气体供应单元
 module.mekanism.automatic_attack_unit=智能范围攻击单元
 module.mekanism.power_enhancement_unit=动力增强单元
 module.mekanism.high_speed_cooling_unit=加速冷却单元
+module.mekanism.quantum_reconstruction_unit=量子重构单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -81,6 +83,7 @@ module.mekanism.damage_true_source_exclude_indirect=间接伤害来源排除
 module.mekanism.attack_player=攻击玩家
 module.mekanism.attack_hostile=攻击敌对生物
 module.mekanism.attack_friendly=攻击友善生物
+module.mekanism.phase_through_blocks=穿越方块
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -113,7 +116,7 @@ description.mekanism.infinite_gas_supply_unit=让MekaSuit始终充满气体
 description.mekanism.automatic_attack_unit=自动攻击玩家范围内的所有生物
 description.mekanism.power_enhancement_unit=能够增强使用者的攻击速度和伤害
 description.mekanism.high_speed_cooling_unit=加速冷却物品的使用
-
+description.mekanism.quantum_reconstruction_unit=通过在量子水平上分解和重建物质，隧道效应使其能够像旁观者模式一样穿透块。
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 

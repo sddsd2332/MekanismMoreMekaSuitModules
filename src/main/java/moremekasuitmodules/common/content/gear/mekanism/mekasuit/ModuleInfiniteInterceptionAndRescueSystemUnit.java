@@ -17,7 +17,7 @@ public class ModuleInfiniteInterceptionAndRescueSystemUnit implements ICustomMod
     @Override
     public void init(IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module, ModuleConfigItemCreator configItemCreator) {
         damagesource = configItemCreator.createConfigItem("damagesource", GMUTLang.MODULE_DAMAGE_SOURCE, new ModuleBooleanData());
-        damagesourceIndirect = configItemCreator.createConfigItem("damagesource", GMUTLang.MODULE_DAMAGE_SOURCE_INDIRECT, new ModuleBooleanData());
+        damagesourceIndirect = configItemCreator.createConfigItem("damagesourceIndirect", GMUTLang.MODULE_DAMAGE_SOURCE_INDIRECT, new ModuleBooleanData());
     }
 
     public Boolean getSource() {

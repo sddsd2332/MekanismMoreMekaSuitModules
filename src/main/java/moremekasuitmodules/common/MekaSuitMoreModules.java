@@ -81,5 +81,6 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModularPowerEnhancementUnit> POWER_ENHANCEMENT_UNIT = ModuleHelper.register("power_enhancement_unit", ModularPowerEnhancementUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC));
     //加速冷却单元(加速物品的冷却)
     public static final ModuleData<ModularHighSpeedCoolingUnit> HIGH_SPEED_COOLING_UNIT = ModuleHelper.register("high_speed_cooling_unit", ModularHighSpeedCoolingUnit::new, builder -> builder.maxStackSize(10).rarity(EnumRarity.EPIC));
-
+    //量子重构单元（可以让玩家穿过方块）
+    public static final ModuleData<ModuleQuantumReconstructionUnit> QUANTUM_RECONSTRUCTION_UNIT = ModuleHelper.register("quantum_reconstruction_unit",ModuleQuantumReconstructionUnit::new,builder -> builder.rarity(EnumRarity.EPIC).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault());
 }

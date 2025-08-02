@@ -174,7 +174,7 @@ public class MoreMekaSuitModules implements IModule {
         if (Mekanism.hooks.GC) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.THERMAL_PROTECTION_UNIT);
         }
-        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT, MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
+        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT, MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
 
         if (Mekanism.hooks.DraconicEvolution) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
