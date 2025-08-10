@@ -1,0 +1,7 @@
+{
+  "parent":"minecraft:item/generated",
+  "textures":
+  {
+    "layer0":"moremekasuitmodules:item/module_infinite_chemical_and_fluid_supply_unit"
+  }
+}

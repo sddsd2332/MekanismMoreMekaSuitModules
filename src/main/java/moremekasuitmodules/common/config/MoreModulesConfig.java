@@ -1,17 +1,20 @@
 package moremekasuitmodules.common.config;
 
+import mekanism.common.config.MekanismConfigHelper;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModLoadingContext;
+
+@SuppressWarnings("removal")
 public class MoreModulesConfig {
 
-    private static MoreModulesConfig LOCAL = new MoreModulesConfig();
-    private static MoreModulesConfig SERVER = null;
-
-    public static MoreModulesConfig current() {
-        return SERVER != null ? SERVER : LOCAL;
+    private MoreModulesConfig() {
     }
 
-    public static MoreModulesConfig local() {
-        return LOCAL;
-    }
 
-    public MekaSuitMoreModulesConfig config = new MekaSuitMoreModulesConfig();
+    public static final MekaSuitMoreModulesConfig config = new MekaSuitMoreModulesConfig();
+
+    public static void registerConfigs(ModLoadingContext modLoadingContext) {
+        ModContainer modContainer = modLoadingContext.getActiveContainer();
+        MekanismConfigHelper.registerConfig(modContainer,config);
+    }
 }

@@ -1,4 +1,0 @@
-{
-      "parent": "mekanism:item/standard_item",
-      "textures": {"layer0": "moremekasuitmodules:items/module_quantum_reconstruction_unit"}
-}

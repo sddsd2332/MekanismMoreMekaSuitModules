@@ -1,0 +1,7 @@
+{
+  "parent":"minecraft:item/generated",
+  "textures":
+  {
+    "layer0":"moremekasuitmodules:item/module_health_regeneration_unit"
+  }
+}

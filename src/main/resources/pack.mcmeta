@@ -1,6 +1,8 @@
 {
   "pack": {
-    "pack_format": 3,
-    "description": "Resources used for MeK-ie-excavator"
+    "description": {
+      "text": "${mod_id} resources"
+    },
+    "pack_format": 15
   }
 }

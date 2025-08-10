@@ -1,4 +1,7 @@
 {
-      "parent": "mekanism:item/standard_item",
-      "textures": {"layer0": "moremekasuitmodules:items/module_high_speed_cooling_unit"}
+  "parent":"minecraft:item/generated",
+  "textures":
+  {
+    "layer0":"moremekasuitmodules:item/module_high_speed_cooling_unit"
+  }
 }

@@ -1,23 +1,65 @@
 package moremekasuitmodules.common.config;
 
-import mekanism.common.config.BaseConfig;
-import mekanism.common.config.options.BooleanOption;
-import mekanism.common.config.options.DoubleOption;
-import mekanism.common.config.options.FloatOption;
-import mekanism.common.config.options.IntOption;
+import mekanism.api.math.FloatingLong;
+import mekanism.common.config.BaseMekanismConfig;
+import mekanism.common.config.value.CachedBooleanValue;
+import mekanism.common.config.value.CachedDoubleValue;
+import mekanism.common.config.value.CachedFloatingLongValue;
+import mekanism.common.config.value.CachedIntValue;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ModConfig.Type;
 
-public class MekaSuitMoreModulesConfig extends BaseConfig {
+public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
 
-    public BooleanOption mekaSuitShield = new BooleanOption(this, "moremodules", "mekaSuitShield", true, "Enables the default calculation of the full set of shields");
-    public FloatOption mekaSuitShieldCapacity = new FloatOption(this, "moremodules", "mekaSuitShieldCapacity", 1000.0F, "The default set of base shield values after installation", 1.0F, Float.MAX_VALUE);
-    public BooleanOption mekaSuitRecovery = new BooleanOption(this, "moremodules", "mekaSuitRecovery", true, "Enables the default calculation of the full set of Recovery");
-    public FloatOption mekaSuitRecoveryRate = new FloatOption(this, "moremodules", "mekaSuitRecoveryRate", 10.0F, "The recovery rate of the full set of base shields after the default installation", 0.1F, Float.MAX_VALUE);
-    public IntOption mekaSuitShieldRestoresEnergy = new IntOption(this, "moremodules", "mekaSuitShieldRestoresEnergy", 500, "The amount of energy required whenever the shield recovers a little", 0, Integer.MAX_VALUE);
-    public BooleanOption MekAsuitOverloadProtection = new BooleanOption(this, "moremodules", "MekAsuitOverloadProtection", true, "Allows MekAsuit to intercept direct setHealth with Emergency Rescue installed");
-    public final BooleanOption DRrecipes = new BooleanOption(this, "moremodules", "DRrecipes", true, "Enable the default Draconic Evolution recipe").setRequiresGameRestart(true);
-    public final BooleanOption DRAdditionsrecipes = new BooleanOption(this, "moremodules", "DRAdditionsrecipes", true, "Enable the default Draconic Additions recipe").setRequiresGameRestart(true);
-    public final BooleanOption InfiniteInterception = new BooleanOption(this, "moremodules", "InfiniteInterception", false, "Enable Infinite interception and rescue system unit").setRequiresGameRestart(true);
-    public final BooleanOption TCRecipes = new BooleanOption(this, "moremodules", "TCRecipes", true, "Enable the default Thaumcraft Recipe");
-    public final BooleanOption TCAspectRecipes = new BooleanOption(this, "moremodules", "TCAspectRecipes", true, "Let default Thaumcraft recipes add the elements synthesized from both types of elements into the recipe.");
-    public DoubleOption mekaSuitEnergyUsageItemAttack = new DoubleOption(this, "moremodules", "energyUsageItemattack", 200, "Energy cost per tick attacking entity");
+    private static final String MEKASUIT_CATEGORY = "mekasuit";
+    private final ForgeConfigSpec configSpec;
+    //生命恢复单元
+    public final CachedFloatingLongValue mekaEnergyUsageHealthRegeneration;
+
+    //智能范围攻击单元
+    public final CachedFloatingLongValue mekaSuitEnergyUsageItemAttack;
+
+    //伤害拦截
+    public final CachedBooleanValue mekaSuitOverloadProtection;
+
+    //能量护盾
+    public final CachedBooleanValue mekaSuitShield;
+    public final CachedDoubleValue mekaSuitShieldCapacity;
+    public final CachedBooleanValue mekaSuitRecovery;
+    public final CachedDoubleValue mekaSuitRecoveryRate;
+    public final CachedIntValue mekaSuitShieldRestoresEnergy;
+    public final CachedIntValue lastStandEnergyRequirement;
+
+    public MekaSuitMoreModulesConfig() {
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        builder.comment("MoreMekaSuitModules Config. This config is synced from server to client.").push("moremekasuitmodules");
+        builder.comment("MekaSuit Settings").push(MEKASUIT_CATEGORY);
+        mekaEnergyUsageHealthRegeneration = CachedFloatingLongValue.define(this, builder, "How much energy regeneration is needed for a health regeneration", "mekaEnergyUsageHealthRegeneration", FloatingLong.create(100));
+        mekaSuitEnergyUsageItemAttack = CachedFloatingLongValue.define(this, builder, "Energy cost per tick attacking entity", "energyUsageItemattack", FloatingLong.create(200));
+        mekaSuitOverloadProtection = CachedBooleanValue.wrap(this, builder.comment("Allows MekAsuit to intercept direct setHealth with Emergency Rescue installed").define("mekaSuitOverloadProtection", true));
+        mekaSuitShield = CachedBooleanValue.wrap(this, builder.comment("Enables the default calculation of the full set of shields").define("mekaSuitShield", true));
+        mekaSuitShieldCapacity = CachedDoubleValue.wrap(this, builder.comment("The default set of base shield values after installation").defineInRange("mekaSuitShieldCapacity", 1000.0F, 1.0F, Float.MAX_VALUE));
+        mekaSuitRecovery = CachedBooleanValue.wrap(this, builder.comment("Enables the default calculation of the full set of Recovery").define("mekaSuitRecovery", true));
+        mekaSuitRecoveryRate = CachedDoubleValue.wrap(this, builder.comment("The recovery rate of the full set of base shields after the default installation").defineInRange("mekaSuitRecoveryRate", 10.0F, 0.1F, Float.MAX_VALUE));
+        mekaSuitShieldRestoresEnergy = CachedIntValue.wrap(this, builder.comment("The amount of energy required whenever the shield recovers a little").defineInRange("mekaSuitShieldRestoresEnergy", 500, 0, Integer.MAX_VALUE));
+        lastStandEnergyRequirement = CachedIntValue.wrap(this, builder.comment("How much energy regeneration is needed for a health regeneration").define("lastStandEnergyRequirement", 10000000));
+        builder.pop();
+        configSpec = builder.build();
+    }
+
+
+    @Override
+    public String getFileName() {
+        return "moremekasuitmodules";
+    }
+
+    @Override
+    public ForgeConfigSpec getConfigSpec() {
+        return configSpec;
+    }
+
+    @Override
+    public Type getConfigType() {
+        return Type.SERVER;
+    }
 }

@@ -1,67 +1,117 @@
 package moremekasuitmodules.common;
 
-
-import io.netty.buffer.ByteBuf;
-import mekanism.api.gas.IGasItem;
+import mekanism.api.MekanismIMC;
 import mekanism.common.Mekanism;
-import mekanism.common.MekanismItems;
-import mekanism.common.Version;
-import mekanism.common.base.IModule;
-import mekanism.common.config.MekanismConfig;
-import mekanism.common.content.gear.IModuleContainerItem;
-import mekanism.common.content.gear.ModuleHelper;
-import mekanism.common.network.PacketSimpleGui;
+import mekanism.common.base.IModModule;
+import mekanism.common.config.MekanismModConfig;
+import mekanism.common.lib.Version;
+import mekanism.common.registries.MekanismCreativeTabs;
 import moremekasuitmodules.common.config.MoreModulesConfig;
-import moremekasuitmodules.common.network.GMUTPacketHandler;
-import moremekasuitmodules.moremekasuitmodules.Tags;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import moremekasuitmodules.common.integration.MoreMekaSuitModulesHooks;
+import moremekasuitmodules.common.integration.botania.botaniaImcQueue;
+import moremekasuitmodules.common.integration.botania.botaniaModules;
+import moremekasuitmodules.common.integration.botania.botaniaModulesItem;
+import moremekasuitmodules.common.integration.iceandfire.iceAndFireModules;
+import moremekasuitmodules.common.integration.iceandfire.iceAndFireModulesItem;
+import moremekasuitmodules.common.integration.iceandfire.iceandfireImcQueue;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
+import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.io.File;
+@SuppressWarnings("removal")
+@Mod(MoreMekaSuitModules.MODID)
+public class MoreMekaSuitModules implements IModModule {
 
-@Mod(modid = MoreMekaSuitModules.MODID, useMetadata = true, version = Tags.VERSION)
-@Mod.EventBusSubscriber()
-public class MoreMekaSuitModules implements IModule {
+    public static final String MODID = "moremekasuitmodules";
 
-    public static final String MODID = Tags.MOD_ID;
-
-    @SidedProxy(clientSide = "moremekasuitmodules.client.MoreMekaSuitModulesClientProxy", serverSide = "moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy")
-    public static MoreMekaSuitModulesCommonProxy proxy;
-
-    @Mod.Instance(MODID)
     public static MoreMekaSuitModules instance;
 
-    public static Version versionNumber = new Version(999, 999, 999);
-    public static final int DATA_VERSION = 1;
-    public static final GMUTPacketHandler packetHandler = new GMUTPacketHandler();
+    public final Version versionNumber;
 
-    public static Configuration config;
+    public static  MoreMekaSuitModulesHooks hooks = new MoreMekaSuitModulesHooks();
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-        Mekanism.modulesLoaded.add(this);
-        PacketSimpleGui.handlers.add(proxy);
-        MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new MoreMekaSuitModulesGuiHandler());
-        MinecraftForge.EVENT_BUS.register(this);
-        packetHandler.initialize();
-        proxy.init();
-        imcQueue();
-        Mekanism.logger.info("Loaded Mekanism MoreMeka Suit Modules module.");
+    public MoreMekaSuitModules() {
+        Mekanism.addModule(instance = this);
+        MoreModulesConfig.registerConfigs(ModLoadingContext.get());
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        hooks.hookCommonSetup();
+        modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::onConfigLoad);
+        modEventBus.addListener(this::imcQueue);
+        MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
+        MekaSuitMoreModules.MODULES.register(modEventBus);
+        if (hooks.DraconicEvolutionLoaded) {
+
+        }
+        if (hooks.IceAndFireLoaded) {
+            modEventBus.addListener(iceandfireImcQueue::imcQueue);
+            iceAndFireModulesItem.ITEMS.register(modEventBus);
+            iceAndFireModules.MODULES.register(modEventBus);
+        }
+        if (hooks.BotaniaLoaded) {
+            modEventBus.addListener(botaniaImcQueue::imcQueue);
+            botaniaModulesItem.ITEMS.register(modEventBus);
+            botaniaModules.MODULES.register(modEventBus);
+        }
+
+        MekaSuitMoreModulesCreativeTabs.CREATIVE_TABS.register(modEventBus);
+        versionNumber = new Version(ModLoadingContext.get().getActiveContainer());
+
     }
+
+    public static ResourceLocation rl(String path) {
+        return new ResourceLocation(MoreMekaSuitModules.MODID, path);
+    }
+
+
+    private void imcQueue(InterModEnqueueEvent event) {
+        MekanismIMC.addModulesToAll(
+                MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT
+        );
+        //meka套全部
+        MekanismIMC.addMekaSuitModules(
+                MekaSuitMoreModules.INSULATED_UNIT,
+                MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
+                MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
+                MekaSuitMoreModules.HP_BOOTS_UNIT
+        );
+        //meka头盔
+        MekanismIMC.addMekaSuitHelmetModules(
+                MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT,
+                MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT,
+                MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT,
+                MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
+
+
+        //meka护甲
+        MekanismIMC.addMekaSuitBodyarmorModules(
+                MekaSuitMoreModules.HEALTH_REGENERATION_UNIT,
+                MekaSuitMoreModules.INFINITE_CHEMICAL_AND_FLUID_SUPPLY_UNIT,
+                MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
+        //meka护腿
+
+        //meka靴子
+    }
+
+
+    private void commonSetup(FMLCommonSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
+        MinecraftForge.EVENT_BUS.register(new ShieldProviderHandler());
+    }
+
+
 
     @Override
     public Version getVersion() {
@@ -73,126 +123,18 @@ public class MoreMekaSuitModules implements IModule {
         return "MoreMekaSuitModules";
     }
 
-
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        proxy.preInit();
-        config = new Configuration(new File("config/mekanism/MoreMekaSuitModules.cfg"));
-        loadConfiguration();
-    }
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(MODID) || event.getModID().equals(Mekanism.MODID)) {
-            loadConfiguration();
-        }
-    }
-
-
-    @Override
-    public void writeConfig(ByteBuf byteBuf, MekanismConfig mekanismConfig) {
-
-    }
-
-    @Override
-    public void readConfig(ByteBuf byteBuf, MekanismConfig mekanismConfig) {
-
-    }
-
     @Override
     public void resetClient() {
 
     }
 
-    public void loadConfiguration() {
-        MoreModulesConfig.local().config.load(config);
-        if (config.hasChanged()) {
-            config.save();
+    private void onConfigLoad(ModConfigEvent configEvent) {
+        //Note: We listen to both the initial load and the reload, to make sure that we fix any accidentally
+        // cached values from calls before the initial loading
+        ModConfig config = configEvent.getConfig();
+        //Make sure it is for the same modid as us
+        if (config.getModId().equals(MODID) && config instanceof MekanismModConfig mekConfig) {
+            mekConfig.clearCache(configEvent);
         }
     }
-
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-        MekaSuitMoreModulesItem.registerItems(event.getRegistry());
-    }
-
-    @SubscribeEvent
-    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
-        drRecipes.addRecipes();
-        tcRecipes.addRecipes();
-    }
-
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        proxy.registerItemRenders();
-    }
-
-    private void imcQueue() {
-        for (Item allmodules : ForgeRegistries.ITEMS) {
-            if (allmodules instanceof IModuleContainerItem) {
-                ModuleHelper.get().setSupported(allmodules, MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT);
-                if (allmodules instanceof IGasItem) {
-                    ModuleHelper.get().setSupported(allmodules, MekaSuitMoreModules.INFINITE_GAS_SUPPLY_UNIT);
-                }
-            }
-        }
-
-        Item[] addMekaSuitModules = {MekanismItems.MEKASUIT_HELMET, MekanismItems.MEKASUIT_BODYARMOR, MekanismItems.MEKASUIT_PANTS, MekanismItems.MEKASUIT_BOOTS};
-        for (Item stack : addMekaSuitModules) {
-
-            if (Mekanism.hooks.DraconicEvolution) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT, MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
-            }
-            if (Mekanism.hooks.AR || Mekanism.hooks.GC) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.SEAL_UNIT);
-            }
-            if (Loader.isModLoaded("immersiveengineering") || Mekanism.hooks.GTCEULoaded) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.INSULATED_UNIT);
-            }
-            if (Loader.isModLoaded("forestry")) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.BEE_CONTROL_UNIT);
-            }
-            if (Loader.isModLoaded("thaumcraft")) {
-                ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.MAGIC_OPTIMIZATION_UNIT);
-            }
-            ModuleHelper.get().setSupported(stack,MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT);
-        }
-
-        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
-        if (MoreModulesConfig.current().config.InfiniteInterception.val()) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
-        }
-        if (Loader.isModLoaded("thaumcraft")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.WARP_CLEAR_BASE_UNIT, MekaSuitMoreModules.WARP_CLEAR_ADVANCED_UNIT, MekaSuitMoreModules.WARP_CLEAR_ULTIMATE_UNIT, MekaSuitMoreModules.GOGGLES_OF_REVEALING_UNIT);
-        }
-
-        if (Loader.isModLoaded("toughasnails")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.AUTOMATIC_LIQUID_SUPPLY_UNIT);
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.INTELLIGENT_TEMPERATURE_REGULATION_UNIT);
-        }
-
-        if (Mekanism.hooks.GC) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.THERMAL_PROTECTION_UNIT);
-        }
-        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT, MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
-
-        if (Mekanism.hooks.DraconicEvolution) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
-        }
-
-        if (Loader.isModLoaded("iceandfire")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_SHIELDING_UNIT);
-        }
-
-        if (Loader.isModLoaded("botania")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.BAND_OF_AURA_UNIT, MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
-        }
-
-        if (Loader.isModLoaded("appliedenergistics2")) {
-            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
-        }
-
-    }
-
-
 }

@@ -1,209 +1,199 @@
 package moremekasuitmodules.mixin.mekanism;
 
-import cofh.redstoneflux.api.IEnergyContainerItem;
-import com.brandon3055.draconicevolution.items.armor.ICustomArmor;
-import forestry.api.apiculture.IArmorApiarist;
-import ic2.api.item.IHazmatLike;
-import ic2.api.item.ISpecialElectricItem;
-import mekanism.api.energy.IEnergizedItem;
-import mekanism.api.gas.GasStack;
-import mekanism.api.gas.IGasItem;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import mekanism.api.MekanismAPI;
+import mekanism.api.NBTConstants;
+import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
-import mekanism.api.gear.Magnetic;
-import mekanism.common.Mekanism;
-import mekanism.common.MekanismFluids;
-import mekanism.common.MekanismItems;
+import mekanism.api.gear.ModuleData;
+import mekanism.api.math.FloatingLong;
+import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IModuleContainerItem;
-import mekanism.common.integration.MekanismHooks;
-import mekanism.common.item.armor.ItemMekaSuitArmor;
+import mekanism.common.content.gear.ModuleHelper;
+import mekanism.common.item.gear.ItemMekaSuitArmor;
+import mekanism.common.item.gear.ItemSpecialArmor;
+import mekanism.common.item.interfaces.IJetpackItem;
 import mekanism.common.item.interfaces.IModeItem;
-import mekanism.common.util.ItemNBTHelper;
-import moremekasuitmodules.common.MekaSuitMoreModules;
+import mekanism.common.lib.attribute.AttributeCache;
+import mekanism.common.lib.attribute.IAttributeRefresher;
+import mekanism.common.registration.impl.CreativeTabDeferredRegister.ICustomCreativeTabContents;
+import mekanism.common.registries.MekanismFluids;
+import mekanism.common.registries.MekanismGases;
+import mekanism.common.util.ChemicalUtil;
+import mekanism.common.util.FluidUtils;
+import mekanism.common.util.ItemDataUtils;
+import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.config.MoreModulesConfig;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.Optional;
+import moremekasuitmodules.common.content.gear.ModuleEnergyShieldUnit;
+import moremekasuitmodules.common.item.interfaces.IShieldProvider;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import thaumcraft.api.items.IGoggles;
-import thaumcraft.api.items.IVisDiscountGear;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.UUID;
 
-@Mixin(ItemMekaSuitArmor.class)
-@Optional.InterfaceList({
-        @Optional.Interface(iface = "ic2.api.item.ISpecialElectricItem", modid = MekanismHooks.IC2_MOD_ID),
-        @Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyContainerItem", modid = MekanismHooks.REDSTONEFLUX_MOD_ID),
-        @Optional.Interface(iface = "ic2.api.item.IHazmatLike", modid = MekanismHooks.IC2_MOD_ID),
-        @Optional.Interface(iface = "com.brandon3055.draconicevolution.items.armor.ICustomArmor", modid = MekanismHooks.DraconicEvolution_MOD_ID),
-        @Optional.Interface(iface = "forestry.api.apiculture.IArmorApiarist", modid = "forestry"),
-        @Optional.Interface(iface = "thaumcraft.api.items.IVisDiscountGear", modid = "thaumcraft"),
-        @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "thaumcraft")
-})
-public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnergizedItem, IModuleContainerItem, IModeItem,
-        ISpecialElectricItem, IEnergyContainerItem, IHazmatLike, Magnetic, ICustomArmor, IArmorApiarist, IVisDiscountGear, IGoggles {
 
-    @Shadow(remap = false)
+@Mixin(value = ItemMekaSuitArmor.class, remap = false)
+public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher, ICustomCreativeTabContents, IShieldProvider {
+
+
+    protected MixinItemMekaSuitArmor(ArmorMaterial material, Type armorType, Properties properties) {
+        super(material, armorType, properties);
+    }
+
+    @Shadow
+    protected abstract FloatingLong getMaxEnergy(ItemStack stack);
+
+    @Shadow
+    @Final
+    private AttributeCache attributeCache;
+
+    @Shadow
     @Final
     private float absorption;
 
-    public MixinItemMekaSuitArmor(ArmorMaterial materialIn, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn) {
-        super(materialIn, renderIndexIn, equipmentSlotIn);
-    }
-
-
-    @Inject(method = "getSubItems", at = @At("TAIL"))
-    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> items, CallbackInfo ci) {
-        if (!isInCreativeTab(tabs)) {
-            return;
-        }
-        ItemStack FullStack2 = new ItemStack(this);
-        setAllModule(FullStack2);
-        setEnergy(FullStack2, ((IEnergizedItem) FullStack2.getItem()).getMaxEnergy(FullStack2));
-        if (FullStack2.getItem() instanceof IGasItem gasItem) {
-            if (FullStack2.getItem() == MekanismItems.MEKASUIT_HELMET) {
-                gasItem.setGas(FullStack2, new GasStack(MekanismFluids.NutritionalPaste, gasItem.getMaxGas(FullStack2)));
-            } else if (FullStack2.getItem() == MekanismItems.MEKASUIT_BODYARMOR) {
-                gasItem.setGas(FullStack2, new GasStack(MekanismFluids.Hydrogen, gasItem.getMaxGas(FullStack2)));
+    @Inject(method = "addItems", at = @At("TAIL"), remap = false)
+    public void addALL(CreativeModeTab.Output tabOutput, CallbackInfo ci) {
+        ItemStack fullStack = new ItemStack((ItemMekaSuitArmor) (Object) this);
+        setAllModule(fullStack);
+        StorageUtils.getFilledEnergyVariant(fullStack, getMaxEnergy(fullStack));
+        if (fullStack.getItem() instanceof ItemMekaSuitArmor armor) {
+            if (armor.getType().equals(Type.HELMET)) {
+                FluidUtils.getFilledVariant(fullStack, MekanismConfig.gear.mekaSuitNutritionalMaxStorage, MekanismFluids.NUTRITIONAL_PASTE);
+            } else if (armor.getType().equals(Type.CHESTPLATE)) {
+                ChemicalUtil.getFilledVariant(fullStack, MekanismConfig.gear.mekaSuitJetpackMaxStorage, MekanismGases.HYDROGEN);
             }
         }
-        if (Mekanism.hooks.DraconicEvolution) {
-            ItemNBTHelper.setFloat(FullStack2, "ProtectionPoints", getProtectionPoints(FullStack2));
+        ItemDataUtils.setDouble(fullStack, "ProtectionPoints", getProtectionPoints(fullStack));
+        tabOutput.accept(fullStack);
+    }
+
+    @Unique
+    public void setAllModule(ItemStack stack) {
+        for (ModuleData<?> module : MekanismAPI.moduleRegistry().getValues()) {
+            if (ModuleHelper.get().getSupported(stack).contains(module)) {
+                setModule(stack, module);
+            }
         }
-        items.add(FullStack2);
     }
 
 
+    @Unique
+    public void setModule(ItemStack stack, ModuleData<?> type) {
+        if (!ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND)) {
+            ItemDataUtils.setCompound(stack, NBTConstants.MODULES, new CompoundTag());
+        }
+        ItemDataUtils.getCompound(stack, NBTConstants.MODULES).put(type.getRegistryName().toString(), new CompoundTag());
+        ItemDataUtils.getCompound(stack, NBTConstants.MODULES).getCompound(type.getRegistryName().toString()).putInt(NBTConstants.AMOUNT, type.getMaxStackSize());
+        ModuleHelper.get().load(stack, type).save(null);
+        ModuleHelper.get().load(stack, type).onAdded(false);
+    }
+
+
+    /**
+     * @author sddsd2332
+     * @reason 覆盖便于添加模块的属性
+     */
     @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getProtectionPoints(ItemStack stack) {
-        IModule<?> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
-        if (module != null) {
-            int upgradeLevel = module.getInstalledCount();
-            if (module.isEnabled()) {
-                if (MoreModulesConfig.current().config.mekaSuitShield.val()) {
-                    return MoreModulesConfig.current().config.mekaSuitShieldCapacity.val() * absorption * (int) Math.pow(2, upgradeLevel);
-                } else {
-                    return MoreModulesConfig.current().config.mekaSuitShieldCapacity.val() * absorption * upgradeLevel;
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        if (slot == getEquipmentSlot()) {
+            builder.putAll(attributeCache.get());
+            UUID uuid = new UUID((stack.getDescriptionId() + slot).hashCode(), 0L);
+            if (stack.getItem() instanceof ArmorItem armor && slot == armor.getType().getSlot()) {
+                IModule<?> module = getModule(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT);
+                if (module != null && module.isEnabled()) {
+                    builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Power Enhancement Unit", module.getInstalledCount(), AttributeModifier.Operation.ADDITION));
+                    builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(uuid, "Power Enhancement Unit", module.getInstalledCount(), AttributeModifier.Operation.ADDITION));
                 }
-            } else {
-                return ItemNBTHelper.getFloat(stack, "ProtectionPoints", 0);
+                IModule<?> HPmodule = getModule(stack, MekaSuitMoreModules.HP_BOOTS_UNIT);
+                if (HPmodule != null) {
+                    builder.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Hp Boots Unit", HPmodule.getInstalledCount(), AttributeModifier.Operation.ADDITION));
+                }
             }
-        } else {
-            return 0.0F;
         }
+        return slot == getEquipmentSlot() ? builder.build(): super.getAttributeModifiers(slot,stack);
     }
 
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getRecoveryRate(ItemStack stack) {
-        IModule<?> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
-        if (module != null && module.isEnabled()) {
-            int upgradeLevel = module.getInstalledCount();
-            if (MoreModulesConfig.current().config.mekaSuitRecovery.val()) {
-                return MoreModulesConfig.current().config.mekaSuitRecoveryRate.val() * (int) Math.pow(2, upgradeLevel);
-            } else {
-                return MoreModulesConfig.current().config.mekaSuitRecoveryRate.val() * (1.0F + upgradeLevel);
-            }
-        } else {
-            return 0.0F;
-        }
-    }
 
+    //护盾保护点数
     @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getSpeedModifier(ItemStack stack, EntityPlayer player) {
-        return 0.0F;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getJumpModifier(ItemStack stack, EntityPlayer player) {
-        return 0.0F;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public boolean hasHillStep(ItemStack stack, EntityPlayer player) {
-        return false;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getFireResistance(ItemStack stack) {
-        return 0.0F;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public boolean[] hasFlight(ItemStack stack) {
-        return new boolean[]{false, false, false};
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getFlightSpeedModifier(ItemStack stack, EntityPlayer player) {
-        return 0;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public float getFlightVModifier(ItemStack stack, EntityPlayer player) {
-        return 0;
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public int getEnergyPerProtectionPoint() {
-        return MoreModulesConfig.current().config.mekaSuitShieldRestoresEnergy.val();
-    }
-
-    @Override
-    @Optional.Method(modid = MekanismHooks.DraconicEvolution_MOD_ID)
-    public void modifyEnergy(ItemStack stack, int modify) {
-        IModule<?> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
+    public double getProtectionPoints(ItemStack stack) {
+        IModule<ModuleEnergyShieldUnit> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
         if (module != null) {
-            double energy = getEnergy(stack);
-            energy += modify;
-            if (energy > getMaxEnergy(stack)) {
-                energy = getMaxEnergy(stack);
-            } else if (energy < 0) {
-                energy = 0;
-            }
-            setEnergy(stack, energy);
+            return module.getCustomInstance().getProtectionPoints(module, absorption, ItemDataUtils.getDouble(stack, "ProtectionPoints"));
+        } else {
+            return 0.0d;
         }
     }
 
+    //护盾能量恢复速率
     @Override
-    @Optional.Method(modid = "forestry")
-    public boolean protectEntity(@Nonnull EntityLivingBase entity, @Nonnull ItemStack armor, @Nullable String cause, boolean doProtect) {
-        return isModuleEnabled(armor, MekaSuitMoreModules.BEE_CONTROL_UNIT);
-    }
-
-    @Override
-    @Optional.Method(modid = "thaumcraft")
-    public int getVisDiscount(ItemStack stack, EntityPlayer player) {
-        IModule<?> module = getModule(stack, MekaSuitMoreModules.MAGIC_OPTIMIZATION_UNIT);
+    public double getRecoveryRate(ItemStack stack) {
+        IModule<ModuleEnergyShieldUnit> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
         if (module != null && module.isEnabled()) {
-            return module.getInstalledCount();
+            return module.getCustomInstance().getRecoveryRate(module);
+        } else {
+            return 0;
         }
-        return 0;
     }
 
+
+    //恢复护盾点数需要多少能量
     @Override
-    @Optional.Method(modid = "thaumcraft")
-    public boolean showIngamePopups(ItemStack stack, EntityLivingBase player) {
-        return isModuleEnabled(stack, MekaSuitMoreModules.GOGGLES_OF_REVEALING_UNIT);
+    public int getEnergyPerProtectionPoint() {
+        return MoreModulesConfig.config.mekaSuitShieldRestoresEnergy.get();
+    }
+
+    //能量消耗使用
+    @Override
+    public void modifyEnergy(ItemStack stack, int amount, LivingEntity entity) {
+        IModule<ModuleEnergyShieldUnit> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
+        if (module != null && module.isEnabled()) {
+            module.useEnergy(entity, FloatingLong.create(amount));
+        }
+    }
+
+    //是否启用护盾
+    @Override
+    public boolean isEnableShield(ItemStack stack, LivingEntity entity) {
+        IModule<ModuleEnergyShieldUnit> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
+        if (module != null && module.isEnabled()) {
+            return module.getCustomInstance().getEnableShield();
+        } else {
+            return false;
+        }
+    }
+
+    //物品当前能量
+    @Override
+    public int getEnergyStored(ItemStack stack) {
+        IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+        return energyContainer == null ? FloatingLong.ZERO.intValue() : energyContainer.getEnergy().intValue();
+    }
+
+    //物品最大能量
+    @Override
+    public int getMaxEnergyStored(ItemStack stack) {
+        return getMaxEnergy(stack).intValue();
     }
 
 }
