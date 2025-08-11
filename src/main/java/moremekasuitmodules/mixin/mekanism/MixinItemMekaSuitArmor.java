@@ -2,15 +2,10 @@ package moremekasuitmodules.mixin.mekanism;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import mekanism.api.MekanismAPI;
-import mekanism.api.NBTConstants;
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
-import mekanism.api.gear.ModuleData;
 import mekanism.api.math.FloatingLong;
-import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.IModuleContainerItem;
-import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.item.gear.ItemSpecialArmor;
 import mekanism.common.item.interfaces.IJetpackItem;
@@ -18,18 +13,13 @@ import mekanism.common.item.interfaces.IModeItem;
 import mekanism.common.lib.attribute.AttributeCache;
 import mekanism.common.lib.attribute.IAttributeRefresher;
 import mekanism.common.registration.impl.CreativeTabDeferredRegister.ICustomCreativeTabContents;
-import mekanism.common.registries.MekanismFluids;
-import mekanism.common.registries.MekanismGases;
-import mekanism.common.util.ChemicalUtil;
-import mekanism.common.util.FluidUtils;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.ModuleEnergyShieldUnit;
 import moremekasuitmodules.common.item.interfaces.IShieldProvider;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -43,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -72,39 +61,16 @@ public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements
 
     @Inject(method = "addItems", at = @At("TAIL"), remap = false)
     public void addALL(CreativeModeTab.Output tabOutput, CallbackInfo ci) {
-        ItemStack fullStack = new ItemStack((ItemMekaSuitArmor) (Object) this);
-        setAllModule(fullStack);
-        StorageUtils.getFilledEnergyVariant(fullStack, getMaxEnergy(fullStack));
-        if (fullStack.getItem() instanceof ItemMekaSuitArmor armor) {
-            if (armor.getType().equals(Type.HELMET)) {
-                FluidUtils.getFilledVariant(fullStack, MekanismConfig.gear.mekaSuitNutritionalMaxStorage, MekanismFluids.NUTRITIONAL_PASTE);
-            } else if (armor.getType().equals(Type.CHESTPLATE)) {
-                ChemicalUtil.getFilledVariant(fullStack, MekanismConfig.gear.mekaSuitJetpackMaxStorage, MekanismGases.HYDROGEN);
+        if (MoreModulesConfig.config.addALLModueltoMekaSuit.get()) {
+            ItemStack fullStack = new ItemStack((ItemMekaSuitArmor) (Object) this);
+            MoreMekaSuitModulesUtils.setAllModule(fullStack);
+            StorageUtils.getFilledEnergyVariant(fullStack, getMaxEnergy(fullStack));
+            MoreMekaSuitModulesUtils.AddSupportedFluidsOrChemicals(fullStack);
+            if (hasModule(fullStack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                ItemDataUtils.setDouble(fullStack, "ProtectionPoints", getProtectionPoints(fullStack));
             }
+            tabOutput.accept(fullStack);
         }
-        ItemDataUtils.setDouble(fullStack, "ProtectionPoints", getProtectionPoints(fullStack));
-        tabOutput.accept(fullStack);
-    }
-
-    @Unique
-    public void setAllModule(ItemStack stack) {
-        for (ModuleData<?> module : MekanismAPI.moduleRegistry().getValues()) {
-            if (ModuleHelper.get().getSupported(stack).contains(module)) {
-                setModule(stack, module);
-            }
-        }
-    }
-
-
-    @Unique
-    public void setModule(ItemStack stack, ModuleData<?> type) {
-        if (!ItemDataUtils.hasData(stack, NBTConstants.MODULES, Tag.TAG_COMPOUND)) {
-            ItemDataUtils.setCompound(stack, NBTConstants.MODULES, new CompoundTag());
-        }
-        ItemDataUtils.getCompound(stack, NBTConstants.MODULES).put(type.getRegistryName().toString(), new CompoundTag());
-        ItemDataUtils.getCompound(stack, NBTConstants.MODULES).getCompound(type.getRegistryName().toString()).putInt(NBTConstants.AMOUNT, type.getMaxStackSize());
-        ModuleHelper.get().load(stack, type).save(null);
-        ModuleHelper.get().load(stack, type).onAdded(false);
     }
 
 
@@ -130,7 +96,7 @@ public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements
                 }
             }
         }
-        return slot == getEquipmentSlot() ? builder.build(): super.getAttributeModifiers(slot,stack);
+        return slot == getEquipmentSlot() ? builder.build() : super.getAttributeModifiers(slot, stack);
     }
 
 

@@ -29,6 +29,7 @@ public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
     public final CachedDoubleValue mekaSuitRecoveryRate;
     public final CachedIntValue mekaSuitShieldRestoresEnergy;
     public final CachedIntValue lastStandEnergyRequirement;
+    public final CachedBooleanValue addALLModueltoMekaSuit;
 
     public MekaSuitMoreModulesConfig() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -43,6 +44,7 @@ public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
         mekaSuitRecoveryRate = CachedDoubleValue.wrap(this, builder.comment("The recovery rate of the full set of base shields after the default installation").defineInRange("mekaSuitRecoveryRate", 10.0F, 0.1F, Float.MAX_VALUE));
         mekaSuitShieldRestoresEnergy = CachedIntValue.wrap(this, builder.comment("The amount of energy required whenever the shield recovers a little").defineInRange("mekaSuitShieldRestoresEnergy", 500, 0, Integer.MAX_VALUE));
         lastStandEnergyRequirement = CachedIntValue.wrap(this, builder.comment("How much energy regeneration is needed for a health regeneration").define("lastStandEnergyRequirement", 10000000));
+        addALLModueltoMekaSuit = CachedBooleanValue.wrap(this, builder.comment("Allows MekaSuit to display the module added in Tap").define("addAllModuleToMekaSuit",true));
         builder.pop();
         configSpec = builder.build();
     }

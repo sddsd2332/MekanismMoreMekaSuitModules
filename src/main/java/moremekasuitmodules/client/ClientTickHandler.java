@@ -1,6 +1,7 @@
 package moremekasuitmodules.client;
 
 import mekanism.common.content.gear.IModuleContainerItem;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -16,6 +17,9 @@ public class ClientTickHandler {
 
     @SubscribeEvent
     public void GuiScreenEvent(ScreenEvent.Opening event) {
+        if (!MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
+            return;
+        }
         if (event.getNewScreen() instanceof DeathScreen) {
             if (minecraft.player instanceof LocalPlayer) {
                 ItemStack head = minecraft.player.getItemBySlot(EquipmentSlot.HEAD);

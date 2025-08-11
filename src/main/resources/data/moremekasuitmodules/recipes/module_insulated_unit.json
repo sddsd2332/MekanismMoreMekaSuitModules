@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "moremekasuitmodules:module_insulated_unit"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "B": {
+      "tag": "forge:leather"
+    },
+    "C": {
+      "item": "mekanism:module_base"
+    }
+  }
+}
