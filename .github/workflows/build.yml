@@ -23,5 +23,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: MekanismMoreMekaSuitModules
+        name: MekanismMoreMekaSuitModules-1.21
         path: build/libs

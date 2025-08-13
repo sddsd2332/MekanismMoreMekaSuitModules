@@ -1,32 +1,38 @@
 package moremekasuitmodules.common;
 
-import mekanism.api.gear.IModule;
-import mekanism.api.providers.IModuleDataProvider;
+import mekanism.api.gear.ModuleData;
 import mekanism.common.content.gear.IModuleContainerItem;
+import mekanism.common.content.gear.ModuleContainer;
+import mekanism.common.content.gear.ModuleHelper;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.integration.ie.event.ieElectricDamage;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.UUID;
 
 public class CommonPlayerTickHandler {
 
-    private boolean ModuleInstallation(ItemStack stack, IModuleDataProvider<?> data) {
+
+    private boolean ModuleInstallation(ItemStack stack, Holder<ModuleData<?>> data) {
         if (stack.getItem() instanceof IModuleContainerItem item) {
             return item.isModuleEnabled(stack, data);
         }
@@ -46,7 +52,10 @@ public class CommonPlayerTickHandler {
                 if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
                     event.setCanceled(true);
                     if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
-                        item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getModuleData());
+                        ModuleContainer container = ModuleHelper.get().getModuleContainer(head);
+                        if (container != null) {
+                            container.removeModule(player.registryAccess(), head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, 1);
+                        }
                     }
                     Death(player, isInfiniteModule);
                     sendMessage(player, isInfiniteModule, item, head);
@@ -57,14 +66,11 @@ public class CommonPlayerTickHandler {
     }
 
     @SubscribeEvent
-    public void onLivingUpdate(TickEvent.PlayerTickEvent event) {
-        if (MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
-            if (event.phase != TickEvent.Phase.START) {
-                return;
-            }
+    public void onLivingUpdate(PlayerTickEvent.Pre event) {
+        if (MoreModulesConfig.config.isLoaded() && MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
             //If the player is affected by setHealth
             //What? Why do you want to go straight to setHealth?
-            Player player = event.player;
+            Player player = event.getEntity();
             if (player == null) {
                 return;
             }
@@ -74,7 +80,10 @@ public class CommonPlayerTickHandler {
                 if (!player.isAlive() || player.isDeadOrDying()) {
                     if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
                         if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
-                            item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getModuleData());
+                            ModuleContainer container = ModuleHelper.get().getModuleContainer(head);
+                            if (container != null) {
+                                container.removeModule(player.registryAccess(), head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, 1);
+                            }
                         }
                         Death(player, isInfiniteModule);
                         //重新刷新玩家的位置 确保玩家在该位置
@@ -120,8 +129,8 @@ public class CommonPlayerTickHandler {
 
     //为什么没有剔除接口了呢?
     @SubscribeEvent
-    public void onIEElectricDamage(LivingAttackEvent event) {
-        if (MoreMekaSuitModules.hooks.IELoaded) {
+    public void onIEElectricDamage(LivingIncomingDamageEvent event) {
+        if (MoreMekaSuitModules.hooks.IELoaded.isLoaded()) {
             LivingEntity base = event.getEntity();
             boolean helmet = isInsulated(base.getItemBySlot(EquipmentSlot.HEAD));
             boolean chest = isInsulated(base.getItemBySlot(EquipmentSlot.CHEST));
@@ -135,7 +144,7 @@ public class CommonPlayerTickHandler {
 
 
     @SubscribeEvent
-    public void isLightningDamage(LivingAttackEvent event) {
+    public void isLightningDamage(LivingIncomingDamageEvent event) {
         LivingEntity base = event.getEntity();
         boolean helmet = isInsulated(base.getItemBySlot(EquipmentSlot.HEAD));
         boolean chest = isInsulated(base.getItemBySlot(EquipmentSlot.CHEST));
@@ -153,53 +162,68 @@ public class CommonPlayerTickHandler {
      * 无限拦截模块 开始
      */
     @SubscribeEvent //实体更新(玩家另外处理)
-    public void isInfiniteModule(LivingEvent.LivingTickEvent event) {
-        LivingEntity base = event.getEntity();
-        if (!(base instanceof Player) && isInfiniteModule(base)) {
-            if (base.getHealth() != base.getMaxHealth()) {
-                base.setHealth(base.getMaxHealth());
-            }
-            if (base.isAlive()) {
-                base.revive();
-                base.deathTime = 0;
-                base.removeAllEffects();
-                base.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 2));
-                base.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 2));
-                base.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 2));
-            }
+    public void isInfiniteModule(EntityTickEvent.Pre event) {
+        if (event.getEntity() instanceof LivingEntity base) {
+            if (!(base instanceof Player) && isInfiniteModule(base)) {
+                if (base.getHealth() != base.getMaxHealth()) {
+                    base.setHealth(base.getMaxHealth());
+                }
+                if (base.isAlive()) {
+                    base.revive();
+                    base.deathTime = 0;
+                    base.removeAllEffects();
+                    base.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 2));
+                    base.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 2));
+                    base.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 2));
+                }
 
+            }
         }
     }
 
+    //取消所有伤害流程1
+    //设置无懈可击
+    @SubscribeEvent
+    public void isInfiniteModule(EntityInvulnerabilityCheckEvent event) {
+        if (event.getEntity() instanceof LivingEntity base) {
+            if (isInfiniteModule(base)) {
+                event.setInvulnerable(true);
+            }
+        }
+    }
 
-    @SubscribeEvent  //取消所有伤害
-    public void isInfiniteModule(LivingAttackEvent event) {
+    //取消所有伤害流程2
+    @SubscribeEvent
+    public void isInfiniteModule(LivingIncomingDamageEvent event) {
         LivingEntity base = event.getEntity();
         if (isInfiniteModule(base)) {
             event.setCanceled(true);
+        }
+    }
+
+    //取消所有伤害流程3
+    @SubscribeEvent
+    public void isInfiniteModule(LivingShieldBlockEvent event) {
+        LivingEntity base = event.getEntity();
+        if (isInfiniteModule(base)) {
+            event.setBlocked(true);
+            event.setBlockedDamage(event.getOriginalBlockedDamage());
+            event.setShieldDamage(0);
+        }
+    }
+
+    //取消所有伤害4
+    @SubscribeEvent
+    public void isInfiniteModule(LivingDamageEvent.Pre event) {
+        LivingEntity base = event.getEntity();
+        if (isInfiniteModule(base)) {
+            event.setNewDamage(0);
         }
     }
 
 
     @SubscribeEvent  //取消所有击退
     public void isInfiniteModule(LivingKnockBackEvent event) {
-        LivingEntity base = event.getEntity();
-        if (isInfiniteModule(base)) {
-            event.setCanceled(true);
-        }
-    }
-
-
-    @SubscribeEvent  //取消所有伤害2
-    public void isInfiniteModule(LivingHurtEvent event) {
-        LivingEntity base = event.getEntity();
-        if (isInfiniteModule(base)) {
-            event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent  //取消所有伤害3
-    public void isInfiniteModule(LivingDamageEvent event) {
         LivingEntity base = event.getEntity();
         if (isInfiniteModule(base)) {
             event.setCanceled(true);
@@ -234,7 +258,9 @@ public class CommonPlayerTickHandler {
     public void isInfiniteModule(CriticalHitEvent event) {
         if (event.getTarget() instanceof LivingEntity base) {
             if (isInfiniteModule(base)) {
-                event.setDamageModifier(0);
+                event.setDamageMultiplier(0);
+                event.setCriticalHit(false);
+                event.setDisableSweep(false);
             }
         }
     }
@@ -262,56 +288,44 @@ public class CommonPlayerTickHandler {
 
 
     @SubscribeEvent
-    public void isInfiniteModuleStopTasks(LivingEvent.LivingTickEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (entity.tickCount % 5 != 0) {
-            return;
-        }
-        if (!(entity instanceof Mob mob)) {
-            return;
-        }
-        if (isInfiniteModule(mob.getTarget())) {
-            mob.setTarget(null);
-            if (mob.targetSelector != null) {
-                mob.targetSelector.getRunningGoals().forEach(wrappedGoal -> {
-                    if (wrappedGoal.getGoal() instanceof TargetGoal tg)
-                        tg.stop();
-                });
+    public void isInfiniteModuleStopTasks(EntityTickEvent.Pre event) {
+        if (event.getEntity() instanceof LivingEntity entity) {
+            if (entity.tickCount % 5 != 0) {
+                return;
             }
-        }
-
-        if (entity instanceof NeutralMob nMob && entity.level() instanceof ServerLevel sl) {
-            UUID uuid = nMob.getPersistentAngerTarget();
-            if (uuid != null && isInfiniteModule(sl.getEntity(uuid))) {
-                nMob.stopBeingAngry();
+            if (!(entity instanceof Mob mob)) {
+                return;
             }
-        }
+            if (isInfiniteModule(mob.getTarget())) {
+                mob.setTarget(null);
+                if (mob.targetSelector != null) {
+                    mob.targetSelector.getAvailableGoals().stream().filter(WrappedGoal::isRunning).forEach(wrappedGoal -> {
+                        if (wrappedGoal.getGoal() instanceof TargetGoal tg)
+                            tg.stop();
+                    });
+                }
+            }
 
-        if (isInfiniteModule(mob.getLastHurtByMob())) {
-            mob.setLastHurtByMob(null);
-            mob.setLastHurtByPlayer(null);
+            if (entity instanceof NeutralMob nMob && entity.level() instanceof ServerLevel sl) {
+                UUID uuid = nMob.getPersistentAngerTarget();
+                if (uuid != null && isInfiniteModule(sl.getEntity(uuid))) {
+                    nMob.stopBeingAngry();
+                }
+            }
+
+            if (isInfiniteModule(mob.getLastHurtByMob())) {
+                mob.setLastHurtByMob(null);
+                mob.setLastHurtByPlayer(null);
+            }
         }
     }
 
 
     @SubscribeEvent
     public void isInfiniteModule(LivingChangeTargetEvent event) {
-        LivingEntity base = event.getOriginalTarget();
+        LivingEntity base = event.getOriginalAboutToBeSetTarget();
         if (isInfiniteModule(base)) {
             event.setCanceled(true);
         }
     }
-
-    //如果实体的当前hp超出hp最大值...则重新设置为hp最大值
-    //太怪了
-    @SubscribeEvent
-    public void HPreset(LivingEvent.LivingTickEvent event){
-        LivingEntity base = event.getEntity();
-        if (base != null){
-            if (base.getHealth() > base.getMaxHealth()){
-                base.setHealth(base.getMaxHealth());
-            }
-        }
-    }
-
 }

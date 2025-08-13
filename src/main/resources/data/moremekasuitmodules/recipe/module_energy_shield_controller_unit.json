@@ -1,0 +1,230 @@
+{
+  "type": "draconicevolution:fusion_crafting",
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_energy_shield_controller_unit"
+  },
+  "catalyst": {
+    "item": "mekanism:module_base"
+  },
+  "ingredients": [
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:alloys/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:circuits/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:alloys/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:circuits/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:energy_tablet"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:energy_tablet"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/polonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configurator"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/polonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configurator"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_control"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_control"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configuration_card"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configuration_card"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_control"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_control"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/polonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configurator"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/polonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:configurator"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:energy_tablet"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/antimatter"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:energy_tablet"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:alloys/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:circuits/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:alloys/ultimate"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:circuits/ultimate"
+      }
+    }
+  ],
+  "techLevel": "chaotic",
+  "totalEnergy": 40000000000
+}

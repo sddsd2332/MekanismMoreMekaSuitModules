@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_quantum_reconstruction_unit"
+  },
+  "pattern": [
+    "EDE",
+    "CBC",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "mekanism:pellet_antimatter"
+    },
+    "B": {
+      "item": "mekanism:module_base"
+    },
+    "C": {
+      "item": "mekanism:teleportation_core"
+    },
+    "D": {
+      "item": "minecraft:echo_shard"
+    },
+    "E": {
+      "tag": "c:alloys/ultimate"
+    }
+  }
+}

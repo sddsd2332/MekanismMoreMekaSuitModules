@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 
 //护盾提供程序
 //使用DR2版本，但是只保留部分
+//使用能力系统？
 public interface IShieldProvider {
 
     //护盾保护点数
@@ -17,14 +18,14 @@ public interface IShieldProvider {
     int getEnergyPerProtectionPoint();
 
     //能量消耗使用
-    void modifyEnergy(ItemStack stack, int modify, LivingEntity entity);
+    void modifyEnergy(ItemStack stack, long modify, LivingEntity entity);
 
     //是否启用护盾
     boolean isEnableShield(ItemStack stack, LivingEntity entity);
 
     //物品当前能量
-    int getEnergyStored(ItemStack stack);
+    long getEnergyStored(ItemStack stack);
 
     //物品最大能量
-    int getMaxEnergyStored(ItemStack stack);
+    long getMaxEnergyStored(ItemStack stack);
 }

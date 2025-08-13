@@ -1,8 +1,8 @@
 package moremekasuitmodules.common;
 
-import mekanism.common.util.ItemDataUtils;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.item.interfaces.IShieldProvider;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -10,11 +10,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ShieldProviderHandler {
 
     //先计算护盾能否承受，在计算盔甲
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onPlayerAttacked(LivingAttackEvent event) {
+    public void onPlayerAttacked(LivingIncomingDamageEvent event) {
         if (!(event.getEntity() instanceof Player player) || event.isCanceled() || event.getAmount() <= 0) {
             return;
         }
@@ -68,8 +68,10 @@ public class ShieldProviderHandler {
             totalAbsorbed += absorbed;
             summery.allocation[i] -= absorbed;
             remainingPoints += summery.allocation[i];
-            ItemDataUtils.setDouble(armorPiece, "ProtectionPoints", summery.allocation[i]);
-            ItemDataUtils.setDouble(armorPiece, "ShieldEntropy", newEntropy);
+            armorPiece.set(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, summery.allocation[i]);
+            armorPiece.set(MoreMekaSuitModulesDataComponents.SHIELD_ENTROPY, newEntropy);
+            //   ItemDataUtils.setDouble(armorPiece, "ProtectionPoints", summery.allocation[i]);
+            //     ItemDataUtils.setDouble(armorPiece, "ShieldEntropy", newEntropy);
         }
 
         if (remainingPoints > 0) {
@@ -93,7 +95,7 @@ public class ShieldProviderHandler {
         }
         ArmorSummery summery = new ArmorSummery().getSummery(player);
 
-        if (summery == null ) {
+        if (summery == null) {
             return;
         }
 
@@ -103,7 +105,7 @@ public class ShieldProviderHandler {
             return;
         }
 
-        int[] charge = new int[summery.armorStacks.size()];
+        long[] charge = new long[summery.armorStacks.size()];
         long totalCharge = 0;
         for (int i = 0; i < summery.armorStacks.size(); i++) {
             if (!summery.armorStacks.get(i).isEmpty() && summery.armorStacks.get(i).getItem() instanceof IShieldProvider provider) {
@@ -118,7 +120,7 @@ public class ShieldProviderHandler {
 
         for (int i = 0; i < summery.armorStacks.size(); i++) {
             if (!summery.armorStacks.get(i).isEmpty() && summery.armorStacks.get(i).getItem() instanceof IShieldProvider provider) {
-                provider.modifyEnergy(summery.armorStacks.get(i), (int) ((charge[i] / (double) totalCharge) * 10000000L), player);
+                provider.modifyEnergy(summery.armorStacks.get(i), ((charge[i] / totalCharge) * 10000000), player);
             }
         }
 
@@ -128,9 +130,8 @@ public class ShieldProviderHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) return;
-        Player player = event.player;
+    public void onPlayerTick(PlayerTickEvent.Pre event) {
+        Player player = event.getEntity();
         ArmorSummery summery = new ArmorSummery().getSummery(player);
         tickShield(summery, player);
     }
@@ -163,20 +164,22 @@ public class ShieldProviderHandler {
             }
             double maxForPiece = provider.getProtectionPoints(stack);
             int energyAmount = provider.getEnergyPerProtectionPoint();
-            provider.modifyEnergy(stack, (int) (((double) summery.energyAllocation[i] / (double) summery.totalEnergyStored) * (totalPointsToAdd * energyAmount)), player);
+            provider.modifyEnergy(stack, ((summery.energyAllocation[i] / summery.totalEnergyStored) * (long) (totalPointsToAdd * energyAmount)), player);
             double pointsForPiece = (summery.pointsDown[i] / Math.max(1, summery.maxProtectionPoints - summery.protectionPoints)) * totalPointsToAdd;
             summery.allocation[i] += pointsForPiece;
             if (summery.allocation[i] > maxForPiece || maxForPiece - summery.allocation[i] < 0.1F) {
                 summery.allocation[i] = maxForPiece;
             }
-            ItemDataUtils.setDouble(stack, "ProtectionPoints", summery.allocation[i]);
+            stack.set(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, summery.allocation[i]);
+            //  ItemDataUtils.setDouble(stack, "ProtectionPoints", summery.allocation[i]);
             if (player.invulnerableTime <= 0) {//TODO Increase this delay (Store the delay in forge entity nbt)
-                ItemDataUtils.setDouble(stack, "ShieldEntropy", summery.entropy);
+                stack.set(MoreMekaSuitModulesDataComponents.SHIELD_ENTROPY, summery.entropy);
+                //         ItemDataUtils.setDouble(stack, "ShieldEntropy", summery.entropy);
             }
         }
     }
 
-    public float applyModDamageAdjustments(ArmorSummery summery, LivingAttackEvent event) {
+    public float applyModDamageAdjustments(ArmorSummery summery, LivingIncomingDamageEvent event) {
         if (summery == null) {
             return event.getAmount();
         }
@@ -199,7 +202,7 @@ public class ShieldProviderHandler {
     /**
      * @return true if the damage was blocked
      */
-    private boolean applyArmorDamageBlocking(LivingAttackEvent event, ArmorSummery summery) {
+    private boolean applyArmorDamageBlocking(LivingIncomingDamageEvent event, ArmorSummery summery) {
         if (summery == null) {
             return false;
         }
@@ -257,7 +260,7 @@ public class ShieldProviderHandler {
         /**
          * RF stored in each armor piece
          */
-        public int[] energyAllocation;
+        public long[] energyAllocation;
 
         public ArmorSummery getSummery(Player player) {
             List<ItemStack> armorStacks = new ArrayList<>(player.getInventory().armor);
@@ -266,14 +269,14 @@ public class ShieldProviderHandler {
             allocation = new double[armorStacks.size()];
             this.armorStacks = NonNullList.withSize(armorStacks.size(), ItemStack.EMPTY);
             pointsDown = new double[armorStacks.size()];
-            energyAllocation = new int[armorStacks.size()];
+            energyAllocation = new long[armorStacks.size()];
             for (int i = 0; i < armorStacks.size(); i++) {
                 ItemStack stack = armorStacks.get(i);
                 if (stack.isEmpty() || !(stack.getItem() instanceof IShieldProvider armor)) continue;
                 pieces++;
-                allocation[i] = ItemDataUtils.getDouble(stack, "ProtectionPoints");
+                allocation[i] = stack.getOrDefault(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, 0D); //ItemDataUtils.getDouble(stack, "ProtectionPoints");
                 protectionPoints += allocation[i];
-                totalEntropy += ItemDataUtils.getDouble(stack, "ShieldEntropy");
+                totalEntropy += stack.getOrDefault(MoreMekaSuitModulesDataComponents.SHIELD_ENTROPY, 0D);//itemDataUtils.getDouble(stack, "ShieldEntropy");
                 this.armorStacks.set(i, stack);
                 totalRecoveryPoints += armor.getRecoveryRate(stack); //UpgradeHelper.getUpgradeLevel(stack, ToolUpgrade.SHIELD_RECOVERY);
                 double maxPoints = armor.getProtectionPoints(stack);
@@ -301,3 +304,4 @@ public class ShieldProviderHandler {
     }
 
 }
+

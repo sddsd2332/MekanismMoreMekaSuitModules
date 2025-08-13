@@ -8,8 +8,8 @@ import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class ClientTickHandler {
 
@@ -17,7 +17,7 @@ public class ClientTickHandler {
 
     @SubscribeEvent
     public void GuiScreenEvent(ScreenEvent.Opening event) {
-        if (!MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
+        if (MoreModulesConfig.config.isLoaded() &&!MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
             return;
         }
         if (event.getNewScreen() instanceof DeathScreen) {

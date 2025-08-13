@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_smart_shielding_unit"
+  },
+  "pattern": [
+    "BEB",
+    "FDF",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "B": {
+      "tag": "c:glass_panes/black"
+    },
+    "E": {
+      "tag": "c:circuits/ultimate"
+    },
+    "D": {
+      "item": "mekanism:module_base"
+    },
+    "F": {
+      "tag": "c:wool/black"
+    }
+  }
+}

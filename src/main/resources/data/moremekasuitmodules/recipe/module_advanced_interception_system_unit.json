@@ -1,0 +1,326 @@
+{
+  "type": "draconicevolution:fusion_crafting",
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_advanced_interception_system_unit"
+  },
+  "catalyst": {
+    "item": "mekanism:module_base"
+  },
+  "ingredients": [
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:dragon_heart"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaos_shard"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:dragon_heart"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaos_shard"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaotic_chestpiece"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaotic_chestpiece"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_large_shield_capacity"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_recovery"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_large_shield_capacity"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_recovery"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_controller_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_undying"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_controller_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_undying"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_large_shield_capacity"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_recovery"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_large_shield_capacity"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:item_chaotic_shield_recovery"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaotic_chestpiece"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_energy_shield_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaotic_chestpiece"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:dragon_heart"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaos_shard"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:dragon_heart"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "draconicevolution:chaos_shard"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "tag": "c:pellets/plutonium"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    },
+    {
+      "consume": true,
+      "ingredient": {
+        "item": "mekanism:ultimate_induction_cell"
+      }
+    }
+  ],
+  "techLevel": "chaotic",
+  "totalEnergy": 45000000000000
+}

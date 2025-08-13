@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_band_of_aura_unit"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:ingots/terrasteel"
+    },
+    "B": {
+      "item": "botania:rune_mana"
+    },
+    "C": {
+      "item": "botania:aura_ring_greater"
+    },
+    "D": {
+      "item": "mekanism:module_base"
+    }
+  }
+}

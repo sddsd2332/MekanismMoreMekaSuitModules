@@ -1,86 +1,87 @@
 package moremekasuitmodules.common.content.gear;
 
+import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
 import mekanism.api.annotations.NothingNullByDefault;
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
-import mekanism.api.gear.config.IModuleConfigItem;
-import mekanism.api.gear.config.ModuleBooleanData;
-import mekanism.api.gear.config.ModuleConfigItemCreator;
-import mekanism.api.gear.config.ModuleEnumData;
-import mekanism.api.math.FloatingLong;
+import mekanism.api.gear.IModuleContainer;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import mekanism.common.MekanismLang;
-import moremekasuitmodules.common.MoreMekaSuitModulesLang;
+import mekanism.common.Mekanism;
+import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.FakePlayer;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.IntFunction;
 
 @ParametersAreNotNullByDefault
-public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticAttackUnit> {
+public record ModuleAutomaticAttackUnit(boolean attackPlayer, boolean attackHostile, boolean attackNeutral,
+                                        boolean attackOther,
+                                        Range range) implements ICustomModule<ModuleAutomaticAttackUnit> {
 
-    private IModuleConfigItem<Boolean> attackPlayer;
-    private IModuleConfigItem<Boolean> attackHostile;
-    private IModuleConfigItem<Boolean> attackNeutral;
-    private IModuleConfigItem<Boolean> attackOther;
-    private IModuleConfigItem<Range> range;
+    public static final ResourceLocation ATTACK_PLAYER = MoreMekaSuitModules.rl("attack_player");
+    public static final ResourceLocation ATTACK_HOSTILE = MoreMekaSuitModules.rl("attack_hostile");
+    public static final ResourceLocation ATTACK_NEUTRAL = MoreMekaSuitModules.rl("attack_neutral");
+    public static final ResourceLocation ATTACK_OTHER = MoreMekaSuitModules.rl("attack_other");
+    public static final ResourceLocation RANGE = Mekanism.rl("range");
 
-    @Override
-    public void init(IModule<ModuleAutomaticAttackUnit> module, ModuleConfigItemCreator configItemCreator) {
-        attackPlayer = configItemCreator.createConfigItem("attack_player", MoreMekaSuitModulesLang.MODULE_ATTACK_PLAYER, new ModuleBooleanData(false));
-        attackHostile = configItemCreator.createConfigItem("attack_hostile", MoreMekaSuitModulesLang.MODULE_ATTACK_HOSTILE, new ModuleBooleanData());
-        attackNeutral = configItemCreator.createConfigItem("attack_neutral", MoreMekaSuitModulesLang.MODULE_ATTACK_NEUTRAL, new ModuleBooleanData(false));
-        attackOther = configItemCreator.createConfigItem("attack_other", MoreMekaSuitModulesLang.MODULE_ATTACK_OTHER, new ModuleBooleanData(false));
-        range = configItemCreator.createConfigItem("range", MekanismLang.MODULE_RANGE, new ModuleEnumData<>(Range.LOW, module.getInstalledCount() + 1));
+
+    public ModuleAutomaticAttackUnit(IModule<ModuleAutomaticAttackUnit> module) {
+        this(module.getBooleanConfigOrFalse(ATTACK_PLAYER), module.getBooleanConfigOrFalse(ATTACK_HOSTILE), module.getBooleanConfigOrFalse(ATTACK_NEUTRAL), module.getBooleanConfigOrFalse(ATTACK_OTHER), module.<Range>getConfigOrThrow(RANGE).get());
     }
 
-    private int getRange() {
-        return range.get().getRange();
-    }
 
     @Override
-    public void tickClient(IModule<ModuleAutomaticAttackUnit> module, Player player) {
-        tickServer(module, player);
+    public void tickClient(IModule<ModuleAutomaticAttackUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
+        tickServer(module, moduleContainer, stack, player);
     }
 
     @Override
-    public void tickServer(IModule<ModuleAutomaticAttackUnit> module, Player player) {
-        if (range.get() == Range.OFF) {
+    public void tickServer(IModule<ModuleAutomaticAttackUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
+        if (range == Range.OFF) {
             return;
         }
-        float size = getRange();
-        FloatingLong usage = MoreModulesConfig.config.mekaSuitEnergyUsageItemAttack.get().multiply(getRange());
-        boolean free = usage.isZero() || player.isCreative();
-        IEnergyContainer energyContainer = free ? null : module.getEnergyContainer();
-        if (free || (energyContainer != null && energyContainer.getEnergy().greaterOrEqual(usage))) {
+        float size = range.getRange();
+        long usage = MoreModulesConfig.config.mekaSuitEnergyUsageItemAttack.get() * range.getRange();
+        boolean free = usage == 0L || player.isCreative();
+        IEnergyContainer energyContainer = free ? null : module.getEnergyContainer(stack);
+        if (free || (energyContainer != null && energyContainer.getEnergy() >= usage)) {
             List<LivingEntity> all = player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(size));
             List<LivingEntity> canAttackList = new ArrayList<>();
             for (LivingEntity allEntity : all) {
                 //排除是玩家
                 if (!(allEntity instanceof Player)) {
                     //如果带有怪物标签,但不是中立生物
-                    if (attackHostile.get() && allEntity instanceof Enemy && !(allEntity instanceof NeutralMob)) {
+                    if (attackHostile && allEntity instanceof Enemy && !(allEntity instanceof NeutralMob)) {
                         canAttackList.add(allEntity);
                         //如果是中立生物
-                    } else if (attackNeutral.get() && allEntity instanceof NeutralMob) {
+                    } else if (attackNeutral && allEntity instanceof NeutralMob) {
                         canAttackList.add(allEntity);
                         //剩余其他生物
-                    } else if (attackOther.get()) {
+                    } else if (attackOther) {
                         canAttackList.add(allEntity);
                     }
                     //如果是玩家，但不是假玩家
-                } else if (attackPlayer.get() && allEntity instanceof Player isplayer && !(isplayer instanceof FakePlayer)) {
+                } else if (attackPlayer && allEntity instanceof Player isplayer && !(isplayer instanceof FakePlayer)) {
                     //如果攻击列表中包含该模块的玩家，则跳过
                     if (!isplayer.equals(player)) {
                         canAttackList.add(isplayer);
@@ -92,12 +93,12 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
                     if (attackList.isAlive()) {
                         if (free) {
                             attackEntityFrom(player, attackList);
-                        } else if (module.useEnergy(player, energyContainer, usage, true).isZero()) {
+                        } else if (module.useEnergy(player, energyContainer, usage, true) == 0L) {
                             //If we can't actually extract energy, exit
                             break;
                         } else {
                             attackEntityFrom(player, attackList);
-                            if (energyContainer.getEnergy().smallerThan(usage)) {
+                            if (energyContainer.getEnergy() < usage) {
                                 //If after using energy, our energy is now smaller than how much we need to use, exit
                                 break;
                             }
@@ -119,17 +120,23 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
     }
 
     @NothingNullByDefault
-    public enum Range implements IHasTextComponent {
+    public enum Range implements IHasTextComponent, StringRepresentable {
         OFF(0),
         LOW(2),
         MED(4),
         HIGH(8),
         ULTRA(16);
 
+        public static final Codec<Range> CODEC = StringRepresentable.fromEnum(Range::values);
+        public static final IntFunction<Range> BY_ID = ByIdMap.continuous(Range::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
+        public static final StreamCodec<ByteBuf, Range> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Range::ordinal);
+
+        private final String serializedName;
         private final int range;
         private final Component label;
 
         Range(int boost) {
+            this.serializedName = name().toLowerCase(Locale.ROOT);
             this.range = boost;
             this.label = TextComponentUtil.getString(Float.toString(boost));
         }
@@ -142,5 +149,11 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
         public int getRange() {
             return range;
         }
+
+        @Override
+        public String getSerializedName() {
+            return serializedName;
+        }
     }
 }
+

@@ -41,7 +41,7 @@ public class MixinLevel {
         if (base != null) {
             ItemStack head = base.getItemBySlot(EquipmentSlot.HEAD);
             if (head.getItem() instanceof IModuleContainerItem item) {
-                IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module = item.getModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+                IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module = item.getEnabledModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
                 if (module != null) {
                     return module.getCustomInstance().getChunkRemove();
                 }

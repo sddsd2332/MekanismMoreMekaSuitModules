@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "c:pellets/polonium"
+    },
+    "B": {
+      "tag": "c:nether_stars"
+    },
+    "C": {
+      "item": "mekanism:module_base"
+    },
+    "D": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "E": {
+      "tag" : "c:circuits/ultimate"
+    },
+    "F": {
+      "tag": "c:alloys/ultimate"
+    }
+  },
+  "pattern": [
+    "BAB",
+    "DCD",
+    "EFE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_emergency_rescue_unit"
+  }
+}

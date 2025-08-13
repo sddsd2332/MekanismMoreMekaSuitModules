@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "c:nether_stars"
+    },
+    "A": {
+      "item": "mekanism:canteen"
+    },
+    "B": {
+      "item": "mekanism:module_base"
+    },
+    "D": {
+      "tag": "c:alloys/ultimate"
+    },
+    "E": {
+      "tag": "c:circuits/ultimate"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "ABA",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_health_regeneration_unit"
+  }
+}

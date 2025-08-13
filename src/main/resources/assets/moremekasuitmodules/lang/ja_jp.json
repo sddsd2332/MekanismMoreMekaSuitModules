@@ -10,6 +10,7 @@
   "description.moremekasuitmodules.automatic_attack_unit": "プレイヤーの範囲内の全ての生物を自動的に攻撃します。",
   "description.moremekasuitmodules.power_enhancement_unit":"着用者の攻撃速度と攻撃力を増加させます。",
   "description.moremekasuitmodules.high_speed_cooling_unit": "冷却アイテムの使用を加速します。",
+  "description.moremekasuitmodules.quantum_reconstruction_unit": "量子レベルで物質を解体・再構成することで、トンネル効果によってスペクテイターモードのようにブロックを透過することができるようになります。",
   "description.moremekasuitmodules.hp_boots_unit": "着用者の最大体力を増加させます。",
 
   "module.moremekasuitmodules.health_regeneration_unit": "体力再生ユニット",
@@ -23,6 +24,7 @@
   "module.moremekasuitmodules.automatic_attack_unit": "全自動攻撃ユニット",
   "module.moremekasuitmodules.power_enhancement_unit": "火力強化ユニット",
   "module.moremekasuitmodules.high_speed_cooling_unit": "冷却加速ユニット",
+  "module.moremekasuitmodules.quantum_reconstruction_unit":"量子再構成ユニット",
   "module.moremekasuitmodules.hp_boots_unit": "体力強化ユニット",
 
   "constants.moremekasuitmodules.mod_name": "More MekaSuit Modules",
@@ -42,6 +44,7 @@
   "module.moremekasuitmodules.supply_curios": "Curiosに供給",
   "module.moremekasuitmodules.emergency_rescue": "着用者に重大ダメージを確認！ユニットを起動します。",
   "module.moremekasuitmodules.shield_depleted": "[警告]着用者に重大ダメージを確認！",
+  "module.moremekasuitmodules.phase_through_blocks": "ブロック透過",
 
   "description.moremekasuitmodules.band_of_aura_unit": "マナが5マナ/ティックの速度で生成され、マナ保存可能アイテムに伝達、保存されます。",
   "description.moremekasuitmodules.basic_band_of_aura_unit":"マナが10マナ/ティックの速度で生成され、マナ保存可能アイテムに伝達、保存されます。",

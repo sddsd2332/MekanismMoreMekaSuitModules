@@ -2,30 +2,29 @@ package moremekasuitmodules.client;
 
 import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD;
 import moremekasuitmodules.common.MoreMekaSuitModules;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.common.NeoForge;
 
-@Mod.EventBusSubscriber(modid = MoreMekaSuitModules.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+
+@EventBusSubscriber(modid = MoreMekaSuitModules.MODID, value = Dist.CLIENT)
 public class ClientRegistration {
-
 
     private ClientRegistration() {
     }
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
+        NeoForge.EVENT_BUS.register(new ClientTickHandler());
     }
 
 
     @SubscribeEvent
-    public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "shield_hud", MoreMekaSuitModulesHUD.INSTANCE);
+    public static void registerOverlays(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.HOTBAR, MoreMekaSuitModules.rl("shield_hud"), MoreMekaSuitModulesHUD.INSTANCE);
     }
-
 }

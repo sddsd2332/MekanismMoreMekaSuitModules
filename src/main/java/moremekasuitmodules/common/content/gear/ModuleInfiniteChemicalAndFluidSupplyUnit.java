@@ -3,85 +3,73 @@ package moremekasuitmodules.common.content.gear;
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
-import mekanism.api.gear.config.IModuleConfigItem;
-import mekanism.api.gear.config.ModuleBooleanData;
-import mekanism.api.gear.config.ModuleConfigItemCreator;
+import mekanism.api.gear.IModuleContainer;
 import mekanism.common.Mekanism;
 import mekanism.common.integration.curios.CuriosIntegration;
-import moremekasuitmodules.common.MoreMekaSuitModulesLang;
+import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @ParametersAreNotNullByDefault
-public class ModuleInfiniteChemicalAndFluidSupplyUnit implements ICustomModule<ModuleInfiniteChemicalAndFluidSupplyUnit> {
+public record ModuleInfiniteChemicalAndFluidSupplyUnit(boolean isArmor, boolean isInventory, boolean isOffhand,
+                                                       boolean isCurios) implements ICustomModule<ModuleInfiniteChemicalAndFluidSupplyUnit> {
 
-    private IModuleConfigItem<Boolean> isArmor;
-    private IModuleConfigItem<Boolean> isInventory;
-    private IModuleConfigItem<Boolean> isOffhand;
-    private IModuleConfigItem<Boolean> isCurios;
+    public static final ResourceLocation SUPPLY_ARMOR = MoreMekaSuitModules.rl("supply_armor");
+    public static final ResourceLocation SUPPLY_INVENTORY = MoreMekaSuitModules.rl("supply_inventory");
+    public static final ResourceLocation SUPPLY_OFFHAND = MoreMekaSuitModules.rl("supply_offhand");
+    public static final ResourceLocation SUPPLY_CURIOS = MoreMekaSuitModules.rl("supply_curios");
 
-
-    @Override
-    public void init(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, ModuleConfigItemCreator configItemCreator) {
-        isArmor = configItemCreator.createConfigItem("armor_supply", MoreMekaSuitModulesLang.MODULE_SUPPLY_ARMOR, new ModuleBooleanData());
-        isInventory = configItemCreator.createConfigItem("inventory_supply", MoreMekaSuitModulesLang.MODULE_SUPPLY_INVENTORY, new ModuleBooleanData(false));
-        isOffhand = configItemCreator.createConfigItem("offhand_supply", MoreMekaSuitModulesLang.MODULE_SUPPLY_OFFHAND, new ModuleBooleanData(false));
-        if (Mekanism.hooks.CuriosLoaded) {
-            isCurios = configItemCreator.createConfigItem("curios_supply", MoreMekaSuitModulesLang.MODULE_SUPPLY_CURIOS, new ModuleBooleanData(false));
-        }
-
+    public ModuleInfiniteChemicalAndFluidSupplyUnit(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module) {
+        this(module.getBooleanConfigOrFalse(SUPPLY_ARMOR), module.getBooleanConfigOrFalse(SUPPLY_INVENTORY), module.getBooleanConfigOrFalse(SUPPLY_OFFHAND), Mekanism.hooks.curios.isLoaded() && module.getBooleanConfigOrFalse(SUPPLY_CURIOS));
     }
 
     @Override
-    public void tickClient(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, Player player) {
-        this.tickServer(module, player);
+    public void tickClient(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
+        this.tickServer(module, moduleContainer, stack, player);
     }
 
     @Override
-    public void tickServer(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, Player player) {
+    public void tickServer(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, IModuleContainer moduleContainer, ItemStack item, Player player) {
         if (module.isEnabled()) {
             List<ItemStack> inventory = new ArrayList<>();
-            if (isArmor.get()) {
+            if (isArmor) {
                 inventory.addAll(player.getInventory().armor);
             }
-            if (isInventory.get()) {
+            if (isInventory) {
                 inventory.addAll(player.getInventory().items);
             }
-            if (isOffhand.get()) {
+            if (isOffhand) {
                 inventory.addAll(player.getInventory().offhand);
             }
-            if (Mekanism.hooks.CuriosLoaded) {
-                if (isCurios.get()) {
+            if (Mekanism.hooks.curios.isLoaded()) {
+                if (isCurios) {
                     getCurios(inventory, player);
                 }
             }
+
             if (!inventory.isEmpty()) {
                 inventory.forEach(stack -> {
                     MoreMekaSuitModulesUtils.addFluidStack(stack, true);
-                    MoreMekaSuitModulesUtils.addGasStack(stack, true);
-                    MoreMekaSuitModulesUtils.addInfuseStack(stack, true);
-                    MoreMekaSuitModulesUtils.addPigmentStack(stack, true);
-                    MoreMekaSuitModulesUtils.addSlurryStack(stack, true);
+                    MoreMekaSuitModulesUtils.addChemicals(stack, true);
                 });
             }
         }
     }
 
+
     public void getCurios(List<ItemStack> stacks, Player player) {
-        Optional<? extends IItemHandler> invOptional = CuriosIntegration.getCuriosInventory(player);
-        if (invOptional.isPresent()) {
-            IItemHandler inv = invOptional.get();
-            for (int i = 0, slots = inv.getSlots(); i < slots; i++) {
-                stacks.add(inv.getStackInSlot(i));
+        IItemHandler invOptional = CuriosIntegration.getCuriosInventory(player);
+        if (invOptional != null) {
+            for (int i = 0, slots = invOptional.getSlots(); i < slots; i++) {
+                stacks.add(invOptional.getStackInSlot(i));
             }
         }
     }
-
 
 }
