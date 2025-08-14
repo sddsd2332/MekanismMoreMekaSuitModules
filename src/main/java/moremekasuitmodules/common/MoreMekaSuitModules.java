@@ -5,7 +5,6 @@ import mekanism.common.Mekanism;
 import mekanism.common.base.IModModule;
 import mekanism.common.config.MekanismModConfig;
 import mekanism.common.lib.Version;
-import mekanism.common.registries.MekanismCreativeTabs;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.integration.MoreMekaSuitModulesHooks;
 import moremekasuitmodules.common.integration.botania.botaniaImcQueue;
@@ -19,9 +18,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -40,7 +37,7 @@ public class MoreMekaSuitModules implements IModModule {
 
     public final Version versionNumber;
 
-    public static  MoreMekaSuitModulesHooks hooks = new MoreMekaSuitModulesHooks();
+    public static MoreMekaSuitModulesHooks hooks = new MoreMekaSuitModulesHooks();
 
     public MoreMekaSuitModules() {
         Mekanism.addModule(instance = this);
@@ -110,7 +107,6 @@ public class MoreMekaSuitModules implements IModModule {
         MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         MinecraftForge.EVENT_BUS.register(new ShieldProviderHandler());
     }
-
 
 
     @Override

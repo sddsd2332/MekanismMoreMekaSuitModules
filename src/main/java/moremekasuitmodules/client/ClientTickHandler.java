@@ -17,7 +17,7 @@ public class ClientTickHandler {
 
     @SubscribeEvent
     public void GuiScreenEvent(ScreenEvent.Opening event) {
-        if (!MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
+        if (MoreModulesConfig.config.isLoaded() && !MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
             return;
         }
         if (event.getNewScreen() instanceof DeathScreen) {

@@ -61,7 +61,7 @@ public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements
 
     @Inject(method = "addItems", at = @At("TAIL"), remap = false)
     public void addALL(CreativeModeTab.Output tabOutput, CallbackInfo ci) {
-        if (MoreModulesConfig.config.addALLModueltoMekaSuit.get()) {
+        if (MoreModulesConfig.config.isLoaded() && MoreModulesConfig.config.addALLModueltoMekaSuit.get()) {
             ItemStack fullStack = new ItemStack((ItemMekaSuitArmor) (Object) this);
             MoreMekaSuitModulesUtils.setAllModule(fullStack);
             StorageUtils.getFilledEnergyVariant(fullStack, getMaxEnergy(fullStack));

@@ -1,6 +1,5 @@
 package moremekasuitmodules.common;
 
-import mekanism.api.gear.IModule;
 import mekanism.api.providers.IModuleDataProvider;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.config.MoreModulesConfig;

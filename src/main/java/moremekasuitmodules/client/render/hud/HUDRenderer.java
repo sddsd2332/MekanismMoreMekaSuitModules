@@ -10,7 +10,8 @@ import mekanism.common.config.MekanismConfig;
 import mekanism.common.content.gear.HUDElement;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.util.text.TextUtils;
-import moremekasuitmodules.common.ShieldProviderHandler;
+import moremekasuitmodules.common.ShieldProviderHandler.ArmorSummery;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -50,13 +51,16 @@ public class HUDRenderer {
         pose.popPose();
     }
 
-    private void renderMekaSuitEnergyShieldIcons(Player player, Font font, GuiGraphics guiGraphics, int color){
+    private void renderMekaSuitEnergyShieldIcons(Player player, Font font, GuiGraphics guiGraphics, int color) {
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
         pose.translate(10, 10, 0);
         ItemStack stack = player.getItemBySlot(EquipmentSlot.HEAD);
         if (stack.getItem() instanceof ItemMekaSuitArmor armor && armor.getType().equals(ArmorItem.Type.HELMET)) {
-            ShieldProviderHandler.ArmorSummery summery = new ShieldProviderHandler.ArmorSummery().getSummery(player);
+            if (!armor.hasModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                return;
+            }
+            ArmorSummery summery = new ArmorSummery().getSummery(player);
             if (summery != null) {
                 double ratio = summery.protectionPoints / summery.maxProtectionPoints;
                 Component text = TextComponentUtil.build(TextComponentUtil.getString((float) summery.protectionPoints + "/" + (float) summery.maxProtectionPoints)).append(" (").append(TextUtils.getPercent(ratio)).append(")");

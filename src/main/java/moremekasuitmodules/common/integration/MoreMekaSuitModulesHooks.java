@@ -1,14 +1,5 @@
 package moremekasuitmodules.common.integration;
 
-import mekanism.common.registries.MekanismCreativeTabs;
-import moremekasuitmodules.common.integration.botania.botaniaImcQueue;
-import moremekasuitmodules.common.integration.botania.botaniaModules;
-import moremekasuitmodules.common.integration.botania.botaniaModulesItem;
-import moremekasuitmodules.common.integration.iceandfire.iceAndFireModules;
-import moremekasuitmodules.common.integration.iceandfire.iceAndFireModulesItem;
-import moremekasuitmodules.common.integration.iceandfire.iceandfireImcQueue;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 
 public final class MoreMekaSuitModulesHooks {
@@ -33,7 +24,6 @@ public final class MoreMekaSuitModulesHooks {
         BotaniaLoaded = modList.isLoaded(BOTANIA_MOD_ID);
         IELoaded = modList.isLoaded(IE_MOD_ID);
     }
-
 
 
 }

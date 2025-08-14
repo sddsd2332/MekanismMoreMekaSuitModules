@@ -65,6 +65,7 @@ public class MoreMekaSuitModulesUtils {
                 setModule(stack, module);
             }
         }
+
     }
 
     public static void setModule(ItemStack stack, ModuleData<?> type) {
