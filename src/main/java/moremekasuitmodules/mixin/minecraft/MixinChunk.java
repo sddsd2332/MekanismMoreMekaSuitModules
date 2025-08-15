@@ -1,8 +1,10 @@
 package moremekasuitmodules.mixin.minecraft;
 
 import com.google.common.base.Predicate;
+import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteInterceptionAndRescueSystemUnit;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -44,7 +46,12 @@ public abstract class MixinChunk implements net.minecraftforge.common.capabiliti
     private boolean isInfiniteModule(EntityLivingBase base) {
         if (base != null) {
             ItemStack head = base.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            return head.getItem() instanceof IModuleContainerItem item && item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+            if (head.getItem() instanceof IModuleContainerItem item) {
+                IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module = item.getModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+                if (module != null) {
+                    return module.getCustomInstance().getChunkRemove();
+                }
+            }
         }
         return false;
     }

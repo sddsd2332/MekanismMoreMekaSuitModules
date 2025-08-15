@@ -1,36 +1,39 @@
 {
-      "result": {
-            "item": "moremekasuitmodules:module_high_speed_cooling_unit"
-      },
-      "pattern": [
-            "BAB",
-            "DCD",
-            "EFE"
-      ],
-      "type": "mekanism:ore_shaped",
-      "key": {
-            "A": {
-                  "ore": "alloyUltimate",
-                  "type": "forge:ore_dict"
-            },
-            "B": {
-                  "ore": "circuitUltimate",
-                  "type": "forge:ore_dict"
-            },
-            "C": {
-                  "item": "mekanism:modulebase"
-            },
-            "D": {
-                  "type": "minecraft:item_nbt",
-                  "item": "forge:bucketfilled",
-                  "nbt": {"FluidName":"liquidsodium", "Amount": 1000}
-            },
-            "E": {
-                  "ore": "PoloniumPellet",
-                  "type": "forge:ore_dict"
-            },
-            "F": {
-              "item": "mekanism:cosmicmatter"
-            }
+  "result": {
+    "item": "moremekasuitmodules:module_high_speed_cooling_unit"
+  },
+  "pattern": [
+    "BAB",
+    "DCD",
+    "EFE"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "ore": "alloyUltimate",
+      "type": "forge:ore_dict"
+    },
+    "B": {
+      "ore": "circuitUltimate",
+      "type": "forge:ore_dict"
+    },
+    "C": {
+      "item": "mekanism:modulebase"
+    },
+    "D": {
+      "type": "minecraft:item_nbt",
+      "item": "forge:bucketfilled",
+      "nbt": {
+        "FluidName": "liquidsodium",
+        "Amount": 1000
       }
+    },
+    "E": {
+      "ore": "PoloniumPellet",
+      "type": "forge:ore_dict"
+    },
+    "F": {
+      "item": "mekanism:cosmicmatter"
+    }
+  }
 }

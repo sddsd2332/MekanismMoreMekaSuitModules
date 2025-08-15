@@ -30,6 +30,7 @@ item.module_automatic_attack_unit.name=智能范围攻击单元
 item.module_power_enhancement_unit.name=动力增强单元
 item.module_high_speed_cooling_unit.name=加速冷却单元
 item.module_quantum_reconstruction_unit.name=量子重构单元
+item.module_hp_boots_unit.name=生命提升单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进救援系统单元
@@ -63,6 +64,7 @@ module.mekanism.automatic_attack_unit=智能范围攻击单元
 module.mekanism.power_enhancement_unit=动力增强单元
 module.mekanism.high_speed_cooling_unit=加速冷却单元
 module.mekanism.quantum_reconstruction_unit=量子重构单元
+module.mekanism.hp_boots_unit=生命提升单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -80,6 +82,7 @@ module.mekanism.wireless_terminal_mode=无线终端模式
 module.emergency_rescue.use=警告！使用者遭到强大的打击！已进行拦截！
 module.mekanism.damage_true_source_exclude=直接伤害来源排除
 module.mekanism.damage_true_source_exclude_indirect=间接伤害来源排除
+module.mekanism.chunk_remove=区块屏蔽
 module.mekanism.attack_player=攻击玩家
 module.mekanism.attack_hostile=攻击敌对生物
 module.mekanism.attack_friendly=攻击友善生物
@@ -117,6 +120,7 @@ description.mekanism.automatic_attack_unit=自动攻击玩家范围内的所有�
 description.mekanism.power_enhancement_unit=能够增强使用者的攻击速度和伤害
 description.mekanism.high_speed_cooling_unit=加速冷却物品的使用
 description.mekanism.quantum_reconstruction_unit=通过在量子水平上分解和重建物质，隧道效应使其能够像旁观者模式一样穿透块。
+description.mekanism.hp_boots_unit=提升使用者的最大生命值上限
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 
@@ -135,9 +139,8 @@ tooltip.chaos.resistance=混沌抗性
 tooltip.InfiniteDefense=无限防御
 
 tooltip.moremekasuitmodules.warning=警告：
-tooltip.moremekasuitmodules.rangeExclude=已自动开启范围排除，无法被选中
+tooltip.moremekasuitmodules.rangeExclude=已开启区块范围排除，无法被选中
 
 tooltip.moremekasuitmodules.damage_true_source_exclude=已启动直接伤害来源剔除
 tooltip.moremekasuitmodules.damage_true_source_exclude_indirect=已启动间接伤害来源剔除
 tooltip.moremekasuitmodules.damage_true_source_exclude.warning=该状态下无法对部分有伤害来源要求的实体无法造成伤害
-

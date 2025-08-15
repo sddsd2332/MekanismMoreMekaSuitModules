@@ -30,6 +30,7 @@ item.module_automatic_attack_unit.name=Automatic Attack Units
 item.module_power_enhancement_unit.name=Power enhancement unit
 item.module_high_speed_cooling_unit.name=Cooling unit boost
 item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
+item.module_hp_boots_unit.name=HP Enhancement Unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -63,6 +64,7 @@ module.mekanism.automatic_attack_unit=Automatic Attack Units
 module.mekanism.power_enhancement_unit=Power enhancement unit
 module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
+module.mekanism.hp_boots_unit=HP Enhancement Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -80,10 +82,12 @@ module.mekanism.wireless_terminal_mode=Wireless terminal mode
 module.emergency_rescue.use=Warn! The user has been hit hard! Intercepted!
 module.mekanism.damage_true_source_exclude=Exclusion of direct sources of harm
 module.mekanism.damage_true_source_exclude_indirect=Exclusion of indirect sources of damage.
+module.mekanism.chunk_remove=Chunks Remove
 module.mekanism.attack_player=Attack the player
 module.mekanism.attack_hostile=Attacks hostile mobs
 module.mekanism.attack_friendly=Attacks friendly mobs
 module.mekanism.phase_through_blocks=Through Blocks
+
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
 description.mekanism.advanced_interception_system_unit=The upgraded version of the emergency rescue unit will not be consumed
@@ -117,6 +121,7 @@ description.mekanism.automatic_attack_unit=Automatically attack all creatures wi
 description.mekanism.power_enhancement_unit=Increases the user's attack speed and damage
 description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
 description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
+description.mekanism.hp_boots_unit=Increases the maximum maximum health of the user
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 
@@ -135,7 +140,7 @@ tooltip.chaos.resistance=Chaos Resistance
 tooltip.InfiniteDefense=Infinite Defense
 
 tooltip.moremekasuitmodules.warning=Warning：
-tooltip.moremekasuitmodules.rangeExclude=Scope exclusion is automatically turned on and cannot be selected
+tooltip.moremekasuitmodules.rangeExclude=Chunk range exclusion has been enabled and cannot be selected.
 
 tooltip.moremekasuitmodules.damage_true_source_exclude=The removal of direct sources of damage has been initiated.
 tooltip.moremekasuitmodules.damage_true_source_exclude_indirect=The removal of indirect sources of harm has been initiated.

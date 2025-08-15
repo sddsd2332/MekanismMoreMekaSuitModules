@@ -13,6 +13,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.PlayerSPPushOutOfBlocksEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -47,6 +48,24 @@ public class ClientTickHandler {
                             event.setCanceled(true);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void isPhaseThroughBlocks(PlayerSPPushOutOfBlocksEvent event) {
+        EntityPlayer player = event.getEntityPlayer();
+        //确保玩家是存活的 且玩家不在地面上
+        if (player != null && player.isEntityAlive() && !player.noClip) {
+            //获取胸部盔甲
+            ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            //如果是模块类型物品
+            if (!stack.isEmpty() && stack.getItem() instanceof IModuleContainerItem item) {
+                //如果启用了量子重建单元
+                if (item.isModuleEnabled(stack, MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT)) {
+                    //取消在方块内被推出
+                    event.setCanceled(true);
                 }
             }
         }

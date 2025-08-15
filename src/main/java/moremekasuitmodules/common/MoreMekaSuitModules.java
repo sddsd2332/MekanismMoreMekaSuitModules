@@ -139,7 +139,6 @@ public class MoreMekaSuitModules implements IModule {
 
         Item[] addMekaSuitModules = {MekanismItems.MEKASUIT_HELMET, MekanismItems.MEKASUIT_BODYARMOR, MekanismItems.MEKASUIT_PANTS, MekanismItems.MEKASUIT_BOOTS};
         for (Item stack : addMekaSuitModules) {
-
             if (Mekanism.hooks.DraconicEvolution) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT, MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
             }
@@ -155,7 +154,7 @@ public class MoreMekaSuitModules implements IModule {
             if (Loader.isModLoaded("thaumcraft")) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.MAGIC_OPTIMIZATION_UNIT);
             }
-            ModuleHelper.get().setSupported(stack,MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT);
+            ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT, MekaSuitMoreModules.HP_BOOTS_UNIT);
         }
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
@@ -174,7 +173,7 @@ public class MoreMekaSuitModules implements IModule {
         if (Mekanism.hooks.GC) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.THERMAL_PROTECTION_UNIT);
         }
-        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT, MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
+        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT, MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT, MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
 
         if (Mekanism.hooks.DraconicEvolution) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);

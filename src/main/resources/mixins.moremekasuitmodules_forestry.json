@@ -1,14 +1,14 @@
 {
-  "package": "moremekasuitmodules.mixin.thaumcraft",
+  "package": "moremekasuitmodules.mixin.forestry",
   "required": true,
   "refmap": "mixins.moremekasuitmodules.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinItemMekaSuitArmor",
-    "MixinToolEvents"
+    "MixinItemMekaSuitArmor"
   ],
   "server": [],
-  "client": []
+  "client": [
+  ]
 }

@@ -22,7 +22,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.event.PlayerSPPushOutOfBlocksEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -120,7 +119,7 @@ public class CommonPlayerTickHandler {
                             Death(player, isInfiniteModule);
                             //重新刷新玩家的位置 确保玩家在该位置
                             player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
-                            player.world.updateEntityWithOptionalForce(player, true);
+                            player.world.updateEntity(player);
                             sendMessage(player, isInfiniteModule, item, head);
                         }
                     }
@@ -251,7 +250,7 @@ public class CommonPlayerTickHandler {
     }
 
 
-    @SubscribeEvent //取消所有伤害
+    @SubscribeEvent  //取消所有伤害
     public void isInfiniteModule(LivingAttackEvent event) {
         EntityLivingBase base = event.getEntityLiving();
         if (isInfiniteModule(base)) {
@@ -260,7 +259,7 @@ public class CommonPlayerTickHandler {
     }
 
 
-    @SubscribeEvent //取消所有击退
+    @SubscribeEvent  //取消所有击退
     public void isInfiniteModule(LivingKnockBackEvent event) {
         EntityLivingBase base = event.getEntityLiving();
         if (isInfiniteModule(base)) {
@@ -269,7 +268,7 @@ public class CommonPlayerTickHandler {
     }
 
 
-    @SubscribeEvent //取消所有伤害2
+    @SubscribeEvent  //取消所有伤害2
     public void isInfiniteModule(LivingHurtEvent event) {
         EntityLivingBase base = event.getEntityLiving();
         if (isInfiniteModule(base)) {
@@ -277,7 +276,7 @@ public class CommonPlayerTickHandler {
         }
     }
 
-    @SubscribeEvent //取消所有伤害3
+    @SubscribeEvent  //取消所有伤害3
     public void isInfiniteModule(LivingDamageEvent event) {
         EntityLivingBase base = event.getEntityLiving();
         if (isInfiniteModule(base)) {
@@ -286,7 +285,7 @@ public class CommonPlayerTickHandler {
     }
 
 
-    @SubscribeEvent //取消所有死亡(玩家另外处理)
+    @SubscribeEvent  //取消所有死亡(玩家另外处理)
     public void isInfiniteModule(LivingDeathEvent event) {
         EntityLivingBase base = event.getEntityLiving();
         if (!(base instanceof EntityPlayer) && isInfiniteModule(base)) {
@@ -296,7 +295,7 @@ public class CommonPlayerTickHandler {
     }
 
 
-    @SubscribeEvent //如果玩家攻击目标带有无限模块，取消本次攻击
+    @SubscribeEvent  //如果玩家攻击目标带有无限模块，取消本次攻击
     public void isInfiniteModule(AttackEntityEvent event) {
         if (event.getTarget() instanceof EntityLivingBase base) {
             if (isInfiniteModule(base)) {
@@ -361,23 +360,5 @@ public class CommonPlayerTickHandler {
         }
     }
 
-
-    @SubscribeEvent
-    public void isPhaseThroughBlocks(PlayerSPPushOutOfBlocksEvent event) {
-        EntityPlayer player = event.getEntityPlayer();
-        //确保玩家是存活的 且玩家不在地面上
-        if (player != null && player.isEntityAlive() && !player.noClip) {
-            //获取胸部盔甲
-            ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-            //如果是模块类型物品
-            if (!stack.isEmpty() && stack.getItem() instanceof IModuleContainerItem item) {
-                //如果启用了量子重建单元
-                if (item.isModuleEnabled(stack, MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT)) {
-                    //取消在方块内被推出
-                    event.setCanceled(true);
-                }
-            }
-        }
-    }
 
 }

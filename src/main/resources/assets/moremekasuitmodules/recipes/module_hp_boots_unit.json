@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_hp_boots_unit"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EEE"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "B": {
+      "item": "minecraft:potion",
+      "nbt": {
+        "Potion": "minecraft:strong_regeneration"
+      },
+      "type": "mekanism:item_nbt"
+    },
+    "C": {
+      "item": "mekanism:module_health_regeneration_unit"
+    },
+    "D": {
+      "item": "mekanism:modulebase"
+    },
+    "E": {
+      "ore": "PoloniumPellet",
+      "type": "forge:ore_dict"
+    }
+  }
+}
