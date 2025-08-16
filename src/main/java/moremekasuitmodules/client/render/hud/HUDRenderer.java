@@ -10,7 +10,9 @@ import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD.DelayedStrin
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.util.text.TextUtils;
-import moremekasuitmodules.common.ShieldProviderHandler;
+import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.ShieldProviderHandler.ArmorSummery;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -61,7 +63,7 @@ public class HUDRenderer {
         Matrix4f matrix = new Matrix4f(pose.last().pose());
         ItemStack stack = player.getItemBySlot(EquipmentSlot.HEAD);
         if (stack.getItem() instanceof ItemMekaSuitArmor armor && armor.getType().equals(ArmorItem.Type.HELMET)) {
-            ShieldProviderHandler.ArmorSummery summery = new ShieldProviderHandler.ArmorSummery().getSummery(player);
+            ArmorSummery summery = new ArmorSummery().getSummery(player);
             if (summery != null) {
                 double ratio = summery.protectionPoints / summery.maxProtectionPoints;
                 Component text = TextComponentUtil.build(TextComponentUtil.getString((float) summery.protectionPoints + "/" + (float) summery.maxProtectionPoints)).append(" (").append(TextUtils.getPercent(ratio)).append(")");

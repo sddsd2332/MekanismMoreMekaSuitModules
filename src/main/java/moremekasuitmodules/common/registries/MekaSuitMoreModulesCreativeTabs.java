@@ -13,6 +13,7 @@ import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesLang;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.item.interfaces.IShieldProvider;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -78,6 +79,9 @@ public class MekaSuitMoreModulesCreativeTabs {
                     }
                     StorageUtils.getFilledEnergyVariant(stack);
                     MoreMekaSuitModulesUtils.addSupportedFluidsOrChemicals(stack);
+                    if (stack.getItem() instanceof IShieldProvider provider && stack.getItem() instanceof IModuleContainerItem container && container.hasModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                        stack.set(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, provider.getProtectionPoints(stack));
+                    }
                     output.accept(stack);
                 }
             }

@@ -3,7 +3,9 @@ package moremekasuitmodules.client.render.hud;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mekanism.client.gui.GuiUtils;
 import mekanism.common.config.MekanismConfig;
+import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.tags.MekanismTags;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -34,16 +36,16 @@ public class MoreMekaSuitModulesHUD implements LayeredDraw.Layer {
         if (player != null && !player.isSpectator() && !minecraft.options.hideGui && MekanismConfig.client.enableHUD.get()) {
             Font font = minecraft.font;
             List<DelayedString> delayedDraws = null;
-
             boolean reverseHud = MekanismConfig.client.reverseHUD.get();
             int maxTextHeight = graphics.guiHeight();
-            if (player.getItemBySlot(EquipmentSlot.HEAD).is(MekanismTags.Items.MEKASUIT_HUD_RENDERER)) {
+            if (player.getItemBySlot(EquipmentSlot.HEAD).is(MekanismTags.Items.MEKASUIT_HUD_RENDERER) && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof ItemMekaSuitArmor armor) {
                 if (delayedDraws == null) {
                     delayedDraws = new ArrayList<>();
                 }
-                hudRenderer.renderHUD(minecraft, graphics, font, delayedDraws, delta, graphics.guiWidth(), graphics.guiHeight(), maxTextHeight, reverseHud);
+                if (armor.hasModule(player.getItemBySlot(EquipmentSlot.HEAD), MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                    hudRenderer.renderHUD(minecraft, graphics, font, delayedDraws, delta, graphics.guiWidth(), graphics.guiHeight(), maxTextHeight, reverseHud);
+                }
             }
-
             if (delayedDraws != null && !delayedDraws.isEmpty()) {
                 for (DelayedString delayedDraw : delayedDraws) {
                     delayedDraw.draw(graphics, font);

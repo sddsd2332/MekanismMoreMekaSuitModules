@@ -29,7 +29,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_ENERGY_SUPPLY = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT, Rarity.EPIC);
     //无限拦截救援系统单元 不再受伤【创造物品】
     public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT, Rarity.EPIC);
-    //无限供能单元 （让MekaSuit始终充气体/流体）【创造物品】 //TODO
+    //无限供能单元 （让MekaSuit始终充气体/流体）【创造物品】
     public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_CHEMICAL_AND_FLUID_SUPPLY = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_CHEMICAL_AND_FLUID_SUPPLY_UNIT,Rarity.EPIC);
     //智能范围攻击单元 (WC 挂)
     public static final ItemRegistryObject<ItemModule> MODULE_AUTOMATIC_ATTACK = ITEMS.registerModule(MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT,Rarity.EPIC);
@@ -37,7 +37,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_POWER_ENHANCEMENT = ITEMS.registerModule(MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,Rarity.EPIC);
     //加速冷却单元(加速物品的冷却)
     public static final ItemRegistryObject<ItemModule> MODULE_HIGH_SPEED_COOLING = ITEMS.registerModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,Rarity.EPIC);
-
+    //量子重建单元
     public static final ItemRegistryObject<ItemModule> MODULE_QUANTUM_RECONSTRUCTION = ITEMS.registerModule(MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT,Rarity.EPIC);
     //生命提升单元
     public static final ItemRegistryObject<ItemModule> MODULE_HP_BOOTS = ITEMS.registerModule(MekaSuitMoreModules.HP_BOOTS_UNIT,Rarity.EPIC);
