@@ -11,7 +11,6 @@ import mekanism.common.content.gear.HUDElement;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.util.text.TextUtils;
 import moremekasuitmodules.common.ShieldProviderHandler.ArmorSummery;
-import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -57,9 +56,6 @@ public class HUDRenderer {
         pose.translate(10, 10, 0);
         ItemStack stack = player.getItemBySlot(EquipmentSlot.HEAD);
         if (stack.getItem() instanceof ItemMekaSuitArmor armor && armor.getType().equals(ArmorItem.Type.HELMET)) {
-            if (!armor.hasModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
-                return;
-            }
             ArmorSummery summery = new ArmorSummery().getSummery(player);
             if (summery != null) {
                 double ratio = summery.protectionPoints / summery.maxProtectionPoints;

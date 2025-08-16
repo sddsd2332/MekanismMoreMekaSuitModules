@@ -6,6 +6,7 @@ license="${mod_license}"
 modId="moremekasuitmodules"
 version="1.0.0"
 displayName="MekanismMoreMekaSuitModules"
+logoFile="logo.png"
 authors="sddsd2332"
 
 description='''${mod_description}'''
