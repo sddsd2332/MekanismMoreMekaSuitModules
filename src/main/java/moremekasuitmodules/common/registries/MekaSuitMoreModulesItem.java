@@ -36,4 +36,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_HIGH_SPEED_COOLING = ITEMS.registerModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
     //生命提升单元
     public static final ItemRegistryObject<ItemModule> MODULE_HP_BOOTS = ITEMS.registerModule(MekaSuitMoreModules.HP_BOOTS_UNIT);
+    //智能无线单元
+    public static final ItemRegistryObject<ItemModule> MODULE_QIO_WIRELESS = ITEMS.registerModule(MekaSuitMoreModules.QIO_WIRELESS_UNIT);
 }

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "moremekasuitmodules:module_qio_wireless_unit"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "AEA"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:alloys/ultimate"
+    },
+    "B": {
+      "item": "mekanism:portable_qio_dashboard"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "D": {
+      "item": "mekanism:module_base"
+    },
+    "E": {
+      "item": "mekanism:teleportation_core"
+    }
+  }
+}

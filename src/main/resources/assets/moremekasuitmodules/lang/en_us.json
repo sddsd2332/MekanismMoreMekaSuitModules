@@ -11,6 +11,7 @@
   "description.moremekasuitmodules.power_enhancement_unit":"Increases the user's attack speed and damage",
   "description.moremekasuitmodules.high_speed_cooling_unit": "Speed up the use of cooling items.",
   "description.moremekasuitmodules.hp_boots_unit": "Increases the maximum maximum health of the user",
+  "description.moremekasuitmodules.qio_wireless_unit": "Allows access to QIO storage systems",
 
   "module.moremekasuitmodules.health_regeneration_unit": "Health Regeneration Unit",
   "module.moremekasuitmodules.emergency_rescue_unit": "Emergency rescue unit",
@@ -24,6 +25,7 @@
   "module.moremekasuitmodules.power_enhancement_unit": "Power enhancement unit",
   "module.moremekasuitmodules.high_speed_cooling_unit": "Cooling unit boost",
   "module.moremekasuitmodules.hp_boots_unit": "HP Enhancement Unit",
+  "module.moremekasuitmodules.qio_wireless_unit": "QIO wireless unit",
 
   "constants.moremekasuitmodules.mod_name": "More MekaSuit Modules",
   "module.moremekasuitmodules.wireless_terminal": "Wireless terminal",
@@ -42,6 +44,7 @@
   "module.moremekasuitmodules.supply_curios": "Supply Curios",
   "module.moremekasuitmodules.emergency_rescue": "Warn! The user has been hit hard! Intercepted!",
   "module.moremekasuitmodules.shield_depleted": "Warning Critical Damage!!!",
+  "module.moremekasuitmodules.open_qio": "Open the QIO system",
 
   "description.moremekasuitmodules.band_of_aura_unit": "Mana can be slowly created at a rate of 5 mana/tick and stored in items that can carry mana",
   "description.moremekasuitmodules.basic_band_of_aura_unit":"Mana can be slowly created at a rate of 10 mana/tick and stored in items that can carry mana",

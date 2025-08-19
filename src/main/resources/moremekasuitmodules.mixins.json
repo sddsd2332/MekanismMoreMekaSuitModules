@@ -13,10 +13,16 @@
   },
   "mixins": [
     "iceandfire.MixinEntityGorgon",
+    "mekanism.MixinContainerTypeRegistryObject",
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
+    "mekanism.MixinMekanismItemContainerType",
+    "mekanism.MixinPacketGuiButtonPress",
+    "mekanism.MixinPacketGuiSetFrequency",
+    "mekanism.MixinSecurityUtils",
     "minecraft.MixinDamageSource",
     "minecraft.MixinLevel",
+    "minecraft.MixinLivingEntity",
     "minecraft.MixinMob"
   ]
 }

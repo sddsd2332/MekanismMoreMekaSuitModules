@@ -13,7 +13,9 @@ import moremekasuitmodules.common.integration.botania.botaniaModulesItem;
 import moremekasuitmodules.common.integration.iceandfire.iceAndFireModules;
 import moremekasuitmodules.common.integration.iceandfire.iceAndFireModulesItem;
 import moremekasuitmodules.common.integration.iceandfire.iceandfireImcQueue;
+import moremekasuitmodules.common.network.MoreMekaSuitModulesPacketHandler;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import moremekasuitmodules.common.registries.MekaSuitMoreModulesContainerTypes;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import net.minecraft.resources.ResourceLocation;
@@ -39,6 +41,8 @@ public class MoreMekaSuitModules implements IModModule {
 
     public static MoreMekaSuitModulesHooks hooks = new MoreMekaSuitModulesHooks();
 
+    private final MoreMekaSuitModulesPacketHandler packetHandler;
+
     public MoreMekaSuitModules() {
         Mekanism.addModule(instance = this);
         MoreModulesConfig.registerConfigs(ModLoadingContext.get());
@@ -49,6 +53,7 @@ public class MoreMekaSuitModules implements IModModule {
         modEventBus.addListener(this::imcQueue);
         MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
+        MekaSuitMoreModulesContainerTypes.CONTAINER_TYPES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded) {
 
         }
@@ -65,7 +70,11 @@ public class MoreMekaSuitModules implements IModModule {
 
         MekaSuitMoreModulesCreativeTabs.CREATIVE_TABS.register(modEventBus);
         versionNumber = new Version(ModLoadingContext.get().getActiveContainer());
+        packetHandler = new MoreMekaSuitModulesPacketHandler();
+    }
 
+    public static MoreMekaSuitModulesPacketHandler packetHandler() {
+        return instance.packetHandler;
     }
 
     public static ResourceLocation rl(String path) {
@@ -89,7 +98,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT,
                 MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT,
                 MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT,
-                MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
+                MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT,
+                MekaSuitMoreModules.QIO_WIRELESS_UNIT);
 
 
         //meka护甲
@@ -106,6 +116,7 @@ public class MoreMekaSuitModules implements IModModule {
     private void commonSetup(FMLCommonSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         MinecraftForge.EVENT_BUS.register(new ShieldProviderHandler());
+        packetHandler.initialize();
     }
 
 

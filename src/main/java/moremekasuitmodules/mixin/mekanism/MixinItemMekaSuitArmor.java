@@ -2,33 +2,53 @@ package moremekasuitmodules.mixin.mekanism;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import mekanism.api.NBTConstants;
 import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.IModule;
 import mekanism.api.math.FloatingLong;
+import mekanism.api.security.ISecurityUtils;
+import mekanism.api.text.EnumColor;
+import mekanism.common.MekanismLang;
+import mekanism.common.capabilities.ItemCapabilityWrapper;
+import mekanism.common.capabilities.security.item.ItemStackOwnerObject;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.item.gear.ItemSpecialArmor;
+import mekanism.common.item.interfaces.IGuiItem;
+import mekanism.common.item.interfaces.IItemSustainedInventory;
 import mekanism.common.item.interfaces.IJetpackItem;
 import mekanism.common.item.interfaces.IModeItem;
 import mekanism.common.lib.attribute.AttributeCache;
 import mekanism.common.lib.attribute.IAttributeRefresher;
+import mekanism.common.lib.frequency.FrequencyType;
+import mekanism.common.lib.frequency.IFrequencyItem;
+import mekanism.common.registration.impl.ContainerTypeRegistryObject;
 import mekanism.common.registration.impl.CreativeTabDeferredRegister.ICustomCreativeTabContents;
+import mekanism.common.registries.MekanismItems;
+import mekanism.common.util.InventoryUtils;
 import mekanism.common.util.ItemDataUtils;
+import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.StorageUtils;
+import mekanism.common.util.text.BooleanStateDisplay;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.ModuleEnergyShieldUnit;
+import moremekasuitmodules.common.inventory.container.item.PortableModuleQIODashboardContainer;
 import moremekasuitmodules.common.item.interfaces.IShieldProvider;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import moremekasuitmodules.common.registries.MekaSuitMoreModulesContainerTypes;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,11 +57,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.UUID;
 
 
 @Mixin(value = ItemMekaSuitArmor.class, remap = false)
-public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher, ICustomCreativeTabContents, IShieldProvider {
+public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements IModuleContainerItem, IModeItem, IJetpackItem, IAttributeRefresher, ICustomCreativeTabContents, IShieldProvider,
+        IFrequencyItem, IGuiItem, IItemSustainedInventory {
 
 
     protected MixinItemMekaSuitArmor(ArmorMaterial material, Type armorType, Properties properties) {
@@ -162,4 +184,42 @@ public abstract class MixinItemMekaSuitArmor extends ItemSpecialArmor implements
         return getMaxEnergy(stack).intValue();
     }
 
+
+    @Override
+    public void onDestroyed(@NotNull ItemEntity item, @NotNull DamageSource damageSource) {
+        InventoryUtils.dropItemContents(item, damageSource);
+    }
+
+    @Inject(method = "appendHoverText", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
+    public void addQIO(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag, CallbackInfo ci) {
+        if (type == Type.HELMET && isModuleEnabled(stack, MekaSuitMoreModules.QIO_WIRELESS_UNIT)) {
+            ISecurityUtils.INSTANCE.addSecurityTooltip(stack, tooltip);
+            MekanismUtils.addFrequencyItemTooltip(stack, tooltip);
+            tooltip.add(MekanismLang.HAS_INVENTORY.translateColored(EnumColor.AQUA, EnumColor.GRAY, BooleanStateDisplay.YesNo.of(hasSustainedInventory(stack))));
+        }
+    }
+
+    @Override
+    public ContainerTypeRegistryObject<PortableModuleQIODashboardContainer> getContainerType() {
+        return MekaSuitMoreModulesContainerTypes.MODULE_QIO;
+    }
+
+
+    @Override
+    public FrequencyType<?> getFrequencyType() {
+        return FrequencyType.QIO;
+    }
+
+    @Override
+    public boolean hasFrequency(ItemStack stack) {
+        return isModuleEnabled(stack, MekaSuitMoreModules.QIO_WIRELESS_UNIT) && ItemDataUtils.hasData(stack, NBTConstants.FREQUENCY, Tag.TAG_COMPOUND);
+    }
+
+
+    @Inject(method = "gatherCapabilities", at = @At("TAIL"))
+    public void addQIO(List<ItemCapabilityWrapper.ItemCapability> capabilities, ItemStack stack, CompoundTag nbt, CallbackInfo ci) {
+        if (stack.getItem() == MekanismItems.MEKASUIT_HELMET.asItem()) {
+            capabilities.add(new ItemStackOwnerObject());
+        }
+    }
 }

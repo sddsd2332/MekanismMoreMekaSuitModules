@@ -77,6 +77,7 @@ public class MekaSuitMoreModules {
      * {@link botaniaModules#CREATIVE_BAND_OF_AURA_UNIT}
      */
     //AE智能无线单元 AE
+
     //无限供能单元 （让MekaSuit始终充气体/流体）【创造物品】
     public static final ModuleRegistryObject<ModuleInfiniteChemicalAndFluidSupplyUnit> INFINITE_CHEMICAL_AND_FLUID_SUPPLY_UNIT = MODULES.register("infinite_chemical_and_fluid_supply_unit", ModuleInfiniteChemicalAndFluidSupplyUnit::new, () -> MekaSuitMoreModulesItem.MODULE_INFINITE_CHEMICAL_AND_FLUID_SUPPLY.asItem(), builder -> builder.rarity(Rarity.EPIC));
     //智能范围攻击单元 (WC 挂)
@@ -87,5 +88,7 @@ public class MekaSuitMoreModules {
     public static final ModuleRegistryObject<ModuleHighSpeedCoolingUnit> HIGH_SPEED_COOLING_UNIT = MODULES.register("high_speed_cooling_unit", ModuleHighSpeedCoolingUnit::new, () -> MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING.asItem(), builder -> builder.maxStackSize(10).rarity(Rarity.EPIC));
     //量子重建单元 //和mod重复，不添加 https://www.curseforge.com/minecraft/mc-mods/mekanism-spectator-module
     //生命提升单元
-    public static final ModuleRegistryObject<?> HP_BOOTS_UNIT = MODULES.registerMarker("hp_boots_unit",()->MekaSuitMoreModulesItem.MODULE_HP_BOOTS.asItem(),builder -> builder.maxStackSize(64).rarity(Rarity.EPIC).noDisable());
+    public static final ModuleRegistryObject<?> HP_BOOTS_UNIT = MODULES.registerMarker("hp_boots_unit", () -> MekaSuitMoreModulesItem.MODULE_HP_BOOTS.asItem(), builder -> builder.maxStackSize(64).rarity(Rarity.EPIC).noDisable());
+    //智能QIO无线单元
+    public static final ModuleRegistryObject<?> QIO_WIRELESS_UNIT = MODULES.registerMarker("qio_wireless_unit", () -> MekaSuitMoreModulesItem.MODULE_QIO_WIRELESS.asItem(), builder -> builder);
 }

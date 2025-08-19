@@ -301,16 +301,5 @@ public class CommonPlayerTickHandler {
         }
     }
 
-    //如果实体的当前hp超出hp最大值...则重新设置为hp最大值
-    //太怪了
-    @SubscribeEvent
-    public void HPreset(LivingEvent.LivingTickEvent event){
-        LivingEntity base = event.getEntity();
-        if (base != null){
-            if (base.getHealth() > base.getMaxHealth()){
-                base.setHealth(base.getMaxHealth());
-            }
-        }
-    }
 
 }

@@ -20,7 +20,8 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_SUPPLY_OFFHAND("module", "supply_offhand"),
     MODULE_SUPPLY_CURIOS("module", "supply_curios"),
     MODULE_EMERGENCY_RESCUE("module","emergency_rescue"),
-    MODULE_SHIELD_DEPLETED("module","shield_depleted")
+    MODULE_SHIELD_DEPLETED("module","shield_depleted"),
+    MODULE_QIO_OPEN("module","open_qio"),
     // EOL
     ;
 

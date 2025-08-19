@@ -11,6 +11,7 @@
   "description.moremekasuitmodules.power_enhancement_unit":"能够增强使用者的攻击速度和伤害",
   "description.moremekasuitmodules.high_speed_cooling_unit": "加速冷却物品的使用",
   "description.moremekasuitmodules.hp_boots_unit": "提升使用者的最大生命值上限",
+  "description.moremekasuitmodules.qio_wireless_unit": "允许访问QIO存储系统",
 
   "module.moremekasuitmodules.health_regeneration_unit": "生命恢复单元",
   "module.moremekasuitmodules.emergency_rescue_unit": "紧急救援单元",
@@ -24,6 +25,7 @@
   "module.moremekasuitmodules.power_enhancement_unit": "动力增强单元",
   "module.moremekasuitmodules.high_speed_cooling_unit": "加速冷却单元",
   "module.moremekasuitmodules.hp_boots_unit": "生命提升单元",
+  "module.moremekasuitmodules.qio_wireless_unit": "QIO无线单元",
 
   "constants.moremekasuitmodules.mod_name": "更多 MekaSuit 模块",
   "module.moremekasuitmodules.wireless_terminal": "无线终端",
@@ -42,6 +44,7 @@
   "module.moremekasuitmodules.supply_curios": "供应Curios",
   "module.moremekasuitmodules.emergency_rescue": "警告！使用者遭到强大的打击！已进行拦截！",
   "module.moremekasuitmodules.shield_depleted": "警告！强大的打击！",
+  "module.moremekasuitmodules.open_qio": "打开QIO系统",
 
   "description.moremekasuitmodules.band_of_aura_unit": "可以以 5 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面",
   "description.moremekasuitmodules.basic_band_of_aura_unit":"可以以 10 mana/tick的速度缓慢制造魔力并存入身上可携带魔力的物品里面",
