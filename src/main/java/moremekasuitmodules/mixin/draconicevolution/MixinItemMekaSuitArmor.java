@@ -1,21 +1,17 @@
 package moremekasuitmodules.mixin.draconicevolution;
 
 import com.brandon3055.draconicevolution.items.armor.ICustomArmor;
-import com.llamalad7.mixinextras.sugar.Local;
 import mekanism.api.energy.IEnergizedItem;
 import mekanism.api.gear.IModule;
-import mekanism.common.Mekanism;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import mekanism.common.util.ItemNBTHelper;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.config.MoreModulesConfig;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,11 +32,9 @@ public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnerg
     @Final
     private float absorption;
 
-    @Inject(method = "getSubItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/NonNullList;add(Ljava/lang/Object;)Z", ordinal = 2))
-    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> items, CallbackInfo ci, @Local(ordinal = 2) ItemStack stack) {
-        if (Mekanism.hooks.DraconicEvolution) {
-            ItemNBTHelper.setFloat(stack, "ProtectionPoints", getProtectionPoints(stack));
-        }
+    @Inject(method = "addALLItemStack", at = @At("HEAD"))
+    public void addallItem(ItemStack stack, CallbackInfo ci) {
+        ItemNBTHelper.setFloat(stack, "ProtectionPoints", getProtectionPoints(stack));
     }
 
     @Override
