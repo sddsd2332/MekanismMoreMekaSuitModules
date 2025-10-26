@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BlockOverlayFix.class)
 public class MixinBlockOverlayFix {
 
-    @Inject(method = "renderNearbyBlocks", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderNearbyBlocks", at = @At("HEAD"), cancellable = true, remap = false)
     private static void getMekaSuitModules(float partialTicks, CallbackInfo ci) {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.player;
