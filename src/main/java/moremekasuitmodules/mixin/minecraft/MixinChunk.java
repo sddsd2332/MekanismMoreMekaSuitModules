@@ -1,6 +1,8 @@
 package moremekasuitmodules.mixin.minecraft;
 
 import com.google.common.base.Predicate;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
@@ -13,22 +15,20 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
 @Mixin(Chunk.class)
-public abstract class MixinChunk implements net.minecraftforge.common.capabilities.ICapabilityProvider {
+public abstract class MixinChunk {
 
 
     /**
      * @author sddsd2332
      * @reason 检查范围内的实体是否已经启用了无限模块, 并且该模块已经启用了范围排除，如果启用了范围排除，则移除该实体
      */
-    @Inject(method = "getEntitiesWithinAABBForEntity", at = @At("TAIL"))
-    public void SkipisInfiniteModuleEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate<? super Entity> filter, CallbackInfo ci) {
+    @WrapMethod(method = "getEntitiesWithinAABBForEntity")
+    private void SkipisInfiniteModuleEntity(Entity entityIn, AxisAlignedBB aabb, List<Entity> listToFill, Predicate<? super Entity> filter, Operation<Void> original) {
+        original.call(entityIn, aabb, listToFill, filter);
         listToFill.removeIf(entity -> entity instanceof EntityLivingBase base && isInfiniteModule(base));
     }
 
@@ -36,8 +36,9 @@ public abstract class MixinChunk implements net.minecraftforge.common.capabiliti
      * @author sddsd2332
      * @reason 检查范围内的实体是否已经启用了无限模块，如果启用了则排除该实体，如果启用了范围排除，则移除该实体
      */
-    @Inject(method = "getEntitiesOfTypeWithinAABB", at = @At("TAIL"))
-    public <T extends Entity> void SkipisInfiniteModuleEntity(Class<? extends T> entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate<? super T> filter, CallbackInfo ci) {
+    @WrapMethod(method = "getEntitiesOfTypeWithinAABB")
+    public <T extends Entity> void SkipisInfiniteModuleEntity(Class<? extends T> entityClass, AxisAlignedBB aabb, List<T> listToFill, Predicate<? super T> filter, Operation<Void> original) {
+        original.call(entityClass, aabb, listToFill, filter);
         listToFill.removeIf(entity -> entity instanceof EntityLivingBase base && isInfiniteModule(base));
     }
 
@@ -55,6 +56,5 @@ public abstract class MixinChunk implements net.minecraftforge.common.capabiliti
         }
         return false;
     }
-
 
 }

@@ -107,4 +107,8 @@ dependencies {
     implementation rfg.deobf('curse.maven:ae2-fluid-crafting-rework-623955:5751930')
     implementation rfg.deobf('curse.maven:mekanism-energistics-1027681:5775101')
     implementation rfg.deobf("curse.maven:matter-overdrive-community-edition-557428:5114422")
+    implementation "curse.maven:asmodeuscore-303101:7007917"
+    implementation rfg.deobf("curse.maven:galaxy-space-addon-for-galacticraft-238770:7005609")
+    compileOnly rfg.deobf("curse.maven:universal-tweaks-705000:6959247")
+    compileOnly rfg.deobf("curse.maven:block-overlay-fix-580690:3650166")
 }

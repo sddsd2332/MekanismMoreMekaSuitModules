@@ -1,5 +1,7 @@
 package moremekasuitmodules.common;
 
+import asmodeuscore.core.event.PressureEvent;
+import asmodeuscore.core.event.RadiationEvent;
 import blusunrize.immersiveengineering.common.util.IEDamageSources.ElectricDamageSource;
 import com.brandon3055.draconicevolution.lib.DEDamageSources;
 import com.google.common.collect.Sets;
@@ -80,6 +82,35 @@ public class CommonPlayerTickHandler {
             event.setCanceled(true);
         }
     }
+
+    @SubscribeEvent
+    @Optional.Method(modid = "asmodeuscore")
+    public void canPressure(PressureEvent event) {
+        if (event.getEntity() instanceof EntityLivingBase base) {
+            boolean SealHelmet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
+            boolean SealChest = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+            boolean SealLegs = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
+            boolean seaFeet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+            if (SealHelmet && SealChest && SealLegs && seaFeet) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @Optional.Method(modid = "asmodeuscore")
+    public void canPressure(RadiationEvent event) {
+        if (event.getEntity() instanceof EntityLivingBase base) {
+            boolean SealHelmet = ModuleInstallation(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD), MekanismModules.RADIATION_SHIELDING_UNIT);
+            boolean SealChest = ModuleInstallation(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST), MekanismModules.RADIATION_SHIELDING_UNIT);
+            boolean SealLegs = ModuleInstallation(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS), MekanismModules.RADIATION_SHIELDING_UNIT);
+            boolean seaFeet = ModuleInstallation(base.getItemStackFromSlot(EntityEquipmentSlot.FEET), MekanismModules.RADIATION_SHIELDING_UNIT);
+            if (SealHelmet && SealChest && SealLegs && seaFeet) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
 
     //When the player dies
     @SubscribeEvent
