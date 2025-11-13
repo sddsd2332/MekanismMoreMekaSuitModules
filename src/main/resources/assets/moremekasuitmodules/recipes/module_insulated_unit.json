@@ -13,7 +13,8 @@
       "item": "mekanism:hdpe_sheet"
     },
     "B": {
-      "tag": "forge:leather"
+      "ore": "leather",
+      "type": "forge:ore_dict"
     },
     "C": {
       "item": "mekanism:modulebase"
