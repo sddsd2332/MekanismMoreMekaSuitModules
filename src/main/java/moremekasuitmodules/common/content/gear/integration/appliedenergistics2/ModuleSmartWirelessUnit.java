@@ -16,7 +16,7 @@ import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import moremekasuitmodules.common.MoreMekaSuitModules;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.GMUTLang;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -35,8 +35,8 @@ public class ModuleSmartWirelessUnit implements ICustomModule<ModuleSmartWireles
 
     @Override
     public void init(IModule<ModuleSmartWirelessUnit> module, ModuleConfigItemCreator configItemCreator) {
-        wirelessMatching = configItemCreator.createConfigItem("wireless_Matching", GMUTLang.MODULE_AE_MATCHING, new ModuleBooleanData());
-        wirelessTerminalIModuleConfigItem = configItemCreator.createConfigItem("wireless_terminal_mode", GMUTLang.MODULE_AE, new ModuleEnumData<>(WirelessTerminal.WIRELESS_TERMINAL));
+        wirelessMatching = configItemCreator.createConfigItem("wireless_Matching", MoreMekaSuitModulesLang.MODULE_AE_MATCHING, new ModuleBooleanData());
+        wirelessTerminalIModuleConfigItem = configItemCreator.createConfigItem("wireless_terminal_mode", MoreMekaSuitModulesLang.MODULE_AE, new ModuleEnumData<>(WirelessTerminal.WIRELESS_TERMINAL));
 
     }
 

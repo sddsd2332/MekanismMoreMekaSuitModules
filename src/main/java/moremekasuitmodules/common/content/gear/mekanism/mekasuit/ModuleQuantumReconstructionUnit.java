@@ -3,7 +3,7 @@ package moremekasuitmodules.common.content.gear.mekanism.mekasuit;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.common.config.MekanismConfig;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.GMUTLang;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -40,7 +40,7 @@ public class ModuleQuantumReconstructionUnit implements ICustomModule<ModuleQuan
 
     @Override
     public void changeMode(IModule<ModuleQuantumReconstructionUnit> module, EntityPlayer player, ItemStack stack, int g, boolean displayChangeMessage) {
-        module.toggleEnabled(player, GMUTLang.MODULE_PHASE_THROUGH_BLOCKS.getTranslationKey());
+        module.toggleEnabled(player, MoreMekaSuitModulesLang.MODULE_PHASE_THROUGH_BLOCKS.getTranslationKey());
     }
 
 }

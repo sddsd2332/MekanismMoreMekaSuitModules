@@ -27,36 +27,10 @@ public class ModuleCreativeBandofAuraUnit implements ICustomModule<ModuleCreativ
     @Optional.Method(modid = "botania")
     private void addMana(ItemStack stack, EntityPlayer player) {
         List<ItemStack> getManaItems = new ArrayList<>();
-        for (ItemStack itemStack : player.inventory.mainInventory) {
-            if (itemStack.getItem() instanceof IManaItem item) {
-                if (item.getMana(itemStack) != item.getMaxMana(itemStack) && item.canReceiveManaFromItem(itemStack, stack)) {
-                    getManaItems.add(itemStack);
-                }
-            }
-        }
-        for (ItemStack itemStack : player.inventory.offHandInventory) {
-            if (itemStack.getItem() instanceof IManaItem item) {
-                if (item.getMana(itemStack) != item.getMaxMana(itemStack) && item.canReceiveManaFromItem(itemStack, stack)) {
-                    getManaItems.add(itemStack);
-                }
-            }
-        }
-        for (ItemStack itemStack : player.inventory.armorInventory) {
-            if (itemStack.getItem() instanceof IManaItem item) {
-                if (item.getMana(itemStack) != item.getMaxMana(itemStack) && item.canReceiveManaFromItem(itemStack, stack)) {
-                    getManaItems.add(itemStack);
-                }
-            }
-        }
-        IItemHandler baubles = BaublesApi.getBaublesHandler(player);
-        for (int i = 0; i < baubles.getSlots(); i++) {
-            ItemStack itemStack = baubles.getStackInSlot(i);
-            if (itemStack.getItem() instanceof IManaItem item) {
-                if (item.getMana(itemStack) != item.getMaxMana(itemStack) && item.canReceiveManaFromItem(itemStack, stack)) {
-                    getManaItems.add(itemStack);
-                }
-            }
-        }
+        collectManaItems(getManaItems, player.inventory.mainInventory, stack);
+        collectManaItems(getManaItems, player.inventory.offHandInventory, stack);
+        collectManaItems(getManaItems, player.inventory.armorInventory, stack);
+        collectBaublesManaItems(getManaItems, player, stack);
 
         if (!getManaItems.isEmpty()) {
             for (ItemStack stackInSlot : getManaItems) {
@@ -70,6 +44,34 @@ public class ModuleCreativeBandofAuraUnit implements ICustomModule<ModuleCreativ
                 }
             }
         }
+    }
+
+    @Optional.Method(modid = "botania")
+    private void collectManaItems(List<ItemStack> manaItems, Iterable<ItemStack> itemStacks, ItemStack source) {
+        for (ItemStack itemStack : itemStacks) {
+            if (canReceiveMana(itemStack, source)) {
+                manaItems.add(itemStack);
+            }
+        }
+    }
+
+    @Optional.Method(modid = "botania")
+    private void collectBaublesManaItems(List<ItemStack> manaItems, EntityPlayer player, ItemStack source) {
+        IItemHandler baubles = BaublesApi.getBaublesHandler(player);
+        for (int i = 0; i < baubles.getSlots(); i++) {
+            ItemStack itemStack = baubles.getStackInSlot(i);
+            if (canReceiveMana(itemStack, source)) {
+                manaItems.add(itemStack);
+            }
+        }
+    }
+
+    @Optional.Method(modid = "botania")
+    private boolean canReceiveMana(ItemStack itemStack, ItemStack source) {
+        if (itemStack.getItem() instanceof IManaItem item) {
+            return item.getMana(itemStack) != item.getMaxMana(itemStack) && item.canReceiveManaFromItem(itemStack, source);
+        }
+        return false;
     }
 
     @Optional.Method(modid = "botania")

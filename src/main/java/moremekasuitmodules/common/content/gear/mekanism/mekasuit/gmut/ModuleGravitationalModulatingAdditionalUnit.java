@@ -24,10 +24,10 @@ public class ModuleGravitationalModulatingAdditionalUnit implements ICustomModul
 
     @Override
     public void init(IModule<ModuleGravitationalModulatingAdditionalUnit> module, ModuleConfigItemCreator configItemCreator) {
-        this.flyAlways = configItemCreator.createConfigItem("fly_always", GMUTLang.MODULE_FLY_ALWAYS, new ModuleBooleanData(false));
-        this.stopImmediately = configItemCreator.createConfigItem("stop_immediately", GMUTLang.MODULE_STOP_IMMEDIATELY, new ModuleBooleanData(true));
-        this.fixFOV = configItemCreator.createConfigItem("fix_fov", GMUTLang.MODULE_FIX_FOV, new ModuleBooleanData(false));
-        this.verticalSpeed = configItemCreator.createConfigItem("vertical_speed", GMUTLang.MODULE_VERTICAL_SPEED, new ModuleEnumData<>(VerticalSpeed.class, VerticalSpeed.OFF));
+        this.flyAlways = configItemCreator.createConfigItem("fly_always", MoreMekaSuitModulesLang.MODULE_FLY_ALWAYS, new ModuleBooleanData(false));
+        this.stopImmediately = configItemCreator.createConfigItem("stop_immediately", MoreMekaSuitModulesLang.MODULE_STOP_IMMEDIATELY, new ModuleBooleanData(true));
+        this.fixFOV = configItemCreator.createConfigItem("fix_fov", MoreMekaSuitModulesLang.MODULE_FIX_FOV, new ModuleBooleanData(false));
+        this.verticalSpeed = configItemCreator.createConfigItem("vertical_speed", MoreMekaSuitModulesLang.MODULE_VERTICAL_SPEED, new ModuleEnumData<>(VerticalSpeed.class, VerticalSpeed.OFF));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ModuleGravitationalModulatingAdditionalUnit implements ICustomModul
             if (prevSpeed != nextSpeed) {
                 this.getVerticalSpeed().set(nextSpeed);
                 if (displayChangeMessage) {
-                    module.displayModeChange(player, GMUTLang.MODULE_VERTICAL_SPEED.getTranslationKey(), nextSpeed);
+                    module.displayModeChange(player, MoreMekaSuitModulesLang.MODULE_VERTICAL_SPEED.getTranslationKey(), nextSpeed);
                 }
             }
         }

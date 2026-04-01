@@ -86,6 +86,8 @@ module.mekanism.chunk_remove=区块屏蔽
 module.mekanism.attack_player=攻击玩家
 module.mekanism.attack_hostile=攻击敌对生物
 module.mekanism.attack_friendly=攻击友善生物
+module.mekanism.attack_other=攻击其他生物
+module.mekanism.attack_tick=攻击延迟
 module.mekanism.phase_through_blocks=穿越方块
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量

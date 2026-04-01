@@ -85,4 +85,7 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleQuantumReconstructionUnit> QUANTUM_RECONSTRUCTION_UNIT = ModuleHelper.register("quantum_reconstruction_unit",ModuleQuantumReconstructionUnit::new,builder -> builder.rarity(EnumRarity.EPIC).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault());
     //生命提升单元
     public static final ModuleData<ModuleHPBootsUnit> HP_BOOTS_UNIT =  ModuleHelper.register("hp_boots_unit", ModuleHPBootsUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC).noDisable());
+    //TODO光学迷彩单元(可以让生物隐身)
+
+
 }

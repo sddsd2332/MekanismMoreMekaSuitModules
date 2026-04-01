@@ -6,7 +6,7 @@ import mekanism.common.content.gear.Module;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.EntityModuleHelper;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.GMUTLang;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import moremekasuitmodules.common.network.to_server.PacketSwitchVerticalSpeedPacket.SwitchVerticalSpeedPacketMessage;
 import net.minecraft.client.settings.KeyBinding;
@@ -23,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 @SideOnly(Side.CLIENT)
 public class GMUTKeyHandler extends MekKeyHandler {
 
-    public static KeyBinding moduleVerticalSpeedSwitchKey = new KeyBinding(GMUTLang.KEY_VERTICAL_SPEED.getTranslationKey(), Keyboard.KEY_NONE, GMUTLang.KEY_CATAGORY.getTranslationKey());
+    public static KeyBinding moduleVerticalSpeedSwitchKey = new KeyBinding(MoreMekaSuitModulesLang.KEY_VERTICAL_SPEED.getTranslationKey(), Keyboard.KEY_NONE, MoreMekaSuitModulesLang.KEY_CATAGORY.getTranslationKey());
 
     public static Builder BINDINGS = new Builder().addBinding(moduleVerticalSpeedSwitchKey, false);
 

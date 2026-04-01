@@ -14,10 +14,6 @@ import net.minecraft.item.ItemStack;
 @ParametersAreNotNullByDefault
 public class ModuleInfiniteGasSupplyUnit implements ICustomModule<ModuleInfiniteGasSupplyUnit> {
 
-    @Override
-    public void tickClient(IModule<ModuleInfiniteGasSupplyUnit> module, EntityPlayer player) {
-        this.tickServer(module, player);
-    }
 
     @Override
     public void tickServer(IModule<ModuleInfiniteGasSupplyUnit> module, EntityPlayer player) {

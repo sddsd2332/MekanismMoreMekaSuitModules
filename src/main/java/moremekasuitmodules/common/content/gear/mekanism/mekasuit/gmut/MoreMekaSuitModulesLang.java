@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public enum GMUTLang implements ILangEntry {
+public enum MoreMekaSuitModulesLang implements ILangEntry {
 
     // Constants
     KEY_CATAGORY("constants", "key_category"),
@@ -28,17 +28,19 @@ public enum GMUTLang implements ILangEntry {
     MODULE_ATTACK_PLAYER("module", "attack_player"),
     MODULE_ATTACK_HOSTILE("module","attack_hostile"),
     MODULE_ATTACK_FRIENDLY("module","attack_friendly"),
+    MODULE_ATTACK_OTHER("module", "attack_other"),
     MODULE_PHASE_THROUGH_BLOCKS("module","phase_through_blocks"),
+    MODULE_ATTACK_TICK("module", "attack_tick"),
     // EOL
     ;
 
     private final String key;
 
-    GMUTLang(String key) {
+    MoreMekaSuitModulesLang(String key) {
         this.key = key;
     }
 
-    GMUTLang(String type, String path) {
+    MoreMekaSuitModulesLang(String type, String path) {
         this(makeDescriptionId(type, Mekanism.rl(path)));
     }
 

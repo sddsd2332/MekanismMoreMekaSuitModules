@@ -86,6 +86,8 @@ module.mekanism.chunk_remove=Chunks Remove
 module.mekanism.attack_player=Attack the player
 module.mekanism.attack_hostile=Attacks hostile mobs
 module.mekanism.attack_friendly=Attacks friendly mobs
+module.mekanism.attack_other=Attack other mobs
+module.mekanism.attack_tick=Attack delay
 module.mekanism.phase_through_blocks=Through Blocks
 
 

@@ -6,7 +6,7 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.IModuleConfigItem;
 import mekanism.api.gear.config.ModuleBooleanData;
 import mekanism.api.gear.config.ModuleConfigItemCreator;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.GMUTLang;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
 
 @ParametersAreNotNullByDefault
 public class ModuleInfiniteInterceptionAndRescueSystemUnit implements ICustomModule<ModuleInfiniteInterceptionAndRescueSystemUnit> {
@@ -18,9 +18,9 @@ public class ModuleInfiniteInterceptionAndRescueSystemUnit implements ICustomMod
 
     @Override
     public void init(IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module, ModuleConfigItemCreator configItemCreator) {
-        damagesource = configItemCreator.createConfigItem("damagesource", GMUTLang.MODULE_DAMAGE_SOURCE, new ModuleBooleanData());
-        damagesourceIndirect = configItemCreator.createConfigItem("damagesourceIndirect", GMUTLang.MODULE_DAMAGE_SOURCE_INDIRECT, new ModuleBooleanData());
-        chunkRemove = configItemCreator.createConfigItem("chunkRemove",GMUTLang.MODULE_CHUNK_REMOVE,new ModuleBooleanData(false));
+        damagesource = configItemCreator.createConfigItem("damagesource", MoreMekaSuitModulesLang.MODULE_DAMAGE_SOURCE, new ModuleBooleanData());
+        damagesourceIndirect = configItemCreator.createConfigItem("damagesourceIndirect", MoreMekaSuitModulesLang.MODULE_DAMAGE_SOURCE_INDIRECT, new ModuleBooleanData());
+        chunkRemove = configItemCreator.createConfigItem("chunkRemove", MoreMekaSuitModulesLang.MODULE_CHUNK_REMOVE,new ModuleBooleanData(false));
     }
 
     public Boolean getSource() {
