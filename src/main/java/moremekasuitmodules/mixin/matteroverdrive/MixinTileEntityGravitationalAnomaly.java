@@ -1,15 +1,12 @@
 package moremekasuitmodules.mixin.matteroverdrive;
 
-import matteroverdrive.api.IScannable;
 import matteroverdrive.api.gravity.IGravitationalAnomaly;
-import matteroverdrive.tile.IMOTickable;
 import matteroverdrive.tile.MOTileEntity;
 import matteroverdrive.tile.TileEntityGravitationalAnomaly;
 import mekanism.common.MekanismModules;
 import mekanism.common.content.gear.IModuleContainerItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(TileEntityGravitationalAnomaly.class)
-public abstract class MixinTileEntityGravitationalAnomaly extends MOTileEntity implements IScannable, IMOTickable, IGravitationalAnomaly, ITickable {
+public abstract class MixinTileEntityGravitationalAnomaly extends MOTileEntity implements IGravitationalAnomaly {
 
     /**
      * @author sddsd2332
