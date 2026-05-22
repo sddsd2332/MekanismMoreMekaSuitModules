@@ -20,6 +20,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         super.init();
         MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
         MinecraftForge.EVENT_BUS.register(new RenderTickHandler());
+        MinecraftForge.EVENT_BUS.register(new EntityDisplayBoxRenderer());
         new GMUTKeyHandler();
     }
 
@@ -84,6 +85,8 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_QUANTUM_RECONSTRUCTION);
         registerItemRender(MekaSuitMoreModulesItem.HP_BOOTS_UNIT);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_OPTICAL_CAMOUFLAGE);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX);
     }
 
     @Override

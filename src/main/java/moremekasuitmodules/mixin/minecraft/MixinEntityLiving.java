@@ -2,6 +2,7 @@ package moremekasuitmodules.mixin.minecraft;
 
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OpticalCamouflageHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -31,7 +32,7 @@ public abstract class MixinEntityLiving extends EntityLivingBase {
      */
     @Inject(method = "setAttackTarget", at = @At("HEAD"), cancellable = true)
     public void setAttackTarget(EntityLivingBase base, CallbackInfo ci) {
-        if (isInfiniteModule(base)) {
+        if (isInfiniteModule(base) || OpticalCamouflageHelper.isFullyCamouflaged(base)) {
             ci.cancel();
         }
     }
@@ -42,7 +43,7 @@ public abstract class MixinEntityLiving extends EntityLivingBase {
      */
     @Inject(method = "getAttackTarget", at = @At("HEAD"), cancellable = true)
     public void getAttackTarget(CallbackInfoReturnable<EntityLivingBase> cir) {
-        if (isInfiniteModule(attackTarget)) {
+        if (isInfiniteModule(attackTarget) || OpticalCamouflageHelper.isFullyCamouflaged(attackTarget)) {
             attackTarget = null;
             cir.setReturnValue(null);
             cir.cancel();

@@ -1,0 +1,34 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_optical_camouflage_unit"
+  },
+  "pattern": [
+    "BEB",
+    "FDF",
+    "AAA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "B": {
+      "item": "minecraft:potion",
+      "nbt": {
+        "Potion": "minecraft:invisibility"
+      },
+      "type": "mekanism:item_nbt"
+    },
+    "E": {
+      "ore": "circuitUltimate",
+      "type": "forge:ore_dict"
+    },
+    "D": {
+      "item": "mekanism:modulebase"
+    },
+    "F": {
+      "ore": "alloyUltimate",
+      "type": "forge:ore_dict"
+    }
+  }
+}

@@ -3,6 +3,7 @@ package moremekasuitmodules.mixin.minecraft;
 import com.google.common.collect.Sets;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OpticalCamouflageHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -51,7 +52,7 @@ public abstract class MixinEntityLivingBase extends Entity {
      */
     @Inject(method = "getRevengeTarget", at = @At("HEAD"), cancellable = true)
     public void getRevengeTarget(CallbackInfoReturnable<EntityLivingBase> cir) {
-        if (isInfiniteModule(revengeTarget)) {
+        if (isInfiniteModule(revengeTarget) || OpticalCamouflageHelper.isFullyCamouflaged(revengeTarget)) {
             revengeTarget = null;
             cir.setReturnValue(null);
             cir.cancel();
@@ -64,7 +65,7 @@ public abstract class MixinEntityLivingBase extends Entity {
      */
     @Inject(method = "setRevengeTarget", at = @At("HEAD"), cancellable = true)
     public void setRevengeTarget(EntityLivingBase base, CallbackInfo ci) {
-        if (isInfiniteModule(base)) {
+        if (isInfiniteModule(base) || OpticalCamouflageHelper.isFullyCamouflaged(base)) {
             ci.cancel();
         }
     }

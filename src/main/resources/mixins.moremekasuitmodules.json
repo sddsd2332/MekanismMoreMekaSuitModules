@@ -8,9 +8,22 @@
     "MixinChunk",
     "MixinEntityDamageSource",
     "MixinEntityDamageSourceIndirect",
+    "MixinEntityAITarget",
     "MixinEntityLiving",
-    "MixinEntityLivingBase"
+    "MixinEntityLivingBase",
+    "MixinWorld"
   ],
   "server": [],
-  "client": []
+  "client": [
+    "MixinLayerArmorBase",
+    "MixinLayerArrow",
+    "MixinLayerCape",
+    "MixinLayerCustomHead",
+    "MixinLayerDeadmau5Head",
+    "MixinLayerElytra",
+    "MixinLayerHeldItem",
+    "MixinRenderLivingBase",
+    "MixinRenderManager",
+    "MixinRenderPlayer"
+  ]
 }

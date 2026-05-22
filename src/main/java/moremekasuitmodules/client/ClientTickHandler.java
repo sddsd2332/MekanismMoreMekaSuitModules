@@ -4,6 +4,7 @@ import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleHelper;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OpticalCamouflageHelper;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -14,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.PlayerSPPushOutOfBlocksEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -68,6 +71,20 @@ public class ClientTickHandler {
                     event.setCanceled(true);
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void renderHand(RenderHandEvent event) {
+        if (OpticalCamouflageHelper.isFullyCamouflaged(minecraft.player)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public void renderSpecificHand(RenderSpecificHandEvent event) {
+        if (OpticalCamouflageHelper.isSlotCamouflaged(minecraft.player, EntityEquipmentSlot.CHEST)) {
+            event.setCanceled(true);
         }
     }
 }

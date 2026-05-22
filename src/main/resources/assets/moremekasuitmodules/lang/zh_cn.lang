@@ -31,6 +31,10 @@ item.module_power_enhancement_unit.name=动力增强单元
 item.module_high_speed_cooling_unit.name=加速冷却单元
 item.module_quantum_reconstruction_unit.name=量子重构单元
 item.module_hp_boots_unit.name=生命提升单元
+item.module_optical_camouflage_unit.name=光学迷彩单元
+item.module_entity_display_box_unit.name=范围生物显示单元
+module.mekanism.optical_camouflage=光学迷彩
+module.mekanism.optical_camouflage_unit=光学迷彩单元
 
 module.mekanism.emergency_rescue_unit=紧急救援单元
 module.mekanism.advanced_interception_system_unit=先进救援系统单元
@@ -65,6 +69,7 @@ module.mekanism.power_enhancement_unit=动力增强单元
 module.mekanism.high_speed_cooling_unit=加速冷却单元
 module.mekanism.quantum_reconstruction_unit=量子重构单元
 module.mekanism.hp_boots_unit=生命提升单元
+module.mekanism.entity_display_box_unit=范围生物显示单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -89,6 +94,15 @@ module.mekanism.attack_friendly=攻击友善生物
 module.mekanism.attack_other=攻击其他生物
 module.mekanism.attack_tick=攻击延迟
 module.mekanism.phase_through_blocks=穿越方块
+module.mekanism.box_color=线框颜色
+module.mekanism.name_color=名称颜色
+module.mekanism.distance_color=距离颜色
+module.mekanism.max_boxes=最大绘制数量
+module.mekanism.health_display=血量显示
+module.mekanism.health_display.off=关闭
+module.mekanism.health_display.bar=血条
+module.mekanism.health_display.text=数字
+module.mekanism.health_display.both=血条+数字
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -123,6 +137,8 @@ description.mekanism.power_enhancement_unit=能够增强使用者的攻击速度
 description.mekanism.high_speed_cooling_unit=加速冷却物品的使用
 description.mekanism.quantum_reconstruction_unit=通过在量子水平上分解和重建物质，隧道效应使其能够像旁观者模式一样穿透块。
 description.mekanism.hp_boots_unit=提升使用者的最大生命值上限
+description.mekanism.optical_camouflage_unit=启用后让安装部位进入光学迷彩状态，全套启用时可完全隐身
+description.mekanism.entity_display_box_unit=在范围内的生物周围显示屏幕空间方框
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 

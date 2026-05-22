@@ -31,6 +31,12 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_ATTACK_OTHER("module", "attack_other"),
     MODULE_PHASE_THROUGH_BLOCKS("module","phase_through_blocks"),
     MODULE_ATTACK_TICK("module", "attack_tick"),
+    MODULE_OPTICAL_CAMOUFLAGE("module", "optical_camouflage"),
+    MODULE_BOX_COLOR("module", "box_color"),
+    MODULE_NAME_COLOR("module", "name_color"),
+    MODULE_DISTANCE_COLOR("module", "distance_color"),
+    MODULE_MAX_BOXES("module", "max_boxes"),
+    MODULE_HEALTH_DISPLAY("module", "health_display"),
     // EOL
     ;
 

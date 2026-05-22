@@ -31,6 +31,10 @@ item.module_power_enhancement_unit.name=Power enhancement unit
 item.module_high_speed_cooling_unit.name=Cooling unit boost
 item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
 item.module_hp_boots_unit.name=HP Enhancement Unit
+item.module_optical_camouflage_unit.name=Optical Camouflage Unit
+item.module_entity_display_box_unit.name=Entity Display Box Unit
+module.mekanism.optical_camouflage=Optical Camouflage
+module.mekanism.optical_camouflage_unit=Optical Camouflage Unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -65,6 +69,7 @@ module.mekanism.power_enhancement_unit=Power enhancement unit
 module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 module.mekanism.hp_boots_unit=HP Enhancement Unit
+module.mekanism.entity_display_box_unit=Entity Display Box Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -89,6 +94,15 @@ module.mekanism.attack_friendly=Attacks friendly mobs
 module.mekanism.attack_other=Attack other mobs
 module.mekanism.attack_tick=Attack delay
 module.mekanism.phase_through_blocks=Through Blocks
+module.mekanism.box_color=Box Color
+module.mekanism.name_color=Name Color
+module.mekanism.distance_color=Distance Color
+module.mekanism.max_boxes=Max Boxes
+module.mekanism.health_display=Health Display
+module.mekanism.health_display.off=Off
+module.mekanism.health_display.bar=Bar
+module.mekanism.health_display.text=Text
+module.mekanism.health_display.both=Bar + Text
 
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
@@ -124,6 +138,8 @@ description.mekanism.power_enhancement_unit=Increases the user's attack speed an
 description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
 description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
 description.mekanism.hp_boots_unit=Increases the maximum maximum health of the user
+description.mekanism.optical_camouflage_unit=Enables optical camouflage for installed armor slots, and fully hides the wearer when the full suit is active
+description.mekanism.entity_display_box_unit=Displays screen-space boxes around living entities within range
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 
