@@ -187,6 +187,8 @@ public class MoreMekaSuitModules implements IModule {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.BAND_OF_AURA_UNIT, MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
         }
 
+        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BOOTS, MekaSuitMoreModules.WALL_CLING_UNIT);
+
         if (Loader.isModLoaded("appliedenergistics2")) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }

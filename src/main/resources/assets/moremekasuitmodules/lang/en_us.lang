@@ -33,6 +33,7 @@ item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
 item.module_hp_boots_unit.name=HP Enhancement Unit
 item.module_optical_camouflage_unit.name=Optical Camouflage Unit
 item.module_entity_display_box_unit.name=Entity Display Box Unit
+item.module_wall_cling_unit.name=Wall Cling Unit
 module.mekanism.optical_camouflage=Optical Camouflage
 module.mekanism.optical_camouflage_unit=Optical Camouflage Unit
 
@@ -70,6 +71,7 @@ module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 module.mekanism.hp_boots_unit=HP Enhancement Unit
 module.mekanism.entity_display_box_unit=Entity Display Box Unit
+module.mekanism.wall_cling_unit=Wall Cling Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -103,6 +105,8 @@ module.mekanism.health_display.off=Off
 module.mekanism.health_display.bar=Bar
 module.mekanism.health_display.text=Text
 module.mekanism.health_display.both=Bar + Text
+module.mekanism.wall_cling=Wall Cling
+module.mekanism.climb_speed=Climb Speed
 
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
@@ -140,6 +144,7 @@ description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructi
 description.mekanism.hp_boots_unit=Increases the maximum maximum health of the user
 description.mekanism.optical_camouflage_unit=Enables optical camouflage for installed armor slots, and fully hides the wearer when the full suit is active
 description.mekanism.entity_display_box_unit=Displays screen-space boxes around living entities within range
+description.mekanism.wall_cling_unit=Allows climbing or slow sliding while touching walls
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

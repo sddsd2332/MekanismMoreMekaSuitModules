@@ -87,7 +87,9 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleHPBootsUnit> HP_BOOTS_UNIT =  ModuleHelper.register("hp_boots_unit", ModuleHPBootsUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC).noDisable());
     //光学迷彩单元(可以让生物隐身)
     public static final ModuleData<ModuleOpticalCamouflageUnit> OPTICAL_CAMOUFLAGE_UNIT = ModuleHelper.register("optical_camouflage_unit", ModuleOpticalCamouflageUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault());
-    //范围生物显示框(显示范围内的生物，用方框在外面显示【类似于fps中那种外挂中的人物方框】)
+    //TODO范围生物显示框(显示范围内的生物，用方框在外面显示【类似于fps中那种外挂中的人物方框】)
+
     public static final ModuleData<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = ModuleHelper.register("entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).disabledByDefault());
 
+    public static final ModuleData<ModuleWallClingUnit> WALL_CLING_UNIT = ModuleHelper.register("wall_cling_unit", ModuleWallClingUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault().exclusive(ModuleData.ExclusiveFlag.OVERRIDE_JUMP));
 }

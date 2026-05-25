@@ -33,6 +33,7 @@ item.module_quantum_reconstruction_unit.name=量子重构单元
 item.module_hp_boots_unit.name=生命提升单元
 item.module_optical_camouflage_unit.name=光学迷彩单元
 item.module_entity_display_box_unit.name=范围生物显示单元
+item.module_wall_cling_unit.name=墙面攀附单元
 module.mekanism.optical_camouflage=光学迷彩
 module.mekanism.optical_camouflage_unit=光学迷彩单元
 
@@ -70,6 +71,7 @@ module.mekanism.high_speed_cooling_unit=加速冷却单元
 module.mekanism.quantum_reconstruction_unit=量子重构单元
 module.mekanism.hp_boots_unit=生命提升单元
 module.mekanism.entity_display_box_unit=范围生物显示单元
+module.mekanism.wall_cling_unit=墙面攀附单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -103,6 +105,8 @@ module.mekanism.health_display.off=关闭
 module.mekanism.health_display.bar=血条
 module.mekanism.health_display.text=数字
 module.mekanism.health_display.both=血条+数字
+module.mekanism.wall_cling=墙面攀附
+module.mekanism.climb_speed=攀爬速度
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -139,6 +143,7 @@ description.mekanism.quantum_reconstruction_unit=通过在量子水平上分解�
 description.mekanism.hp_boots_unit=提升使用者的最大生命值上限
 description.mekanism.optical_camouflage_unit=启用后让安装部位进入光学迷彩状态，全套启用时可完全隐身
 description.mekanism.entity_display_box_unit=在范围内的生物周围显示屏幕空间方框
+description.mekanism.wall_cling_unit=贴近墙面时可攀爬或缓慢下滑
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 

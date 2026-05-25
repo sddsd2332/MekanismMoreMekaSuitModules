@@ -37,6 +37,8 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_DISTANCE_COLOR("module", "distance_color"),
     MODULE_MAX_BOXES("module", "max_boxes"),
     MODULE_HEALTH_DISPLAY("module", "health_display"),
+    MODULE_WALL_CLING("module", "wall_cling"),
+    MODULE_CLIMB_SPEED("module", "climb_speed"),
     // EOL
     ;
 

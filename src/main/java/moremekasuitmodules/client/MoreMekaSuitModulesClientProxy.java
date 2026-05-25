@@ -87,6 +87,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.HP_BOOTS_UNIT);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_OPTICAL_CAMOUFLAGE);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_WALL_CLING);
     }
 
     @Override

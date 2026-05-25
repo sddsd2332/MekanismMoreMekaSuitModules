@@ -1,9 +1,14 @@
 package moremekasuitmodules.client;
 
 import mekanism.api.gear.IModule;
+import mekanism.client.MekanismClient;
+import mekanism.common.KeySync;
+import mekanism.common.Mekanism;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleHelper;
+import mekanism.common.item.interfaces.IJetpackItem;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OpticalCamouflageHelper;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.client.Minecraft;
@@ -19,6 +24,8 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,6 +34,19 @@ public class ClientTickHandler {
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
 
+    @SubscribeEvent
+    public void syncWallClingJump(ClientTickEvent event) {
+        if (event.phase != Phase.START || minecraft.world == null || minecraft.player == null || Mekanism.proxy.isPaused()) {
+            return;
+        }
+        EntityPlayerSP player = minecraft.player;
+        IModule<ModuleWallClingUnit> module = ModuleHelper.get().load(player.getItemStackFromSlot(EntityEquipmentSlot.FEET), MekaSuitMoreModules.WALL_CLING_UNIT);
+        if (module != null && module.isEnabled()) {
+            MekanismClient.updateKey(player.movementInput.jump, KeySync.ASCEND);
+        } else if (IJetpackItem.getActiveJetpack(player).isEmpty() && Mekanism.keyMap.has(player.getUniqueID(), KeySync.ASCEND)) {
+            MekanismClient.updateKey(false, KeySync.ASCEND);
+        }
+    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onFOVModifier(FOVUpdateEvent event) {
