@@ -34,6 +34,8 @@ item.module_hp_boots_unit.name=HP Enhancement Unit
 item.module_optical_camouflage_unit.name=Optical Camouflage Unit
 item.module_entity_display_box_unit.name=Entity Display Box Unit
 item.module_wall_cling_unit.name=Wall Cling Unit
+item.module_ore_visual_enhancement_unit.name=Ore Visual Enhancement Unit
+item.module_automatic_ore_mining_unit.name=Automatic Ore Mining Unit
 module.mekanism.optical_camouflage=Optical Camouflage
 module.mekanism.optical_camouflage_unit=Optical Camouflage Unit
 
@@ -72,6 +74,8 @@ module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 module.mekanism.hp_boots_unit=HP Enhancement Unit
 module.mekanism.entity_display_box_unit=Entity Display Box Unit
 module.mekanism.wall_cling_unit=Wall Cling Unit
+module.mekanism.ore_visual_enhancement_unit=Ore Visual Enhancement Unit
+module.mekanism.automatic_ore_mining_unit=Automatic Ore Mining Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -107,6 +111,13 @@ module.mekanism.health_display.text=Text
 module.mekanism.health_display.both=Bar + Text
 module.mekanism.wall_cling=Wall Cling
 module.mekanism.climb_speed=Climb Speed
+module.mekanism.scan_delay=Scan Delay
+module.mekanism.ore_scan_next=Next Scan
+module.mekanism.ore_scan_count=Ore Count
+module.mekanism.text_color=Text Color
+module.mekanism.max_blocks=Max Blocks
+module.mekanism.chain_mining=Chain Mining
+module.mekanism.mining_wave_color=Mining Wave Color
 
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
@@ -145,6 +156,8 @@ description.mekanism.hp_boots_unit=Increases the maximum maximum health of the u
 description.mekanism.optical_camouflage_unit=Enables optical camouflage for installed armor slots, and fully hides the wearer when the full suit is active
 description.mekanism.entity_display_box_unit=Displays screen-space boxes around living entities within range
 description.mekanism.wall_cling_unit=Allows climbing or slow sliding while touching walls
+description.mekanism.ore_visual_enhancement_unit=Scans server-side for nearby ore dictionary entries starting with ore, then renders boxes and distance labels client-side
+description.mekanism.automatic_ore_mining_unit=Automatically mines nearby ore dictionary blocks using the helmet ore visual scanner's range and delay
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

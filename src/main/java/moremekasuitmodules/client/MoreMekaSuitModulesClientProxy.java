@@ -7,11 +7,15 @@ import moremekasuitmodules.common.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonProxy {
@@ -21,6 +25,8 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
         MinecraftForge.EVENT_BUS.register(new RenderTickHandler());
         MinecraftForge.EVENT_BUS.register(new EntityDisplayBoxRenderer());
+        MinecraftForge.EVENT_BUS.register(new OreVisualEnhancementRenderer());
+        MinecraftForge.EVENT_BUS.register(new OreVisualEnhancementClientEvents());
         new GMUTKeyHandler();
     }
 
@@ -88,6 +94,8 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.MODULE_OPTICAL_CAMOUFLAGE);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_WALL_CLING);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_ORE_VISUAL_ENHANCEMENT);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_ORE_MINING);
     }
 
     @Override
@@ -97,5 +105,25 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
 
     public void registerItemRender(Item item) {
         MekanismRenderer.registerItemRender(MoreMekaSuitModules.MODID, item);
+    }
+
+    @Override
+    public void handleOreVisualScan(BlockPos center, List<PacketOreVisualScan.OreEntry> entries) {
+        OreVisualScanClientCache.update(center, entries);
+    }
+
+    @Override
+    public void handleOreVisualRemove(BlockPos pos) {
+        OreVisualScanClientCache.remove(pos);
+    }
+
+    @Override
+    public void handleOreMiningWave(BlockPos center, int radius, int color, int durationTicks) {
+        OreVisualScanClientCache.startMiningWave(center, radius, color, durationTicks);
+    }
+
+    @Override
+    public int getOreVisualClientEntryCount() {
+        return OreVisualScanClientCache.getEntries().size();
     }
 }

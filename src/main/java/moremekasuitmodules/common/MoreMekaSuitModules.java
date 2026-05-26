@@ -12,20 +12,28 @@ import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.network.PacketSimpleGui;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningDropRedirector;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
 import moremekasuitmodules.moremekasuitmodules.Tags;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -55,6 +63,7 @@ public class MoreMekaSuitModules implements IModule {
         Mekanism.modulesLoaded.add(this);
         PacketSimpleGui.handlers.add(proxy);
         MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
+        MinecraftForge.EVENT_BUS.register(new AutomaticOreMiningDropRedirector());
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new MoreMekaSuitModulesGuiHandler());
         MinecraftForge.EVENT_BUS.register(this);
         packetHandler.initialize();
@@ -79,6 +88,20 @@ public class MoreMekaSuitModules implements IModule {
         proxy.preInit();
         config = new Configuration(new File("config/mekanism/MoreMekaSuitModules.cfg"));
         loadConfiguration();
+    }
+
+    @Mod.EventHandler
+    public void serverStopping(FMLServerStoppingEvent event) {
+        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        if (server != null && server.getPlayerList() != null) {
+            for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+                AutomaticOreMiningTracker.cancel(player);
+            }
+        }
+        OreVisualScanTracker.clearAll();
+        OreVisualScanServerCache.clearAll();
+        AutomaticOreMiningTracker.clearAll();
+        AutomaticOreMiningDropRedirector.clearAll();
     }
 
     @SubscribeEvent
@@ -158,6 +181,7 @@ public class MoreMekaSuitModules implements IModule {
         }
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT, MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);
+        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.ORE_VISUAL_ENHANCEMENT_UNIT);
         if (MoreModulesConfig.current().config.InfiniteInterception.val()) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
         }
@@ -192,6 +216,8 @@ public class MoreMekaSuitModules implements IModule {
         if (Loader.isModLoaded("appliedenergistics2")) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }
+
+        ModuleHelper.get().setSupported(MekanismItems.MEKA_TOOL, MekaSuitMoreModules.AUTOMATIC_ORE_MINING_UNIT);
 
     }
 

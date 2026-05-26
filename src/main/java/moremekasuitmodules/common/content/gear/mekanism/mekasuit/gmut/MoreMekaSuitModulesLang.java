@@ -39,6 +39,13 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_HEALTH_DISPLAY("module", "health_display"),
     MODULE_WALL_CLING("module", "wall_cling"),
     MODULE_CLIMB_SPEED("module", "climb_speed"),
+    MODULE_SCAN_DELAY("module", "scan_delay"),
+    MODULE_ORE_SCAN_NEXT("module", "ore_scan_next"),
+    MODULE_ORE_SCAN_COUNT("module", "ore_scan_count"),
+    MODULE_TEXT_COLOR("module", "text_color"),
+    MODULE_MAX_BLOCKS("module", "max_blocks"),
+    MODULE_CHAIN_MINING("module", "chain_mining"),
+    MODULE_MINING_WAVE_COLOR("module", "mining_wave_color"),
     // EOL
     ;
 

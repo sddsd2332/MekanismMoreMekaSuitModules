@@ -46,6 +46,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_OPTICAL_CAMOUFLAGE = new ItemModule(MekaSuitMoreModules.OPTICAL_CAMOUFLAGE_UNIT);
     public static final ItemModule MODULE_ENTITY_DISPLAY_BOX = new ItemModule(MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);
     public static final ItemModule MODULE_WALL_CLING = new ItemModule(MekaSuitMoreModules.WALL_CLING_UNIT);
+    public static final ItemModule MODULE_ORE_VISUAL_ENHANCEMENT = new ItemModule(MekaSuitMoreModules.ORE_VISUAL_ENHANCEMENT_UNIT);
+    public static final ItemModule MODULE_AUTOMATIC_ORE_MINING = new ItemModule(MekaSuitMoreModules.AUTOMATIC_ORE_MINING_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
@@ -110,6 +112,8 @@ public class MekaSuitMoreModulesItem {
         registry.register(initModule(MODULE_OPTICAL_CAMOUFLAGE));
         registry.register(initModule(MODULE_ENTITY_DISPLAY_BOX));
         registry.register(initModule(MODULE_WALL_CLING));
+        registry.register(initModule(MODULE_ORE_VISUAL_ENHANCEMENT));
+        registry.register(initModule(MODULE_AUTOMATIC_ORE_MINING));
     }
 
 

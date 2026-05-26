@@ -12,6 +12,7 @@ import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarp
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearUltimateUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleAutomaticLiquidSupplyUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleIntelligentTemperatureRegulationUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleAutomaticOreMiningUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.*;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.item.EnumRarity;
@@ -92,4 +93,8 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = ModuleHelper.register("entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).disabledByDefault());
 
     public static final ModuleData<ModuleWallClingUnit> WALL_CLING_UNIT = ModuleHelper.register("wall_cling_unit", ModuleWallClingUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault().exclusive(ModuleData.ExclusiveFlag.OVERRIDE_JUMP));
+
+    public static final ModuleData<ModuleOreVisualEnhancementUnit> ORE_VISUAL_ENHANCEMENT_UNIT = ModuleHelper.register("ore_visual_enhancement_unit", ModuleOreVisualEnhancementUnit::new, builder -> builder.maxStackSize(5).rarity(EnumRarity.RARE).disabledByDefault().rendersHUD());
+
+    public static final ModuleData<ModuleAutomaticOreMiningUnit> AUTOMATIC_ORE_MINING_UNIT = ModuleHelper.register("automatic_ore_mining_unit", ModuleAutomaticOreMiningUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).disabledByDefault());
 }

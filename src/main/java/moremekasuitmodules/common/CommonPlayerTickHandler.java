@@ -11,8 +11,13 @@ import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismModules;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.integration.MekanismHooks;
+import moremekasuitmodules.common.network.to_client.PacketOreVisualRemove;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningDropRedirector;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,6 +33,8 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
@@ -53,6 +60,60 @@ public class CommonPlayerTickHandler {
             return sealArmor(stack) && item.isModuleEnabled(stack, MekanismModules.INHALATION_PURIFICATION_UNIT);
         }
         return false;
+    }
+
+    @SubscribeEvent
+    public void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!event.getWorld().isRemote && !event.isCanceled() && event.getPlayer() instanceof EntityPlayerMP player && hasOreVisualEnhancement(player)) {
+            OreVisualScanServerCache.remove(player, event.getPos());
+            MoreMekaSuitModules.packetHandler.sendTo(new PacketOreVisualRemove.Message(event.getPos()), player);
+        }
+    }
+
+    private boolean hasOreVisualEnhancement(EntityPlayer player) {
+        ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        return helmet.getItem() instanceof IModuleContainerItem item && item.isModuleEnabled(helmet, MekaSuitMoreModules.ORE_VISUAL_ENHANCEMENT_UNIT);
+    }
+
+    @SubscribeEvent
+    public void onOreVisualPlayerLogin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.player instanceof EntityPlayerMP player) {
+            OreVisualScanTracker.clear(player);
+            OreVisualScanTracker.delayInitialScan(player);
+            OreVisualScanServerCache.clear(player);
+            AutomaticOreMiningTracker.clear(player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onOreVisualPlayerLogout(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.player instanceof EntityPlayerMP player) {
+            AutomaticOreMiningTracker.cancel(player);
+            OreVisualScanTracker.clear(player);
+            OreVisualScanTracker.delayInitialScan(player);
+            OreVisualScanServerCache.clear(player);
+            AutomaticOreMiningTracker.clear(player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onOreVisualPlayerChangedDimension(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (event.player instanceof EntityPlayerMP player) {
+            AutomaticOreMiningTracker.cancel(player);
+            OreVisualScanTracker.clear(player);
+            OreVisualScanServerCache.clear(player);
+            AutomaticOreMiningTracker.clear(player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onOreVisualWorldUnload(WorldEvent.Unload event) {
+        if (!event.getWorld().isRemote) {
+            OreVisualScanTracker.clearDimension(event.getWorld().provider.getDimension());
+            OreVisualScanServerCache.clearDimension(event.getWorld().provider.getDimension());
+            AutomaticOreMiningTracker.clearDimension(event.getWorld().provider.getDimension());
+            AutomaticOreMiningDropRedirector.clearWorld(event.getWorld());
+        }
     }
 
     @SubscribeEvent

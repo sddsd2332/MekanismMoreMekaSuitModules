@@ -1,0 +1,31 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_automatic_ore_mining_unit"
+  },
+  "pattern": [
+    "PUP",
+    "OMO",
+    "AAA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "U": {
+      "ore": "circuitUltimate",
+      "type": "forge:ore_dict"
+    },
+    "O": {
+      "ore": "oreDiamond",
+      "type": "forge:ore_dict"
+    },
+    "M": {
+      "item": "mekanism:modulebase"
+    },
+    "A": {
+      "ore": "alloyElite",
+      "type": "forge:ore_dict"
+    }
+  }
+}

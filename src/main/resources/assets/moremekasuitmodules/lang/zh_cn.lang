@@ -34,6 +34,8 @@ item.module_hp_boots_unit.name=生命提升单元
 item.module_optical_camouflage_unit.name=光学迷彩单元
 item.module_entity_display_box_unit.name=范围生物显示单元
 item.module_wall_cling_unit.name=墙面攀附单元
+item.module_ore_visual_enhancement_unit.name=矿物视觉增强单元
+item.module_automatic_ore_mining_unit.name=自动范围挖矿单元
 module.mekanism.optical_camouflage=光学迷彩
 module.mekanism.optical_camouflage_unit=光学迷彩单元
 
@@ -72,6 +74,8 @@ module.mekanism.quantum_reconstruction_unit=量子重构单元
 module.mekanism.hp_boots_unit=生命提升单元
 module.mekanism.entity_display_box_unit=范围生物显示单元
 module.mekanism.wall_cling_unit=墙面攀附单元
+module.mekanism.ore_visual_enhancement_unit=矿物视觉增强单元
+module.mekanism.automatic_ore_mining_unit=自动范围挖矿单元
 
 module.mekanism.fix_fov=无视觉变形
 module.mekanism.fly_always=始终无视重力
@@ -107,6 +111,13 @@ module.mekanism.health_display.text=数字
 module.mekanism.health_display.both=血条+数字
 module.mekanism.wall_cling=墙面攀附
 module.mekanism.climb_speed=攀爬速度
+module.mekanism.scan_delay=扫描延迟
+module.mekanism.ore_scan_next=下次扫描
+module.mekanism.ore_scan_count=矿物数量
+module.mekanism.text_color=文字颜色
+module.mekanism.max_blocks=最大挖掘数量
+module.mekanism.chain_mining=连锁挖掘
+module.mekanism.mining_wave_color=挖矿波颜色
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -144,6 +155,8 @@ description.mekanism.hp_boots_unit=提升使用者的最大生命值上限
 description.mekanism.optical_camouflage_unit=启用后让安装部位进入光学迷彩状态，全套启用时可完全隐身
 description.mekanism.entity_display_box_unit=在范围内的生物周围显示屏幕空间方框
 description.mekanism.wall_cling_unit=贴近墙面时可攀爬或缓慢下滑
+description.mekanism.ore_visual_enhancement_unit=服务端扫描范围内矿辞以ore开头的矿物，并在客户端显示线框与距离
+description.mekanism.automatic_ore_mining_unit=使用头盔矿物视觉增强单元的范围与扫描延迟，自动挖掘附近矿辞以ore开头的矿物
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 
