@@ -14,6 +14,7 @@ import mekanism.common.network.PacketSimpleGui;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningDropRedirector;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
@@ -64,6 +65,7 @@ public class MoreMekaSuitModules implements IModule {
         PacketSimpleGui.handlers.add(proxy);
         MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         MinecraftForge.EVENT_BUS.register(new AutomaticOreMiningDropRedirector());
+        MinecraftForge.EVENT_BUS.register(new CounterattackHandler());
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new MoreMekaSuitModulesGuiHandler());
         MinecraftForge.EVENT_BUS.register(this);
         packetHandler.initialize();
@@ -177,7 +179,7 @@ public class MoreMekaSuitModules implements IModule {
             if (Loader.isModLoaded("thaumcraft")) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.MAGIC_OPTIMIZATION_UNIT);
             }
-            ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT, MekaSuitMoreModules.HP_BOOTS_UNIT, MekaSuitMoreModules.OPTICAL_CAMOUFLAGE_UNIT);
+            ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT, MekaSuitMoreModules.HP_BOOTS_UNIT, MekaSuitMoreModules.OPTICAL_CAMOUFLAGE_UNIT, MekaSuitMoreModules.COUNTERATTACK_UNIT);
         }
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT, MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);

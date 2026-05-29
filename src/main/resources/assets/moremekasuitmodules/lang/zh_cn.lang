@@ -27,6 +27,7 @@ item.module_creative_band_of_aura_unit.name=创造光环单元
 item.module_smart_wireless_unit.name=智能无线单元
 item.module_infinite_gas_supply_unit.name=无限气体供应单元
 item.module_automatic_attack_unit.name=智能范围攻击单元
+item.module_counterattack_unit.name=自动反击单元
 item.module_power_enhancement_unit.name=动力增强单元
 item.module_high_speed_cooling_unit.name=加速冷却单元
 item.module_quantum_reconstruction_unit.name=量子重构单元
@@ -68,6 +69,7 @@ module.mekanism.creative_band_of_aura_unit=创造光环单元
 module.mekanism.smart_wireless_unit=智能无线单元
 module.mekanism.infinite_gas_supply_unit=无限气体供应单元
 module.mekanism.automatic_attack_unit=智能范围攻击单元
+module.mekanism.counterattack_unit=自动反击单元
 module.mekanism.power_enhancement_unit=动力增强单元
 module.mekanism.high_speed_cooling_unit=加速冷却单元
 module.mekanism.quantum_reconstruction_unit=量子重构单元
@@ -118,6 +120,7 @@ module.mekanism.text_color=文字颜色
 module.mekanism.max_blocks=最大挖掘数量
 module.mekanism.chain_mining=连锁挖掘
 module.mekanism.mining_wave_color=挖矿波颜色
+module.mekanism.counter_level=反击等级
 
 description.mekanism.emergency_rescue_unit=当玩家濒死时，会消耗一次单元进行回复血量
 description.mekanism.advanced_interception_system_unit=紧急救援单元的升级版本，不会在消耗
@@ -148,6 +151,7 @@ description.mekanism.creative_band_of_aura_unit=可以以 §6§k2147483647§r§7
 description.mekanism.smart_wireless_unit=安装此单元后，可以访问AE网络内的内容
 description.mekanism.infinite_gas_supply_unit=让MekaSuit始终充满气体
 description.mekanism.automatic_attack_unit=自动攻击玩家范围内的所有生物
+description.mekanism.counterattack_unit=根据已安装单元数量，对真实攻击者返回魔法反击伤害
 description.mekanism.power_enhancement_unit=能够增强使用者的攻击速度和伤害
 description.mekanism.high_speed_cooling_unit=加速冷却物品的使用
 description.mekanism.quantum_reconstruction_unit=通过在量子水平上分解和重建物质，隧道效应使其能够像旁观者模式一样穿透块。
@@ -157,6 +161,9 @@ description.mekanism.entity_display_box_unit=在范围内的生物周围显示�
 description.mekanism.wall_cling_unit=贴近墙面时可攀爬或缓慢下滑
 description.mekanism.ore_visual_enhancement_unit=服务端扫描范围内矿辞以ore开头的矿物，并在客户端显示线框与距离
 description.mekanism.automatic_ore_mining_unit=使用头盔矿物视觉增强单元的范围与扫描延迟，自动挖掘附近矿辞以ore开头的矿物
+
+death.attack.mekanism.counterattack=%1$s 被自动反击击败
+death.attack.mekanism.counterattack.player=%1$s 被 %2$s 自动反击击败
 
 chat.appliedenergistics2.DeviceLinked=设备已连接
 

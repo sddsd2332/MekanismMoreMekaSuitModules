@@ -20,6 +20,7 @@ import mekanism.common.content.gear.mekatool.ModuleVeinMiningUnit;
 import mekanism.common.util.WorldUtils;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.content.gear.mekanism.MekaLightningEffectHelper;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleOreVisualEnhancementUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
@@ -207,22 +208,27 @@ public class ModuleAutomaticOreMiningUnit implements ICustomModule<ModuleAutomat
     }
 
     private MineResult mineOreTarget(EntityPlayerMP player, IModuleContainerItem moduleContainer, IEnergizedItem energyContainer, ItemStack stack, PacketOreVisualScan.OreEntry seedEntry, IBlockState seedState, boolean silk, boolean creative, int remaining, Set<BlockPos> visited, OreVisualScanServerCache.ScanResult scanResult, int previousRadiusSq, int currentRadiusSq) {
-        Map<BlockPos, Integer> candidates = getCandidates(player.world, moduleContainer, stack, seedEntry, seedState, remaining, scanResult);
+        Map<BlockPos, OreCandidate> candidates = getCandidates(player.world, moduleContainer, stack, seedEntry, seedState, remaining, scanResult);
+        boolean singleCandidate = candidates.size() == 1;
         int mined = 0;
         int experience = 0;
         boolean outOfEnergy = false;
-        for (Map.Entry<BlockPos, Integer> entry : candidates.entrySet()) {
+        for (Map.Entry<BlockPos, OreCandidate> entry : candidates.entrySet()) {
             if (mined >= remaining) {
                 break;
             }
             BlockPos pos = entry.getKey();
+            OreCandidate candidate = entry.getValue();
             int distanceSq = (int) pos.distanceSq(scanResult.getCenter());
             if (distanceSq <= previousRadiusSq || distanceSq > currentRadiusSq) {
                 continue;
             }
             visited.add(pos);
-            BlockBreakResult result = breakOreBlock(player, moduleContainer, energyContainer, stack, pos, silk, creative, entry.getValue());
+            BlockBreakResult result = breakOreBlock(player, moduleContainer, energyContainer, stack, pos, silk, creative, candidate.distance);
             if (result.result == BreakResult.BROKEN) {
+                if (singleCandidate) {
+                    MekaLightningEffectHelper.renderBlockImpact(player.world, pos, player.ticksExisted, candidate.entry.getColor());
+                }
                 mined++;
                 experience += result.experience;
             } else if (result.result == BreakResult.OUT_OF_ENERGY) {
@@ -233,21 +239,21 @@ public class ModuleAutomaticOreMiningUnit implements ICustomModule<ModuleAutomat
         return new MineResult(mined, outOfEnergy, experience);
     }
 
-    private Map<BlockPos, Integer> getCandidates(World world, IModuleContainerItem moduleContainer, ItemStack stack, PacketOreVisualScan.OreEntry seedEntry, IBlockState seedState, int limit, OreVisualScanServerCache.ScanResult scanResult) {
-        Map<BlockPos, Integer> candidates = new LinkedHashMap<>();
+    private Map<BlockPos, OreCandidate> getCandidates(World world, IModuleContainerItem moduleContainer, ItemStack stack, PacketOreVisualScan.OreEntry seedEntry, IBlockState seedState, int limit, OreVisualScanServerCache.ScanResult scanResult) {
+        Map<BlockPos, OreCandidate> candidates = new LinkedHashMap<>();
         IModule<ModuleVeinMiningUnit> veinMiningUnit = moduleContainer.getModule(stack, MekanismModules.VEIN_MINING_UNIT);
         if (!chainMining.get() || veinMiningUnit == null || !veinMiningUnit.isEnabled() || !ModuleVeinMiningUnit.canVeinBlock(seedState)) {
-            candidates.put(seedEntry.getPos(), 0);
+            candidates.put(seedEntry.getPos(), new OreCandidate(seedEntry, 0));
             return candidates;
         }
-        findScannedOreVeinCandidates(seedEntry, Math.max(1, limit), scanResult, candidates);
+        findScannedOreVeinCandidates(world, seedEntry, Math.max(1, limit), scanResult, candidates);
         if (candidates.isEmpty()) {
-            candidates.put(seedEntry.getPos(), 0);
+            candidates.put(seedEntry.getPos(), new OreCandidate(seedEntry, 0));
         }
         return candidates;
     }
 
-    private void findScannedOreVeinCandidates(PacketOreVisualScan.OreEntry seedEntry, int limit, OreVisualScanServerCache.ScanResult scanResult, Map<BlockPos, Integer> candidates) {
+    private void findScannedOreVeinCandidates(World world, PacketOreVisualScan.OreEntry seedEntry, int limit, OreVisualScanServerCache.ScanResult scanResult, Map<BlockPos, OreCandidate> candidates) {
         Map<BlockPos, PacketOreVisualScan.OreEntry> remaining = new LinkedHashMap<>();
         for (PacketOreVisualScan.OreEntry entry : scanResult.getEntries()) {
             if (entry.getOreName().equals(seedEntry.getOreName()) && entry.getDisplayName().equals(seedEntry.getDisplayName())) {
@@ -265,14 +271,16 @@ public class ModuleAutomaticOreMiningUnit implements ICustomModule<ModuleAutomat
             if (entry == null) {
                 continue;
             }
-            candidates.put(pos, node.distance);
+            candidates.put(pos, new OreCandidate(entry, node.distance));
             if (candidates.size() >= limit) {
                 break;
             }
             for (BlockPos nextMutable : BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1))) {
                 BlockPos next = nextMutable.toImmutable();
-                if (queued.add(next)) {
+                PacketOreVisualScan.OreEntry nextEntry = remaining.get(next);
+                if (nextEntry != null && queued.add(next)) {
                     frontier.add(new SearchNode(next, node.distance + 1));
+                    MekaLightningEffectHelper.renderBlockChain(world, pos, next, candidates.size(), nextEntry.getColor());
                 }
             }
         }
@@ -419,6 +427,16 @@ public class ModuleAutomaticOreMiningUnit implements ICustomModule<ModuleAutomat
 
         private SearchNode(BlockPos pos, int distance) {
             this.pos = pos;
+            this.distance = distance;
+        }
+    }
+
+    private static class OreCandidate {
+        private final PacketOreVisualScan.OreEntry entry;
+        private final int distance;
+
+        private OreCandidate(PacketOreVisualScan.OreEntry entry, int distance) {
+            this.entry = entry;
             this.distance = distance;
         }
     }

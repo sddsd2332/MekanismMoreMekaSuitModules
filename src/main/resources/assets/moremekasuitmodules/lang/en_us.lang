@@ -27,6 +27,7 @@ item.module_creative_band_of_aura_unit.name=Creative Aura unit
 item.module_smart_wireless_unit.name=Smart wireless unit
 item.module_infinite_gas_supply_unit.name=Infinite gas supply unit
 item.module_automatic_attack_unit.name=Automatic Attack Units
+item.module_counterattack_unit.name=Counterattack Unit
 item.module_power_enhancement_unit.name=Power enhancement unit
 item.module_high_speed_cooling_unit.name=Cooling unit boost
 item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
@@ -68,6 +69,7 @@ module.mekanism.creative_band_of_aura_unit=Creative Aura unit
 module.mekanism.smart_wireless_unit=Smart wireless unit
 module.mekanism.infinite_gas_supply_unit=Infinite gas supply unit
 module.mekanism.automatic_attack_unit=Automatic Attack Units
+module.mekanism.counterattack_unit=Counterattack Unit
 module.mekanism.power_enhancement_unit=Power enhancement unit
 module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
@@ -118,6 +120,7 @@ module.mekanism.text_color=Text Color
 module.mekanism.max_blocks=Max Blocks
 module.mekanism.chain_mining=Chain Mining
 module.mekanism.mining_wave_color=Mining Wave Color
+module.mekanism.counter_level=Counter Level
 
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
@@ -149,6 +152,7 @@ description.mekanism.creative_band_of_aura_unit=Mana can be slowly created at a 
 description.mekanism.smart_wireless_unit=Once this unit is installed, content within the AE network can be accessed
 description.mekanism.infinite_gas_supply_unit=Keep MekaSuit full of gas at all times
 description.mekanism.automatic_attack_unit=Automatically attack all creatures within the range of the player.
+description.mekanism.counterattack_unit=Returns magic counterattack damage to the true attacker based on installed units.
 description.mekanism.power_enhancement_unit=Increases the user's attack speed and damage
 description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
 description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
@@ -158,6 +162,9 @@ description.mekanism.entity_display_box_unit=Displays screen-space boxes around 
 description.mekanism.wall_cling_unit=Allows climbing or slow sliding while touching walls
 description.mekanism.ore_visual_enhancement_unit=Scans server-side for nearby ore dictionary entries starting with ore, then renders boxes and distance labels client-side
 description.mekanism.automatic_ore_mining_unit=Automatically mines nearby ore dictionary blocks using the helmet ore visual scanner's range and delay
+
+death.attack.mekanism.counterattack=%1$s was counterattacked
+death.attack.mekanism.counterattack.player=%1$s was counterattacked by %2$s
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

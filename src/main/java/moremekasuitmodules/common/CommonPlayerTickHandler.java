@@ -11,6 +11,7 @@ import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismModules;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.integration.MekanismHooks;
+import moremekasuitmodules.common.network.to_client.PacketPlayerRescueSync;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualRemove;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningDropRedirector;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
@@ -186,6 +187,9 @@ public class CommonPlayerTickHandler {
                         item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                     }
                     Death(player, isInfiniteModule);
+                    if (player instanceof EntityPlayerMP serverPlayer) {
+                        syncPlayerRescueState(serverPlayer);
+                    }
                     sendMessage(player, isInfiniteModule, item, head);
                 }
             }
@@ -203,17 +207,18 @@ public class CommonPlayerTickHandler {
                 ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (head.getItem() instanceof IModuleContainerItem item) {
                     boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
-                    if (!player.isEntityAlive()) {
+                    if (player.getHealth() <= 0.0F) {
                         if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
                             if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
                                 item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                             }
                             Death(player, isInfiniteModule);
-                            //重新刷新玩家的位置 确保玩家在该位置
-                            player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
-                            player.world.updateEntity(player);
+                            syncPlayerRescueState(player);
                             sendMessage(player, isInfiniteModule, item, head);
                         }
+                    } else if (player.isDead || player.deathTime > 0) {
+                        resetPlayerDeathState(player);
+                        syncPlayerRescueState(player);
                     }
                 }
             }
@@ -222,8 +227,7 @@ public class CommonPlayerTickHandler {
 
 
     private void Death(EntityPlayer player, boolean isInfiniteModule) {
-        player.isDead = false;
-        player.deathTime = 0;
+        resetPlayerDeathState(player);
         player.setHealth(isInfiniteModule ? player.getMaxHealth() : 5F);
         player.clearActivePotions();
         player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 800, 2));
@@ -231,6 +235,20 @@ public class CommonPlayerTickHandler {
         player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 2));
         player.setAir(300);
         player.getFoodStats().addStats(20, 20);
+    }
+
+    private void resetPlayerDeathState(EntityPlayer player) {
+        player.isDead = false;
+        player.deathTime = 0;
+        player.hurtTime = 0;
+        player.maxHurtTime = 0;
+    }
+
+    private void syncPlayerRescueState(EntityPlayerMP player) {
+        PacketPlayerRescueSync.Message message = new PacketPlayerRescueSync.Message(player.getEntityId(), player.getHealth());
+        MoreMekaSuitModules.packetHandler.sendTo(message, player);
+        MoreMekaSuitModules.packetHandler.sendToAllTracking(message, player);
+        player.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
     }
 
     private void sendMessage(EntityPlayer player, boolean isInfiniteModule, IModuleContainerItem item, ItemStack head) {

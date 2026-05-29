@@ -13,6 +13,7 @@ import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismDamageSource;
 import mekanism.common.MekanismLang;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.MekaLightningEffectHelper;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.MoreMekaSuitModulesLang;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -124,7 +125,9 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
     private void attackEntityFrom(EntityPlayer player, EntityLivingBase target) {
         MekanismDamageSource source = MekanismDamageSource.SMARTATTACKDAMAGE.setTrueSource(player);
         float sourceAmount = (float) player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
-        target.attackEntityFrom(source, sourceAmount);
+        if (target.attackEntityFrom(source, sourceAmount)) {
+            MekaLightningEffectHelper.renderEntityImpact(target, player.ticksExisted);
+        }
         player.swingArm(EnumHand.MAIN_HAND);
     }
 

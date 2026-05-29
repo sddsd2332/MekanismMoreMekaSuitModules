@@ -78,6 +78,7 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleInfiniteGasSupplyUnit> INFINITE_GAS_SUPPLY_UNIT = ModuleHelper.register("infinite_gas_supply_unit", ModuleInfiniteGasSupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC));
     //智能范围攻击单元 (WC 挂)
     public static final ModuleData<ModuleAutomaticAttackUnit> AUTOMATIC_ATTACK_UNIT = ModuleHelper.register("automatic_attack_unit", ModuleAutomaticAttackUnit::new, builder -> builder.maxStackSize(4).rarity(EnumRarity.EPIC));
+    public static final ModuleData<ModuleCounterattackUnit> COUNTERATTACK_UNIT = ModuleHelper.register("counterattack_unit", ModuleCounterattackUnit::new, builder -> builder.maxStackSize(ModuleCounterattackUnit.MAX_MODULES_PER_ARMOR).rarity(EnumRarity.RARE).disabledByDefault());
     //动力增强单元（增加伤害和攻击速度）
     public static final ModuleData<ModularPowerEnhancementUnit> POWER_ENHANCEMENT_UNIT = ModuleHelper.register("power_enhancement_unit", ModularPowerEnhancementUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC));
     //加速冷却单元(加速物品的冷却)

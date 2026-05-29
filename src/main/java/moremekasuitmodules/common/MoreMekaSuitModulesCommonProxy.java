@@ -8,6 +8,7 @@ import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
@@ -54,6 +55,12 @@ public class MoreMekaSuitModulesCommonProxy implements IGuiProvider {
     }
 
     public void handleOreMiningWave(BlockPos center, int radius, int color, int durationTicks) {
+    }
+
+    public void handleColoredLightning(int renderer, Vec3d start, Vec3d end, int segments, int color) {
+    }
+
+    public void handlePlayerRescueSync(int entityId, float health) {
     }
 
     public int getOreVisualClientEntryCount() {

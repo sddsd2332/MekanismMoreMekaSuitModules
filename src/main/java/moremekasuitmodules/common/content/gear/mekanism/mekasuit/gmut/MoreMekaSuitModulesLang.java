@@ -46,6 +46,7 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_MAX_BLOCKS("module", "max_blocks"),
     MODULE_CHAIN_MINING("module", "chain_mining"),
     MODULE_MINING_WAVE_COLOR("module", "mining_wave_color"),
+    MODULE_COUNTER_LEVEL("module", "counter_level"),
     // EOL
     ;
 

@@ -1,0 +1,33 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_counterattack_unit"
+      },
+      "pattern": [
+            "CBC",
+            "AMA",
+            "SRS"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyElite",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "minecraft:cactus"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "R": {
+                  "item": "minecraft:redstone_block"
+            },
+            "S": {
+                  "item": "minecraft:diamond_sword"
+            }
+      }
+}

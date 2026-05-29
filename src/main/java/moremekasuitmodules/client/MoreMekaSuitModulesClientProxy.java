@@ -2,14 +2,23 @@ package moremekasuitmodules.client;
 
 import mekanism.client.render.MekanismRenderer;
 import mekanism.common.Mekanism;
+import mekanism.common.config.MekanismConfig;
+import mekanism.common.lib.Color;
+import mekanism.common.lib.effect.BoltEffect;
+import mekanism.common.lib.effect.BoltEffect.BoltRenderInfo;
+import mekanism.common.lib.effect.BoltEffect.SpawnFunction;
 import moremekasuitmodules.client.key.GMUTKeyHandler;
 import moremekasuitmodules.common.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -87,6 +96,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_GAS_SUPPLY);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_ATTACK);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_COUNTERATTACK);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_POWER_ENHANCEMENT);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_QUANTUM_RECONSTRUCTION);
@@ -120,6 +130,41 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
     @Override
     public void handleOreMiningWave(BlockPos center, int radius, int color, int durationTicks) {
         OreVisualScanClientCache.startMiningWave(center, radius, color, durationTicks);
+    }
+
+    @Override
+    public void handleColoredLightning(int renderer, Vec3d start, Vec3d end, int segments, int color) {
+        if (!MekanismConfig.current().client.renderToolAOEParticles.val()) {
+            return;
+        }
+        BoltRenderInfo renderInfo = BoltRenderInfo.electricity().color(Color.argb(normalizeLightningColor(color)));
+        BoltEffect bolt = new BoltEffect(renderInfo, start, end, segments).size(0.015F).lifespan(12).spawn(SpawnFunction.NO_DELAY);
+        mekanism.client.render.RenderTickHandler.renderBolt(renderer, bolt);
+    }
+
+    private int normalizeLightningColor(int color) {
+        if ((color & 0xFF000000) == 0) {
+            return color | 0xCC000000;
+        }
+        return color;
+    }
+
+    @Override
+    public void handlePlayerRescueSync(int entityId, float health) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        if (minecraft.world == null) {
+            return;
+        }
+        Entity entity = minecraft.world.getEntityByID(entityId);
+        if (entity instanceof EntityLivingBase living) {
+            living.isDead = false;
+            living.deathTime = 0;
+            living.hurtTime = 0;
+            living.maxHurtTime = 0;
+            if (health > 0.0F) {
+                living.setHealth(health);
+            }
+        }
     }
 
     @Override
