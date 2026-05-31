@@ -1,0 +1,30 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_knockback_control_unit"
+      },
+      "pattern": [
+            "PBP",
+            "AMA",
+            "PSP"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyReinforced",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitElite",
+                  "type": "forge:ore_dict"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "P": {
+                  "item": "minecraft:piston"
+            },
+            "S": {
+                  "item": "minecraft:diamond_sword"
+            }
+      }
+}

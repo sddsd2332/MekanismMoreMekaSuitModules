@@ -2,6 +2,7 @@ package moremekasuitmodules.common.network;
 
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.network.to_client.PacketColoredLightningRender;
+import moremekasuitmodules.common.network.to_client.PacketImpactWave;
 import moremekasuitmodules.common.network.to_client.PacketOreMiningWave;
 import moremekasuitmodules.common.network.to_client.PacketPlayerRescueSync;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualRemove;
@@ -28,6 +29,7 @@ public class GMUTPacketHandler {
         netHandler.registerMessage(PacketOreMiningWave.class, PacketOreMiningWave.Message.class, 3, Side.CLIENT);
         netHandler.registerMessage(PacketPlayerRescueSync.class, PacketPlayerRescueSync.Message.class, 4, Side.CLIENT);
         netHandler.registerMessage(PacketColoredLightningRender.class, PacketColoredLightningRender.Message.class, 5, Side.CLIENT);
+        netHandler.registerMessage(PacketImpactWave.class, PacketImpactWave.Message.class, 6, Side.CLIENT);
     }
 
     public void sendToServer(IMessage message) {

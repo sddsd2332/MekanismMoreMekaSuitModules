@@ -1,0 +1,38 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_looting_amplification_unit"
+      },
+      "pattern": [
+            "EBE",
+            "AMA",
+            "ESE"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyElite",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "item": "minecraft:enchanted_book",
+                  "nbt": {
+                        "StoredEnchantments": [
+                              {
+                                    "id": 21,
+                                    "lvl": 3
+                              }
+                        ]
+                  },
+                  "type": "mekanism:item_nbt"
+            },
+            "E": {
+                  "item": "minecraft:emerald"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "S": {
+                  "item": "minecraft:diamond_sword"
+            }
+      }
+}

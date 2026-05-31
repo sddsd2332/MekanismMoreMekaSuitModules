@@ -1,0 +1,30 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_execution_unit"
+      },
+      "pattern": [
+            "ABA",
+            "SMS",
+            "RBR"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyAtomic",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "R": {
+                  "item": "minecraft:redstone_block"
+            },
+            "S": {
+                  "item": "minecraft:diamond_sword"
+            }
+      }
+}

@@ -63,6 +63,9 @@ public class MoreMekaSuitModulesCommonProxy implements IGuiProvider {
     public void handlePlayerRescueSync(int entityId, float health) {
     }
 
+    public void handleImpactWave(double x, double y, double z, float radius, int color, int durationTicks, int sourceEntityId, float fallDistance) {
+    }
+
     public int getOreVisualClientEntryCount() {
         return 0;
     }

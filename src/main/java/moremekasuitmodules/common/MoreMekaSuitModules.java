@@ -14,7 +14,10 @@ import mekanism.common.network.PacketSimpleGui;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningDropRedirector;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolCombatHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolSmeltingHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
@@ -65,7 +68,10 @@ public class MoreMekaSuitModules implements IModule {
         PacketSimpleGui.handlers.add(proxy);
         MinecraftForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         MinecraftForge.EVENT_BUS.register(new AutomaticOreMiningDropRedirector());
+        MinecraftForge.EVENT_BUS.register(new MekaToolCombatHandler());
+        MinecraftForge.EVENT_BUS.register(new MekaToolSmeltingHandler());
         MinecraftForge.EVENT_BUS.register(new CounterattackHandler());
+        MinecraftForge.EVENT_BUS.register(new ImpactWaveHandler());
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new MoreMekaSuitModulesGuiHandler());
         MinecraftForge.EVENT_BUS.register(this);
         packetHandler.initialize();
@@ -102,6 +108,7 @@ public class MoreMekaSuitModules implements IModule {
         }
         OreVisualScanTracker.clearAll();
         OreVisualScanServerCache.clearAll();
+        ImpactWaveHandler.clearAll();
         AutomaticOreMiningTracker.clearAll();
         AutomaticOreMiningDropRedirector.clearAll();
     }
@@ -179,7 +186,7 @@ public class MoreMekaSuitModules implements IModule {
             if (Loader.isModLoaded("thaumcraft")) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.MAGIC_OPTIMIZATION_UNIT);
             }
-            ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT, MekaSuitMoreModules.HP_BOOTS_UNIT, MekaSuitMoreModules.OPTICAL_CAMOUFLAGE_UNIT, MekaSuitMoreModules.COUNTERATTACK_UNIT);
+            ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT, MekaSuitMoreModules.HP_BOOTS_UNIT, MekaSuitMoreModules.OPTICAL_CAMOUFLAGE_UNIT, MekaSuitMoreModules.COUNTERATTACK_UNIT, MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT);
         }
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT, MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);
@@ -213,13 +220,13 @@ public class MoreMekaSuitModules implements IModule {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, MekaSuitMoreModules.BAND_OF_AURA_UNIT, MekaSuitMoreModules.BASIC_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ADVANCED_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ELITE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.ULTIMATE_BAND_OF_AURA_UNIT, MekaSuitMoreModules.CREATIVE_BAND_OF_AURA_UNIT);
         }
 
-        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BOOTS, MekaSuitMoreModules.WALL_CLING_UNIT);
+        ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BOOTS, MekaSuitMoreModules.WALL_CLING_UNIT, MekaSuitMoreModules.IMPACT_WAVE_UNIT);
 
         if (Loader.isModLoaded("appliedenergistics2")) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }
 
-        ModuleHelper.get().setSupported(MekanismItems.MEKA_TOOL, MekaSuitMoreModules.AUTOMATIC_ORE_MINING_UNIT);
+        ModuleHelper.get().setSupported(MekanismItems.MEKA_TOOL, MekaSuitMoreModules.AUTOMATIC_ORE_MINING_UNIT, MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT, MekaSuitMoreModules.KNOCKBACK_CONTROL_UNIT, MekaSuitMoreModules.EXECUTION_UNIT, MekaSuitMoreModules.SMELTING_UNIT);
 
     }
 

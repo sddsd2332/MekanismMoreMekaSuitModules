@@ -1,0 +1,37 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_automatic_extinguish_unit"
+      },
+      "pattern": [
+            "FBF",
+            "AMA",
+            "CWC"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyReinforced",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitElite",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "minecraft:cauldron"
+            },
+            "F": {
+                  "item": "minecraft:magma_cream"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "W": {
+                  "item": "minecraft:potion",
+                  "nbt": {
+                        "Potion": "minecraft:water"
+                  },
+                  "type": "mekanism:item_nbt"
+            }
+      }
+}

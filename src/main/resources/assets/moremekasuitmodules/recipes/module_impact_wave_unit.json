@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_impact_wave_unit"
+  },
+  "pattern": [
+    "AEA",
+    "CMC",
+    "PDP"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "ore": "alloyElite",
+      "type": "forge:ore_dict"
+    },
+    "E": {
+      "item": "mekanism:energytablet"
+    },
+    "C": {
+      "ore": "circuitElite",
+      "type": "forge:ore_dict"
+    },
+    "M": {
+      "item": "mekanism:modulebase"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "D": {
+      "item": "minecraft:diamond_boots"
+    }
+  }
+}

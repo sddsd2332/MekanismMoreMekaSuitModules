@@ -13,6 +13,9 @@ import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarp
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleAutomaticLiquidSupplyUnit;
 import moremekasuitmodules.common.content.gear.integration.toughasnails.ModuleIntelligentTemperatureRegulationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleAutomaticOreMiningUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleExecutionUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleKnockbackControlUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.*;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.item.EnumRarity;
@@ -98,4 +101,16 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleOreVisualEnhancementUnit> ORE_VISUAL_ENHANCEMENT_UNIT = ModuleHelper.register("ore_visual_enhancement_unit", ModuleOreVisualEnhancementUnit::new, builder -> builder.maxStackSize(5).rarity(EnumRarity.RARE).disabledByDefault().rendersHUD());
 
     public static final ModuleData<ModuleAutomaticOreMiningUnit> AUTOMATIC_ORE_MINING_UNIT = ModuleHelper.register("automatic_ore_mining_unit", ModuleAutomaticOreMiningUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).disabledByDefault());
+
+    public static final ModuleData<ModuleLootingAmplificationUnit> LOOTING_AMPLIFICATION_UNIT = ModuleHelper.register("looting_amplification_unit", ModuleLootingAmplificationUnit::new, builder -> builder.maxStackSize(ModuleLootingAmplificationUnit.MAX_MODULES).rarity(EnumRarity.RARE).disabledByDefault());
+
+    public static final ModuleData<ModuleKnockbackControlUnit> KNOCKBACK_CONTROL_UNIT = ModuleHelper.register("knockback_control_unit", ModuleKnockbackControlUnit::new, builder -> builder.maxStackSize(ModuleKnockbackControlUnit.MAX_MODULES).rarity(EnumRarity.RARE).disabledByDefault());
+
+    public static final ModuleData<ModuleExecutionUnit> EXECUTION_UNIT = ModuleHelper.register("execution_unit", ModuleExecutionUnit::new, builder -> builder.maxStackSize(ModuleExecutionUnit.MAX_MODULES).rarity(EnumRarity.EPIC).disabledByDefault());
+
+    public static final ModuleData<ModuleAutomaticExtinguishUnit> AUTOMATIC_EXTINGUISH_UNIT = ModuleHelper.register("automatic_extinguish_unit", ModuleAutomaticExtinguishUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.UNCOMMON).disabledByDefault());
+
+    public static final ModuleData<?> SMELTING_UNIT = ModuleHelper.registerMarker("smelting_unit",  builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).disabledByDefault());
+
+    public static final ModuleData<ModuleImpactWaveUnit> IMPACT_WAVE_UNIT = ModuleHelper.register("impact_wave_unit", ModuleImpactWaveUnit::new, builder -> builder.maxStackSize(ModuleImpactWaveUnit.MAX_MODULES).rarity(EnumRarity.RARE).disabledByDefault());
 }

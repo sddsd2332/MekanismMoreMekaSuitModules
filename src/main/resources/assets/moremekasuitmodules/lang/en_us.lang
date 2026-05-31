@@ -37,6 +37,12 @@ item.module_entity_display_box_unit.name=Entity Display Box Unit
 item.module_wall_cling_unit.name=Wall Cling Unit
 item.module_ore_visual_enhancement_unit.name=Ore Visual Enhancement Unit
 item.module_automatic_ore_mining_unit.name=Automatic Ore Mining Unit
+item.module_looting_amplification_unit.name=Looting Amplification Unit
+item.module_knockback_control_unit.name=Knockback Control Unit
+item.module_execution_unit.name=Execution Unit
+item.module_automatic_extinguish_unit.name=Automatic Extinguish Unit
+item.module_smelting_unit.name=Smelting Unit
+item.module_impact_wave_unit.name=Impact Wave Unit
 module.mekanism.optical_camouflage=Optical Camouflage
 module.mekanism.optical_camouflage_unit=Optical Camouflage Unit
 
@@ -78,6 +84,12 @@ module.mekanism.entity_display_box_unit=Entity Display Box Unit
 module.mekanism.wall_cling_unit=Wall Cling Unit
 module.mekanism.ore_visual_enhancement_unit=Ore Visual Enhancement Unit
 module.mekanism.automatic_ore_mining_unit=Automatic Ore Mining Unit
+module.mekanism.looting_amplification_unit=Looting Amplification Unit
+module.mekanism.knockback_control_unit=Knockback Control Unit
+module.mekanism.execution_unit=Execution Unit
+module.mekanism.automatic_extinguish_unit=Automatic Extinguish Unit
+module.mekanism.smelting_unit=Smelting Unit
+module.mekanism.impact_wave_unit=Impact Wave Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -121,6 +133,13 @@ module.mekanism.max_blocks=Max Blocks
 module.mekanism.chain_mining=Chain Mining
 module.mekanism.mining_wave_color=Mining Wave Color
 module.mekanism.counter_level=Counter Level
+module.mekanism.looting_level=Looting Level
+module.mekanism.knockback_strength=Knockback Strength
+module.mekanism.execution_level=Execution Threshold
+module.mekanism.impact_trigger_height=Trigger Height
+module.mekanism.impact_radius=Impact Radius
+module.mekanism.impact_damage=Impact Damage
+module.mekanism.impact_wave_color=Impact Wave Color
 
 
 description.mekanism.emergency_rescue_unit=When the player is dying, they consume a unit to regenerate health
@@ -162,9 +181,17 @@ description.mekanism.entity_display_box_unit=Displays screen-space boxes around 
 description.mekanism.wall_cling_unit=Allows climbing or slow sliding while touching walls
 description.mekanism.ore_visual_enhancement_unit=Scans server-side for nearby ore dictionary entries starting with ore, then renders boxes and distance labels client-side
 description.mekanism.automatic_ore_mining_unit=Automatically mines nearby ore dictionary blocks using the helmet ore visual scanner's range and delay
+description.mekanism.looting_amplification_unit=Increases the effective looting level when killing entities with the Meka-Tool
+description.mekanism.knockback_control_unit=Increases Meka-Tool attack knockback strength
+description.mekanism.execution_unit=Executes heavily wounded targets when attacking with the Meka-Tool
+description.mekanism.automatic_extinguish_unit=Automatically extinguishes fire by consuming MekaSuit energy
+description.mekanism.smelting_unit=Smelts block drops harvested by the Meka-Tool and disables Silk Touch while active
+description.mekanism.impact_wave_unit=Creates a transparent impact wave on hard landings, damaging nearby entities
 
 death.attack.mekanism.counterattack=%1$s was counterattacked
 death.attack.mekanism.counterattack.player=%1$s was counterattacked by %2$s
+death.attack.mekanism.impact_wave=%1$s was crushed by an impact wave
+death.attack.mekanism.impact_wave.player=%1$s was crushed by %2$s's impact wave
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

@@ -49,6 +49,12 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_WALL_CLING = new ItemModule(MekaSuitMoreModules.WALL_CLING_UNIT);
     public static final ItemModule MODULE_ORE_VISUAL_ENHANCEMENT = new ItemModule(MekaSuitMoreModules.ORE_VISUAL_ENHANCEMENT_UNIT);
     public static final ItemModule MODULE_AUTOMATIC_ORE_MINING = new ItemModule(MekaSuitMoreModules.AUTOMATIC_ORE_MINING_UNIT);
+    public static final ItemModule MODULE_LOOTING_AMPLIFICATION = new ItemModule(MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT);
+    public static final ItemModule MODULE_KNOCKBACK_CONTROL = new ItemModule(MekaSuitMoreModules.KNOCKBACK_CONTROL_UNIT);
+    public static final ItemModule MODULE_EXECUTION = new ItemModule(MekaSuitMoreModules.EXECUTION_UNIT);
+    public static final ItemModule MODULE_AUTOMATIC_EXTINGUISH = new ItemModule(MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT);
+    public static final ItemModule MODULE_SMELTING = new ItemModule(MekaSuitMoreModules.SMELTING_UNIT);
+    public static final ItemModule MODULE_IMPACT_WAVE = new ItemModule(MekaSuitMoreModules.IMPACT_WAVE_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
@@ -116,6 +122,12 @@ public class MekaSuitMoreModulesItem {
         registry.register(initModule(MODULE_WALL_CLING));
         registry.register(initModule(MODULE_ORE_VISUAL_ENHANCEMENT));
         registry.register(initModule(MODULE_AUTOMATIC_ORE_MINING));
+        registry.register(initModule(MODULE_LOOTING_AMPLIFICATION));
+        registry.register(initModule(MODULE_KNOCKBACK_CONTROL));
+        registry.register(initModule(MODULE_EXECUTION));
+        registry.register(initModule(MODULE_AUTOMATIC_EXTINGUISH));
+        registry.register(initModule(MODULE_SMELTING));
+        registry.register(initModule(MODULE_IMPACT_WAVE));
     }
 
 

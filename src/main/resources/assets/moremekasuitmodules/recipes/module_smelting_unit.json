@@ -1,0 +1,31 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_smelting_unit"
+      },
+      "pattern": [
+            "FBF",
+            "AMA",
+            "IFI"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyElite",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitElite",
+                  "type": "forge:ore_dict"
+            },
+            "F": {
+                  "item": "minecraft:furnace"
+            },
+            "I": {
+                  "ore": "ingotSteel",
+                  "type": "forge:ore_dict"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            }
+      }
+}

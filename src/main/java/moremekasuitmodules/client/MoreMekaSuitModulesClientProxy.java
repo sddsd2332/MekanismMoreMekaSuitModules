@@ -36,6 +36,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         MinecraftForge.EVENT_BUS.register(new EntityDisplayBoxRenderer());
         MinecraftForge.EVENT_BUS.register(new OreVisualEnhancementRenderer());
         MinecraftForge.EVENT_BUS.register(new OreVisualEnhancementClientEvents());
+        MinecraftForge.EVENT_BUS.register(new ImpactWaveRenderer());
         new GMUTKeyHandler();
     }
 
@@ -106,6 +107,12 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.MODULE_WALL_CLING);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_ORE_VISUAL_ENHANCEMENT);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_ORE_MINING);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_LOOTING_AMPLIFICATION);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_KNOCKBACK_CONTROL);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_EXECUTION);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_AUTOMATIC_EXTINGUISH);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_SMELTING);
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_IMPACT_WAVE);
     }
 
     @Override
@@ -165,6 +172,11 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
                 living.setHealth(health);
             }
         }
+    }
+
+    @Override
+    public void handleImpactWave(double x, double y, double z, float radius, int color, int durationTicks, int sourceEntityId, float fallDistance) {
+        ImpactWaveRenderer.addWave(x, y, z, radius, color, durationTicks, sourceEntityId, fallDistance);
     }
 
     @Override

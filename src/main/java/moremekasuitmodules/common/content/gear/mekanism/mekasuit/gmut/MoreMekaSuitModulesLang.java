@@ -47,6 +47,13 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     MODULE_CHAIN_MINING("module", "chain_mining"),
     MODULE_MINING_WAVE_COLOR("module", "mining_wave_color"),
     MODULE_COUNTER_LEVEL("module", "counter_level"),
+    MODULE_LOOTING_LEVEL("module", "looting_level"),
+    MODULE_KNOCKBACK_STRENGTH("module", "knockback_strength"),
+    MODULE_EXECUTION_LEVEL("module", "execution_level"),
+    MODULE_IMPACT_TRIGGER_HEIGHT("module", "impact_trigger_height"),
+    MODULE_IMPACT_RADIUS("module", "impact_radius"),
+    MODULE_IMPACT_DAMAGE("module", "impact_damage"),
+    MODULE_IMPACT_WAVE_COLOR("module", "impact_wave_color"),
     // EOL
     ;
 
