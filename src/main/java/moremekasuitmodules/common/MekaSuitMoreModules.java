@@ -56,6 +56,7 @@ public class MekaSuitMoreModules {
     ///混沌抗性单元 （给meka套提供阻挡混沌伤害的抵抗效果）[最大25个]
     public static final ModuleData<?> CHAOS_RESISTANCE_UNIT = ModuleHelper.registerMarker("chaos_resistance_unit", builder -> builder.maxStackSize(25).rarity(EnumRarity.EPIC).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR"));
     //混沌旋涡稳定器 DR（当挖掘混沌晶体时，如果玩家附近会产生混沌旋涡，则移除本单元来平息该爆炸）
+    public static final ModuleData<?> PERCENTAGE_DAMAGE_LIMIT_UNIT = ModuleHelper.registerMarker("percentage_damage_limit_unit", builder -> builder.maxStackSize(10).rarity(EnumRarity.EPIC));
     public static final ModuleData<ModuleChaosVortexStabilizationUnit> CHAOS_VORTEX_STABILIZATION_UNIT = ModuleHelper.register("chaos_vortex_stabilization_unit", ModuleChaosVortexStabilizationUnit::new, builder -> builder.maxStackSize(10).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded(MekanismHooks.DraconicEvolution_MOD_ID)).notEnabled("tooltip.install.DR").disabledByDefault());
     //智能屏蔽单元 冰与火（通过芯片分析，自动屏蔽对方的目光）【需要mixin】
     public static final ModuleData<?> SMART_SHIELDING_UNIT = ModuleHelper.registerMarker("smart_shielding_unit", builder -> builder.rarity(EnumRarity.UNCOMMON).canEnable(!Loader.isModLoaded("iceandfire")).notEnabled("tooltip.install.IAF"));

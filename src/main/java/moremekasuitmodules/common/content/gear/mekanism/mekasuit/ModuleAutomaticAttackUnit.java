@@ -1,7 +1,7 @@
 package moremekasuitmodules.common.content.gear.mekanism.mekasuit;
 
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
-import mekanism.api.energy.IEnergizedItem;
+import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.IModuleConfigItem;
@@ -68,9 +68,9 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
         float size = getRange();
         double usage = MoreModulesConfig.current().config.mekaSuitEnergyUsageItemAttack.val() * getRange();
         boolean free = usage == 0 || player.isCreative();
-        IEnergizedItem energyContainer = free ? null : module.getEnergyContainer();
+        IEnergyContainer energyContainer = free ? null : module.getEnergyContainer();
 
-        if (!free && (energyContainer == null || energyContainer.getEnergy(module.getContainer()) < usage)) {
+        if (!free && (energyContainer == null || energyContainer.getEnergy() < usage)) {
             return;
         }
 
@@ -97,7 +97,7 @@ public class ModuleAutomaticAttackUnit implements ICustomModule<ModuleAutomaticA
                 break;
             } else {
                 attackEntityFrom(player, target);
-                if (energyContainer.getEnergy(module.getContainer()) < usage) {
+                if (energyContainer.getEnergy() < usage) {
                     // If after using energy we don't have enough for next hit, exit.
                     break;
                 }

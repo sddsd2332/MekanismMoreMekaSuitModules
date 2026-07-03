@@ -1,7 +1,9 @@
 package moremekasuitmodules.common.content.gear.mekanism.mekasuit;
 
+import mekanism.api.Action;
+import mekanism.api.AutomationType;
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
-import mekanism.api.energy.IEnergizedItem;
+import mekanism.api.energy.IEnergyContainer;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,9 +18,9 @@ public class ModuleInfiniteEnergySupplyUnit implements ICustomModule<ModuleInfin
 
     @Override
     public void tickServer(IModule<ModuleInfiniteEnergySupplyUnit> module, EntityPlayer player) {
-        IEnergizedItem energyContainer = module.getEnergyContainer();
+        IEnergyContainer energyContainer = module.getEnergyContainer();
         if (energyContainer != null) {
-            energyContainer.insert(module.getContainer(), energyContainer.getMaxEnergy(module.getContainer()), true);
+            energyContainer.insert(energyContainer.getNeeded(), Action.EXECUTE, AutomationType.MANUAL);
         }
     }
 

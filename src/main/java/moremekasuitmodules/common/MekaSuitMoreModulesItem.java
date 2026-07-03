@@ -26,6 +26,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_GRAVITATIONAL_MODULATING_ADDITIONAL = new ItemModule(MekaSuitMoreModules.GRAVITATIONAL_MODULATING_ADDITIONAL_UNIT);
     public static final ItemModule MODULE_ENERGY_SHIELD = new ItemModule(MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
     public static final ItemModule MODULE_CHAOS_RESISTANCE = new ItemModule(MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
+    public static final ItemModule MODULE_PERCENTAGE_DAMAGE_LIMIT = new ItemModule(MekaSuitMoreModules.PERCENTAGE_DAMAGE_LIMIT_UNIT);
     public static final ItemModule MODULE_CHAOS_VORTEX_STABILIZATION = new ItemModule(MekaSuitMoreModules.CHAOS_VORTEX_STABILIZATION_UNIT);
     public static final ItemModule MODULE_SMART_SHIELDING = new ItemModule(MekaSuitMoreModules.SMART_SHIELDING_UNIT);
     public static final ItemModule MODULE_INFINITE_ENERGY_SUPPLY = new ItemModule(MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT);
@@ -91,6 +92,7 @@ public class MekaSuitMoreModulesItem {
             registry.register(initModule(MODULE_CHAOS_RESISTANCE));
             registry.register(initModule(MODULE_CHAOS_VORTEX_STABILIZATION));
         }
+        registry.register(initModule(MODULE_PERCENTAGE_DAMAGE_LIMIT));
         if (Loader.isModLoaded("iceandfire")) {
             registry.register(initModule(MODULE_SMART_SHIELDING));
         }

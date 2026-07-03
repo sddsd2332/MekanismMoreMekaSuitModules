@@ -1,0 +1,33 @@
+{
+      "result": {
+            "item": "moremekasuitmodules:module_percentage_damage_limit_unit"
+      },
+      "pattern": [
+            "CBC",
+            "AMA",
+            "RGR"
+      ],
+      "type": "mekanism:ore_shaped",
+      "key": {
+            "A": {
+                  "ore": "alloyUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "B": {
+                  "ore": "circuitUltimate",
+                  "type": "forge:ore_dict"
+            },
+            "C": {
+                  "item": "minecraft:golden_apple"
+            },
+            "G": {
+                  "item": "minecraft:ghast_tear"
+            },
+            "M": {
+                  "item": "mekanism:modulebase"
+            },
+            "R": {
+                  "item": "minecraft:redstone_block"
+            }
+      }
+}

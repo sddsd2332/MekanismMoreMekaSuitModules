@@ -75,6 +75,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_RESISTANCE);
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CHAOS_VORTEX_STABILIZATION);
         }
+        registerItemRender(MekaSuitMoreModulesItem.MODULE_PERCENTAGE_DAMAGE_LIMIT);
         if (Loader.isModLoaded("iceandfire")) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_SHIELDING);
         }

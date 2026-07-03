@@ -101,7 +101,7 @@ public class EntityDisplayBoxRenderer {
         RenderManager renderManager = minecraft.getRenderManager();
         ScaledResolution resolution = new ScaledResolution(minecraft);
         ICamera camera = new Frustum();
-        camera.setPosition(renderManager.renderPosX, renderManager.renderPosY, renderManager.renderPosZ);
+        camera.setPosition(renderManager.viewerPosX, renderManager.viewerPosY, renderManager.viewerPosZ);
         for (EntityLivingBase target : targets) {
             if (displayBoxes.size() >= maxBoxes) {
                 break;
@@ -205,9 +205,9 @@ public class EntityDisplayBoxRenderer {
     private boolean project(ScreenBounds bounds, double x, double y, double z, RenderManager renderManager, ScaledResolution resolution) {
         projected.clear();
         boolean success = GLU.gluProject(
-                (float) (x - renderManager.renderPosX),
-                (float) (y - renderManager.renderPosY),
-                (float) (z - renderManager.renderPosZ),
+                (float) (x - renderManager.viewerPosX),
+                (float) (y - renderManager.viewerPosY),
+                (float) (z - renderManager.viewerPosZ),
                 modelView,
                 projection,
                 viewport,

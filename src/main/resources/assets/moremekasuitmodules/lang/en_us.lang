@@ -187,6 +187,9 @@ description.mekanism.execution_unit=Executes heavily wounded targets when attack
 description.mekanism.automatic_extinguish_unit=Automatically extinguishes fire by consuming MekaSuit energy
 description.mekanism.smelting_unit=Smelts block drops harvested by the Meka-Tool and disables Silk Touch while active
 description.mekanism.impact_wave_unit=Creates a transparent impact wave on hard landings, damaging nearby entities
+item.module_percentage_damage_limit_unit.name=Percentage Damage Limit Unit
+module.mekanism.percentage_damage_limit_unit=Percentage Damage Limit Unit
+description.mekanism.percentage_damage_limit_unit=Reduces health loss by enabled units across armor, limiting each loss to at most 1 point at 40 units
 
 death.attack.mekanism.counterattack=%1$s was counterattacked
 death.attack.mekanism.counterattack.player=%1$s was counterattacked by %2$s
