@@ -18,6 +18,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleKnockback
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.*;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
+import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fml.common.Loader;
 
@@ -27,8 +28,9 @@ public class MekaSuitMoreModules {
     public static final ModuleData<?> EMERGENCY_RESCUE_UNIT = ModuleHelper.registerMarker("emergency_rescue_unit", builder -> builder.maxStackSize(10).rarity(EnumRarity.EPIC));
     //先进救援（不消耗该单元来进行复活玩家，且如果安装并启用了紧急救援，则不消耗紧急救援）
     public static final ModuleData<?> ADVANCED_INTERCEPTION_SYSTEM_UNIT = ModuleHelper.registerMarker("advanced_interception_system_unit", builder -> builder.rarity(EnumRarity.EPIC));
-    //密封单元 //GC或者AR （允许在太空中呼吸）
-    public static final ModuleData<?> SEAL_UNIT = ModuleHelper.registerMarker("seal_unit", builder -> builder.maxStackSize(1).canEnable(!Loader.isModLoaded(MekanismHooks.GC_MOD_ID) && !Loader.isModLoaded(MekanismHooks.AR_MOD_ID)).notEnabled("tooltip.install.space"));
+    //密封单元 //GC、AR或者Ad Astra Reborn （允许在太空中呼吸）
+    public static final ModuleData<?> SEAL_UNIT = ModuleHelper.registerMarker("seal_unit", builder -> builder.maxStackSize(1).canEnable(!SpaceEnvironmentCompat.isSpaceEnvironmentLoaded()).notEnabled("tooltip.install.space"));
+    public static final ModuleData<ModuleOxygenSupplyUnit> OXYGEN_SUPPLY_UNIT = ModuleHelper.register("oxygen_supply_unit", ModuleOxygenSupplyUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.UNCOMMON));
     //热防护单元 //GC （允许在更热的星球不会导致过热）
     public static final ModuleData<ModuleThermalProtectionUnit> THERMAL_PROTECTION_UNIT = ModuleHelper.register("thermal_protection_unit", ModuleThermalProtectionUnit::new, builder -> builder.maxStackSize(1).canEnable(!Loader.isModLoaded(MekanismHooks.GC_MOD_ID)).notEnabled("tooltip.install.gc"));
     //绝缘单元 IE 和 GTCEU（将电流导入大地，防止导致受伤）

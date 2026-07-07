@@ -3,6 +3,7 @@ package moremekasuitmodules.common;
 import mekanism.common.Mekanism;
 import mekanism.common.item.ItemModule;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -13,6 +14,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_EMERGENCY_RESCUE = new ItemModule(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
     public static final ItemModule MODULE_ADVANCED_INTERCEPTION_SYSTEM = new ItemModule(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT);
     public static final ItemModule MODULE_SEAL = new ItemModule(MekaSuitMoreModules.SEAL_UNIT);
+    public static final ItemModule MODULE_OXYGEN_SUPPLY = new ItemModule(MekaSuitMoreModules.OXYGEN_SUPPLY_UNIT);
     public static final ItemModule MODULE_THERMAL_PROTECTION = new ItemModule(MekaSuitMoreModules.THERMAL_PROTECTION_UNIT);
     public static final ItemModule MODULE_INSULATED = new ItemModule(MekaSuitMoreModules.INSULATED_UNIT);
     public static final ItemModule MODULE_BEE_CONTROL = new ItemModule(MekaSuitMoreModules.BEE_CONTROL_UNIT);
@@ -60,8 +62,9 @@ public class MekaSuitMoreModulesItem {
     public static void registerItems(IForgeRegistry<Item> registry) {
         registry.register(initModule(MODULE_EMERGENCY_RESCUE));
         registry.register(initModule(MODULE_ADVANCED_INTERCEPTION_SYSTEM));
-        if (Mekanism.hooks.GC || Mekanism.hooks.AR) {
+        if (SpaceEnvironmentCompat.isSpaceEnvironmentLoaded()) {
             registry.register(initModule(MODULE_SEAL));
+            registry.register(initModule(MODULE_OXYGEN_SUPPLY));
         }
 
         if (Mekanism.hooks.GC) {

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "moremekasuitmodules:module_oxygen_supply_unit"
+  },
+  "pattern": [
+    "AOA",
+    "CMC",
+    "AOA"
+  ],
+  "type": "mekanism:ore_shaped",
+  "key": {
+    "A": {
+      "ore": "alloyAdvanced",
+      "type": "forge:ore_dict"
+    },
+    "C": {
+      "ore": "circuitAdvanced",
+      "type": "forge:ore_dict"
+    },
+    "M": {
+      "item": "mekanism:modulebase"
+    },
+    "O": {
+      "item": "mekanism:module_electrolytic_breathing_unit"
+    }
+  }
+}

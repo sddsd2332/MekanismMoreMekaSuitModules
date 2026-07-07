@@ -27,6 +27,8 @@ public class MekaSuitMoreModulesConfig extends BaseConfig {
     public DoubleOption mekaSuitEnergyUsageAutomaticExtinguish = new DoubleOption(this, "energyUsageAutomaticExtinguish", 1000, "Energy cost when automatic extinguish removes fire");
     public DoubleOption mekaToolEnergyUsageSmelting = new DoubleOption(this, "energyUsageSmelting", 200, "Energy cost per smelted item dropped by Meka-Tool");
     public DoubleOption mekaSuitEnergyUsageImpactWave = new DoubleOption(this, "energyUsageImpactWave", 350, "Energy cost per impact wave radius block");
+    public IntOption mekaSuitOxygenCapacity = new IntOption(this, "mekaSuitOxygenCapacity", 24000, "Oxygen capacity for the MekaSuit helmet oxygen supply unit", 0, Integer.MAX_VALUE);
+    public IntOption mekaSuitOxygenUsage = new IntOption(this, "mekaSuitOxygenUsage", 1, "Oxygen consumed per tick while the oxygen supply unit is enabled", 0, Integer.MAX_VALUE);
 
     @Override
     public String getCategory() {

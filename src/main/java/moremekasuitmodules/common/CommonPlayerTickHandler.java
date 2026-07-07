@@ -17,6 +17,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMin
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AutomaticOreMiningTracker;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleOxygenSupplyUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
 import net.minecraft.entity.Entity;
@@ -45,22 +46,38 @@ import java.util.Set;
 public class CommonPlayerTickHandler {
 
 
-    private boolean ModuleInstallation(ItemStack stack, ModuleData<?> data) {
+    private static boolean ModuleInstallation(ItemStack stack, ModuleData<?> data) {
         if (stack.getItem() instanceof IModuleContainerItem item) {
             return item.isModuleEnabled(stack, data);
         }
         return false;
     }
 
-    private boolean sealArmor(ItemStack stack) {
+    private static boolean sealArmor(ItemStack stack) {
         return ModuleInstallation(stack, MekaSuitMoreModules.SEAL_UNIT);
     }
 
-    private boolean sealHelmetArmor(ItemStack stack) {
+    private static boolean sealHelmetArmor(ItemStack stack) {
         if (stack.getItem() instanceof IModuleContainerItem item) {
-            return sealArmor(stack) && item.isModuleEnabled(stack, MekanismModules.INHALATION_PURIFICATION_UNIT);
+            return sealArmor(stack) && item.isModuleEnabled(stack, MekaSuitMoreModules.OXYGEN_SUPPLY_UNIT) && ModuleOxygenSupplyUnit.hasOxygen(stack);
         }
         return false;
+    }
+
+    public static boolean hasFullSealedMekaSuit(EntityLivingBase base) {
+        boolean sealHelmet = sealHelmetArmor(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
+        boolean sealChest = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+        boolean sealLegs = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
+        boolean sealFeet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+        return sealHelmet && sealChest && sealLegs && sealFeet;
+    }
+
+    public static boolean hasFullSealUnit(EntityLivingBase base) {
+        boolean sealHelmet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
+        boolean sealChest = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+        boolean sealLegs = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
+        boolean sealFeet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+        return sealHelmet && sealChest && sealLegs && sealFeet;
     }
 
     @SubscribeEvent
@@ -122,11 +139,7 @@ public class CommonPlayerTickHandler {
     public void canARBreathe(AtmosphereEvent.AtmosphereTickEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof EntityLivingBase base) {
-            boolean SealHelmet = sealHelmetArmor(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
-            boolean SealChest = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-            boolean SealLegs = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
-            boolean seaFeet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
-            if (SealHelmet && SealChest && SealLegs && seaFeet) {
+            if (hasFullSealedMekaSuit(base)) {
                 event.setCanceled(true);
             }
         }
@@ -136,11 +149,7 @@ public class CommonPlayerTickHandler {
     @Optional.Method(modid = MekanismHooks.GC_MOD_ID)
     public void canGCBreathe(GCCoreOxygenSuffocationEvent.Pre event) {
         EntityLivingBase base = event.getEntityLiving();
-        boolean SealHelmet = sealHelmetArmor(base.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
-        boolean SealChest = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-        boolean SealLegs = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
-        boolean seaFeet = sealArmor(base.getItemStackFromSlot(EntityEquipmentSlot.FEET));
-        if (SealHelmet && SealChest && SealLegs && seaFeet) {
+        if (hasFullSealedMekaSuit(base)) {
             event.setCanceled(true);
         }
     }

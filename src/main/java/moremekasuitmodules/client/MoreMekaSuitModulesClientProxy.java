@@ -12,6 +12,7 @@ import moremekasuitmodules.common.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -44,8 +45,9 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
     public void registerItemRenders() {
         registerItemRender(MekaSuitMoreModulesItem.MODULE_EMERGENCY_RESCUE);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_ADVANCED_INTERCEPTION_SYSTEM);
-        if (Mekanism.hooks.GC || Mekanism.hooks.AR) {
+        if (SpaceEnvironmentCompat.isSpaceEnvironmentLoaded()) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SEAL);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_OXYGEN_SUPPLY);
         }
 
         if (Mekanism.hooks.GC) {

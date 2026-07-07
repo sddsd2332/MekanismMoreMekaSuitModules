@@ -1,15 +1,22 @@
 package moremekasuitmodules.mixin.mekanism;
 
 import mekanism.api.EnumColor;
+import mekanism.api.IContentsListener;
+import mekanism.api.functions.ConstantPredicates;
+import mekanism.api.gas.GasStack;
 import mekanism.api.gas.IGasItem;
+import mekanism.api.gas.IExtendedGasTank;
 import mekanism.api.gear.IModule;
 import mekanism.api.mixninapi.EnderMaskMixinHelp;
+import mekanism.common.MekanismFluids;
+import mekanism.common.capabilities.gas.item.RateLimitGasHandler;
 import mekanism.common.interfaces.IOverlayRenderAware;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import mekanism.common.item.armor.ItemMekaSuitHelmet;
 import mekanism.common.util.LangUtils;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleInfiniteInterceptionAndRescueSystemUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleOxygenSupplyUnit;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -30,6 +37,17 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
         super(renderIndex, slot);
     }
 
+    @Inject(method = "collectGasCapabilityTanks", at = @At("TAIL"), remap = false)
+    private void moremekasuitmodules$addOxygenCapabilityTank(ItemStack stack, IContentsListener listener, List<IExtendedGasTank> tanks, CallbackInfo ci) {
+        tanks.add(new RateLimitGasHandler.RateLimitGasTank(
+                () -> ModuleOxygenSupplyUnit.getOxygenRate(stack),
+                () -> ModuleOxygenSupplyUnit.getOxygenCapacity(stack),
+                ConstantPredicates.notExternal(),
+                (gasStack, automationType) -> ModuleOxygenSupplyUnit.isOxygenModuleEnabled(stack),
+                gasStack -> moremekasuitmodules$isValidOxygen(stack, gasStack),
+                listener
+        ));
+    }
 
     @SideOnly(Side.CLIENT)
     @Inject(method = "addInformation", at = @At("TAIL"), remap = false)
@@ -62,5 +80,9 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
         }
     }
 
+    @Unique
+    private boolean moremekasuitmodules$isValidOxygen(ItemStack stack, GasStack gasStack) {
+        return gasStack != null && gasStack.getGas() == MekanismFluids.Oxygen && ModuleOxygenSupplyUnit.isOxygenModuleEnabled(stack);
+    }
 
 }

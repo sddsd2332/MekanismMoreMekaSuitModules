@@ -20,6 +20,8 @@ import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHa
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
+import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
+import moremekasuitmodules.common.integration.adastra.AdAstraRebornCompat;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
 import moremekasuitmodules.moremekasuitmodules.Tags;
 import net.minecraft.item.Item;
@@ -76,6 +78,9 @@ public class MoreMekaSuitModules implements IModule {
         MinecraftForge.EVENT_BUS.register(this);
         packetHandler.initialize();
         proxy.init();
+        if (SpaceEnvironmentCompat.isAdAstraRebornLoaded()) {
+            AdAstraRebornCompat.register();
+        }
         imcQueue();
         Mekanism.logger.info("Loaded Mekanism MoreMeka Suit Modules module.");
     }
@@ -174,7 +179,7 @@ public class MoreMekaSuitModules implements IModule {
             if (Mekanism.hooks.DraconicEvolution) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT, MekaSuitMoreModules.CHAOS_RESISTANCE_UNIT);
             }
-            if (Mekanism.hooks.AR || Mekanism.hooks.GC) {
+            if (SpaceEnvironmentCompat.isSpaceEnvironmentLoaded()) {
                 ModuleHelper.get().setSupported(stack, MekaSuitMoreModules.SEAL_UNIT);
             }
             if (Loader.isModLoaded("immersiveengineering") || Mekanism.hooks.GTCEULoaded) {
@@ -190,6 +195,9 @@ public class MoreMekaSuitModules implements IModule {
         }
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT, MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);
+        if (SpaceEnvironmentCompat.isSpaceEnvironmentLoaded()) {
+            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.OXYGEN_SUPPLY_UNIT);
+        }
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.ORE_VISUAL_ENHANCEMENT_UNIT);
         if (MoreModulesConfig.current().config.InfiniteInterception.val()) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
