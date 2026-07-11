@@ -12,6 +12,7 @@ import moremekasuitmodules.common.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.MoreMekaSuitModulesCommonProxy;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.integration.AppliedEnergisticsCompat;
 import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
 import net.minecraft.client.Minecraft;
@@ -95,7 +96,7 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
             registerItemRender(MekaSuitMoreModulesItem.MODULE_CREATIVE_BAND_OF_AURA);
         }
 
-        if (Loader.isModLoaded("appliedenergistics2")){
+        if (AppliedEnergisticsCompat.shouldLoadLegacyWireless()){
             registerItemRender(MekaSuitMoreModulesItem.MODULE_SMART_WIRELESS);
         }
         registerItemRender(MekaSuitMoreModulesItem.MODULE_INFINITE_GAS_SUPPLY);

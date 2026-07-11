@@ -1,17 +1,13 @@
 package moremekasuitmodules.common;
 
-import appeng.api.AEApi;
-import appeng.api.features.IWirelessTermHandler;
-import mekanism.common.MekanismItems;
 import mekanism.common.base.IGuiProvider;
+import moremekasuitmodules.common.integration.AppliedEnergisticsCompat;
 import moremekasuitmodules.common.network.to_client.PacketOreVisualScan;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
 
 import java.util.List;
 
@@ -30,15 +26,10 @@ public class MoreMekaSuitModulesCommonProxy implements IGuiProvider {
     }
 
     public void init() {
-        if (Loader.isModLoaded("appliedenergistics2")){
-            AEregistries();
+        if (AppliedEnergisticsCompat.shouldLoadLegacyWireless()){
+            AppliedEnergisticsCompat.registerLegacyWireless();
         }
 
-    }
-
-    @Optional.Method(modid = "appliedenergistics2")
-    public void AEregistries(){
-        AEApi.instance().registries().wireless().registerWirelessHandler((IWirelessTermHandler)MekanismItems.MEKASUIT_HELMET);
     }
 
 

@@ -3,6 +3,7 @@ package moremekasuitmodules.common;
 import mekanism.common.Mekanism;
 import mekanism.common.item.ItemModule;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.integration.AppliedEnergisticsCompat;
 import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -112,7 +113,7 @@ public class MekaSuitMoreModulesItem {
             registry.register(initModule(MODULE_CREATIVE_BAND_OF_AURA));
         }
 
-        if (Loader.isModLoaded("appliedenergistics2")) {
+        if (AppliedEnergisticsCompat.shouldLoadLegacyWireless()) {
             registry.register(initModule(MODULE_SMART_WIRELESS));
         }
         registry.register(initModule(MODULE_INFINITE_GAS_SUPPLY));

@@ -20,6 +20,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHa
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanServerCache;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.OreVisualScanTracker;
+import moremekasuitmodules.common.integration.AppliedEnergisticsCompat;
 import moremekasuitmodules.common.integration.SpaceEnvironmentCompat;
 import moremekasuitmodules.common.integration.adastra.AdAstraRebornCompat;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
@@ -230,7 +231,7 @@ public class MoreMekaSuitModules implements IModule {
 
         ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BOOTS, MekaSuitMoreModules.WALL_CLING_UNIT, MekaSuitMoreModules.IMPACT_WAVE_UNIT);
 
-        if (Loader.isModLoaded("appliedenergistics2")) {
+        if (AppliedEnergisticsCompat.shouldLoadLegacyWireless()) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }
 

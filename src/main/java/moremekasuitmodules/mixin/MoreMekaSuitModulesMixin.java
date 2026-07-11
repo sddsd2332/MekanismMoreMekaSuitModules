@@ -1,6 +1,7 @@
 package moremekasuitmodules.mixin;
 
 import mekanism.common.Mekanism;
+import moremekasuitmodules.common.integration.AppliedEnergisticsCompat;
 import net.minecraftforge.fml.common.Loader;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
@@ -22,7 +23,7 @@ public class MoreMekaSuitModulesMixin implements ILateMixinLoader {
         addModdedMixinCFG("mixins.moremekasuitmodules_advancedRocketry.json","advancedrocketry");
         addModdedMixinCFG("mixins.moremekasuitmodules_lolipickaxe.json","lolipickaxe");
         addModdedMixinCFG("mixins.moremekasuitmodules_botania.json","botania");
-        addModdedMixinCFG("mixins.moremekasuitmodules_appliedenergistics2.json","appliedenergistics2");
+        addMixinCFG("mixins.moremekasuitmodules_appliedenergistics2.json", AppliedEnergisticsCompat::shouldLoadLegacyWireless);
         addModdedMixinCFG("mixins.moremekasuitmodules_matteroverdrive.json","matteroverdrive");
         addModdedMixinCFG("mixins.moremekasuitmodules_thaumcraft.json","thaumcraft");
         addModdedMixinCFG("mixins.moremekasuitmodules_extrabotany.json","extrabotany");
