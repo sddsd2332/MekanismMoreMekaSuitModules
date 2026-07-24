@@ -6,6 +6,8 @@ import mekanism.api.gear.IModule;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.entity.player.EntityPlayer;
 
+import static moremekasuitmodules.common.content.gear.ModuleEnergyHelper.tryUseEnergy;
+
 @ParametersAreNotNullByDefault
 public class ModuleAutomaticExtinguishUnit implements ICustomModule<ModuleAutomaticExtinguishUnit> {
 
@@ -15,9 +17,7 @@ public class ModuleAutomaticExtinguishUnit implements ICustomModule<ModuleAutoma
             return;
         }
         double usage = MoreModulesConfig.current().config.mekaSuitEnergyUsageAutomaticExtinguish.val();
-        if (usage <= 0 || player.isCreative()) {
-            player.extinguish();
-        } else if (module.useEnergy(player, usage) > 0) {
+        if (tryUseEnergy(module, player, usage)) {
             player.extinguish();
         }
     }

@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.Optional;
 import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.capability.IThirst;
 
+import static moremekasuitmodules.common.content.gear.ModuleEnergyHelper.tryUseEnergy;
+
 @ParametersAreNotNullByDefault
 public class ModuleAutomaticLiquidSupplyUnit implements ICustomModule<ModuleAutomaticLiquidSupplyUnit> {
 
@@ -26,8 +28,7 @@ public class ModuleAutomaticLiquidSupplyUnit implements ICustomModule<ModuleAuto
         }
         IThirst thirst = player.getCapability(TANCapabilities.THIRST, null);
         if (thirst != null) {
-            if (thirst.getThirst() < 20) {
-                module.useEnergy(player, 100);
+            if (thirst.getThirst() < 20 && tryUseEnergy(module, player, 100)) {
                 thirst.setThirst(thirst.getThirst() + 1);
                 thirst.setHydration(5.0F);
                 thirst.setExhaustion(0.0F);

@@ -4,8 +4,10 @@ import com.brandon3055.draconicevolution.items.armor.ICustomArmor;
 import mekanism.api.energy.IEnergizedItem;
 import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
+import mekanism.common.integration.redstoneflux.RFIntegration;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import mekanism.common.util.ItemNBTHelper;
+import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -125,14 +127,15 @@ public abstract class MixinItemMekaSuitArmor extends ItemArmor implements IEnerg
     public void modifyEnergy(ItemStack stack, int modify) {
         IModule<?> module = getModule(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT);
         if (module != null) {
-            double energy = getEnergy(stack);
-            energy += modify;
-            if (energy > getMaxEnergy(stack)) {
-                energy = getMaxEnergy(stack);
+            double energy = StorageUtils.getStoredEnergy(stack);
+            energy += RFIntegration.fromRF(modify);
+            double maxEnergy = StorageUtils.getMaxEnergy(stack);
+            if (energy > maxEnergy) {
+                energy = maxEnergy;
             } else if (energy < 0) {
                 energy = 0;
             }
-            setEnergy(stack, energy);
+            StorageUtils.setStoredEnergy(stack, energy);
         }
     }
 

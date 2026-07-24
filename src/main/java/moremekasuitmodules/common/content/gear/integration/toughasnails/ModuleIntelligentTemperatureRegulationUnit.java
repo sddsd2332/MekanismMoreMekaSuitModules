@@ -10,6 +10,8 @@ import toughasnails.api.TANCapabilities;
 import toughasnails.api.stat.capability.ITemperature;
 import toughasnails.api.temperature.Temperature;
 
+import static moremekasuitmodules.common.content.gear.ModuleEnergyHelper.tryUseEnergy;
+
 @ParametersAreNotNullByDefault
 public class ModuleIntelligentTemperatureRegulationUnit implements ICustomModule<ModuleIntelligentTemperatureRegulationUnit> {
 
@@ -27,15 +29,10 @@ public class ModuleIntelligentTemperatureRegulationUnit implements ICustomModule
         }
         ITemperature temperature = player.getCapability(TANCapabilities.TEMPERATURE, null);
         if (temperature != null) {
-            if (temperature.getTemperature().getRawValue() != 14) {
+            int currentTemperature = temperature.getTemperature().getRawValue();
+            if (currentTemperature != 14 && tryUseEnergy(module, player, 100)) {
                 temperature.setChangeTime(1);
-                if (temperature.getTemperature().getRawValue() < 14) {
-                    module.useEnergy(player, 100);
-                    temperature.setTemperature(new Temperature(temperature.getTemperature().getRawValue() + 1));
-                } else if (temperature.getTemperature().getRawValue() > 14) {
-                    module.useEnergy(player, 100);
-                    temperature.setTemperature(new Temperature(temperature.getTemperature().getRawValue() - 1));
-                }
+                temperature.setTemperature(new Temperature(currentTemperature + (currentTemperature < 14 ? 1 : -1)));
             }
         }
     }

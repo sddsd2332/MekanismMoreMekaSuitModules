@@ -11,6 +11,8 @@ import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.IPlayerWarp.EnumWarpType;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
+import static moremekasuitmodules.common.content.gear.ModuleEnergyHelper.tryUseEnergy;
+
 @ParametersAreNotNullByDefault
 public class ModuleWarpClearBaseUnit implements ICustomModule<ModuleWarpClearBaseUnit> {
 
@@ -27,8 +29,8 @@ public class ModuleWarpClearBaseUnit implements ICustomModule<ModuleWarpClearBas
             return;
         }
         IPlayerWarp warp = player.getCapability(ThaumcraftCapabilities.WARP, null);
-        if (warp != null && warp.get(EnumWarpType.TEMPORARY) != 0) {
-            module.useEnergy(player, warp.get(EnumWarpType.TEMPORARY));
+        if (warp != null && warp.get(EnumWarpType.TEMPORARY) != 0
+                && tryUseEnergy(module, player, warp.get(EnumWarpType.TEMPORARY))) {
             warp.set(EnumWarpType.TEMPORARY, player.isCreative() ? 0 : warp.get(EnumWarpType.TEMPORARY) - 1);
             ThaumcraftApi.internalMethods.addWarpToPlayer(player, player.isCreative() ? warp.get(EnumWarpType.TEMPORARY) : -1, EnumWarpType.TEMPORARY);
         }

@@ -10,11 +10,13 @@ import appeng.api.features.IWirelessTermHandler;
 import appeng.api.util.IConfigManager;
 import appeng.core.sync.GuiBridge;
 import appeng.util.ConfigManager;
+import mekanism.api.Action;
 import mekanism.api.gear.IModule;
 import mekanism.common.MekanismItems;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import mekanism.common.item.armor.ItemMekaSuitHelmet;
 import mekanism.common.util.LangUtils;
+import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.MekaSuitMoreModules;
 import moremekasuitmodules.common.content.gear.integration.appliedenergistics2.ModuleSmartWirelessUnit;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,12 +73,23 @@ public abstract class MixinItemMekaSuitHelmet extends ItemMekaSuitArmor implemen
 
     @Override
     public boolean usePower(EntityPlayer entityPlayer, double amount, ItemStack itemStack) {
-        return getEnergy(itemStack) >= amount - 0.5 && isModuleEnabled(itemStack, MekaSuitMoreModules.SMART_WIRELESS_UNIT) && entityPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == MekanismItems.MEKASUIT_HELMET;
+        if (!isWirelessTerminalActive(entityPlayer, itemStack)
+                || StorageUtils.extractEnergy(itemStack, amount, Action.SIMULATE) < amount) {
+            return false;
+        }
+        return StorageUtils.extractEnergy(itemStack, amount, Action.EXECUTE) >= amount;
     }
 
     @Override
     public boolean hasPower(EntityPlayer entityPlayer, double amount, ItemStack itemStack) {
-        return getEnergy(itemStack) > amount && isModuleEnabled(itemStack, MekaSuitMoreModules.SMART_WIRELESS_UNIT) && entityPlayer.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == MekanismItems.MEKASUIT_HELMET;
+        return isWirelessTerminalActive(entityPlayer, itemStack)
+                && StorageUtils.extractEnergy(itemStack, amount, Action.SIMULATE) >= amount;
+    }
+
+    @Unique
+    private boolean isWirelessTerminalActive(EntityPlayer player, ItemStack stack) {
+        return isModuleEnabled(stack, MekaSuitMoreModules.SMART_WIRELESS_UNIT)
+                && player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == MekanismItems.MEKASUIT_HELMET;
     }
 
     @Override
